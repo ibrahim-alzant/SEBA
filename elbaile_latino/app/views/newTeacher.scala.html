@@ -1,0 +1,33 @@
+@(teacherForm : Form[controllers.teacher.TeacherController.TeacherForm], message:String)
+
+@import helper._
+
+<h1>Register new Teacher</h1>
+@main("new teacher") {
+	@form(controllers.teacher.routes.TeacherController.createTeacher()){
+		@inputText(teacherForm("firstName"))
+		
+		@inputText(teacherForm("lastName"))
+		
+		@inputText(
+            teacherForm("email"),
+            'placeholder -> Messages("email"),
+            '_label -> "email address",
+            'class -> "form-control"
+        )
+		@inputText(teacherForm("mobile"))
+		@inputText(teacherForm("imgURL"))
+		@inputText(teacherForm("professionalExperience"))
+		@inputText(teacherForm("nationality"))
+		@inputText(teacherForm("spokenLanguages"))
+		
+		@inputText(
+			teacherForm("dateOfBirth"),
+			args = 'size -> 10
+			)
+		@inputText(teacherForm("danceStyles"))
+		
+		
+		<input type="submit"  value="@message" />
+	}
+}

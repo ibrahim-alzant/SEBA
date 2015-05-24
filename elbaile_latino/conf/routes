@@ -5,5 +5,10 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+GET     /teachers                   controllers.teacher.TeacherController.list()
+GET     /teachers/:id               controllers.teacher.TeacherController.show(id:Long)
+GET     /teachers/new/              controllers.teacher.TeacherController.newTeacherForm()
+POST    /teachers/post/ 			controllers.teacher.TeacherController.createTeacher()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

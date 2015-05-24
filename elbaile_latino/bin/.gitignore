@@ -4,5 +4,6 @@
 /application.conf
 /assets/
 /controllers/
+/models/
 /routes
 /views/
