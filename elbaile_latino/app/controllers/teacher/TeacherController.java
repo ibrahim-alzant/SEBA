@@ -6,12 +6,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import models.common.DanceStyle;
 import models.common.Language;
+import models.common.course.Course;
 import models.teacher.Teacher;
 import play.data.Form;
 import play.data.validation.Constraints;
-import play.data.validation.Constraints.Email;
+import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -61,6 +65,9 @@ public class TeacherController extends Controller {
 		teacher.save();
 		return redirect(controllers.teacher.routes.TeacherController.list());
 	}
+	
+	
+	
 	
 	private static List<Language> getLanguages(String languges){
 		List<Language> languages = new ArrayList<Language>();		
@@ -117,5 +124,5 @@ public class TeacherController extends Controller {
         
         
 	}
-
+	
 }

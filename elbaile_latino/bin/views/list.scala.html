@@ -1,0 +1,37 @@
+@(teachers:List[models.teacher.Teacher])
+
+@main("List of teachers"){
+	<table>
+		<thead>
+			<tr>
+				<td>Name</td>
+				<td>Email</td>
+				<td>Phone</td>
+				<td>spokenLanguages</td>
+				<td>danceStyles</td>
+				<td>dateOfBirth</td>
+				<td>imgURL</td>
+				<td>nationality</td>
+				<td>professionalExperience</td>
+			</tr>
+		</thead>
+		<tbody>
+			@for(teacher <- teachers) {
+				<tr>
+					<td>@teacher.firstName</td>
+					<td>@teacher.email</td>
+					<td>@teacher.mobile</td>
+					<td>@teacher.spokenLanguages</td>
+					<td>@teacher.danceStyles</td>
+					<td>@teacher.dateOfBirth</td>
+					<td>@teacher.imgURL</td>
+					<td>@teacher.nationality</td>
+					<td>@teacher.professionalExperience</td>
+					
+				</tr>
+			}
+		</tbody>
+	</table>
+	
+	<a href="@controllers.teacher.routes.TeacherController.newTeacherForm()">create new teacher</a>
+}

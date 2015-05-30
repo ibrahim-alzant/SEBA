@@ -3,6 +3,18 @@
 
 # --- !Ups
 
+create table course (
+  id                        integer not null,
+  title                     varchar(255),
+  start_date                timestamp,
+  number_of_classes         integer,
+  number_of_participants    integer,
+  max_number_of_participants integer,
+  dance_level               varchar(255),
+  status                    varchar(255),
+  constraint pk_course primary key (id))
+;
+
 create table dance_style (
   id                        bigint not null,
   dance_style_name          varchar(255),
@@ -30,6 +42,8 @@ create table teacher (
   constraint pk_teacher primary key (id))
 ;
 
+create sequence course_seq;
+
 create sequence dance_style_seq;
 
 create sequence language_seq;
@@ -43,6 +57,8 @@ create sequence teacher_seq;
 
 SET REFERENTIAL_INTEGRITY FALSE;
 
+drop table if exists course;
+
 drop table if exists dance_style;
 
 drop table if exists language;
@@ -50,6 +66,8 @@ drop table if exists language;
 drop table if exists teacher;
 
 SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists course_seq;
 
 drop sequence if exists dance_style_seq;
 

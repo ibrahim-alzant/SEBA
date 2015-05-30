@@ -15,6 +15,10 @@ import models.common.Language;
 @Entity
 public class Teacher extends Model {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6738879617416559361L;
 	@Id
 	@GeneratedValue
 	public Long id;

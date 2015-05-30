@@ -1,0 +1,30 @@
+@(courses:List[models.common.course.Course])
+
+@main("List of Courses"){
+	<table>
+		<thead>
+			<tr>
+				<td>id</td>
+				<td>Title</td>
+				<td>Dance Style</td>
+				<td>Dance Level</td>
+				<td>Language</td>
+				
+			</tr>
+		</thead>
+		<tbody>
+			@for(course <- courses) {
+				<tr>
+				<td>@course.id</td>
+					<td>@course.title</td>
+					<!-- <td>course.danceStyle.danceStyleName</td>  -->
+					<td>@course.danceLevel</td>
+					<td>course.language.languageName</td>					
+					
+				</tr>
+			}
+		</tbody>
+	</table>
+	
+	<a href="@controllers.course.routes.CourseController.newCourseForm()">create new Course</a>
+}

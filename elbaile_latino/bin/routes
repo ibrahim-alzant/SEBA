@@ -6,7 +6,7 @@
 GET     /                           controllers.Application.index()
 
 GET     /teachers                   controllers.teacher.TeacherController.list()
-GET     /teachers/:id               controllers.teacher.TeacherController.show(id:Long)
+GET     /teacher/:username          controllers.teacher.TeacherController.show(username:String)
 GET     /teachers/new/              controllers.teacher.TeacherController.newTeacherForm()
 POST    /teachers/post/ 			controllers.teacher.TeacherController.createTeacher()
 

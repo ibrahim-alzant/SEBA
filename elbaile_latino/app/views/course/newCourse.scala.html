@@ -1,0 +1,22 @@
+@(courseForm : Form[controllers.course.CourseController.CourseForm])
+
+@import helper._
+
+<h1>create new course</h1>
+@main("new course") {
+	@form(controllers.course.routes.CourseController.createCourse()){
+		@inputText(courseForm("title"))
+		
+		@inputText(courseForm("startDate"))
+		@inputText(courseForm("numberOfClasses"))			
+		@inputText(courseForm("numberOfParticipants"))
+		@inputText(courseForm("maxNumberOfParticipants"))
+		@inputText(courseForm("language"))
+		@inputText(courseForm("danceStyle"))
+		@inputText(courseForm("danceLevel"))		
+		@inputText(courseForm("status"))
+		
+		
+		<input type="submit"  value="submit" />
+	}
+}
