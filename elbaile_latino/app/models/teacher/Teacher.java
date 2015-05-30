@@ -1,8 +1,7 @@
-package models;
+package models.teacher;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +9,8 @@ import javax.persistence.Id;
 
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
-import models.*;
-import play.data.format.Formats;
+import models.common.DanceStyle;
+import models.common.Language;
 
 @Entity
 public class Teacher extends Model {
@@ -22,6 +21,7 @@ public class Teacher extends Model {
 	@Required
 	public String firstName;
 	public String lastName;
+	public String userName;
 	public String email;
 	public String mobile;
 	public String imgURL;
@@ -34,4 +34,7 @@ public class Teacher extends Model {
 	public static Finder<Long, Teacher> find = new Finder<Long, Teacher>(
 			Long.class, Teacher.class);
 
+	public static Teacher findByUsername(String username){
+		return find.where().eq("userName", username).findUnique();
+	}
 }

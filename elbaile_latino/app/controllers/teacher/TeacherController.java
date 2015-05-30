@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import models.DanceStyle;
-import models.Language;
-import models.Teacher;
+import models.common.DanceStyle;
+import models.common.Language;
+import models.teacher.Teacher;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.Email;
@@ -24,12 +24,13 @@ public class TeacherController extends Controller {
 		return ok(views.html.list.render(teachers));
 	}
 	
-	public static Result show(Long id){
-		Teacher teacher = Teacher.find.byId(id);
+	
+	public static Result show(String username){
+		Teacher teacher = Teacher.findByUsername(username);
 		if(teacher == null){
 			return notFound();
 		} else {
-			return ok();
+			return ok(views.html.teacherProfile.render(teacher));
 		}
 	}
 	
@@ -48,6 +49,7 @@ public class TeacherController extends Controller {
 		Teacher teacher = new Teacher();
 		teacher.firstName = teacherForm.firstName;
 		teacher.lastName = teacherForm.lastName;
+		teacher.userName = teacherForm.userName;
 		teacher.email = teacherForm.email;
 		teacher.mobile = teacherForm.mobile;
 		teacher.imgURL = teacherForm.imgURL;
@@ -79,6 +81,8 @@ public class TeacherController extends Controller {
         public String firstName;
         @Constraints.Required
         public String lastName;
+        @Constraints.Required
+        public String userName;
         @Constraints.Required        
         public String email;
         @Constraints.Required

@@ -20,6 +20,7 @@ create table teacher (
   id                        bigint not null,
   first_name                varchar(255),
   last_name                 varchar(255),
+  user_name                 varchar(255),
   email                     varchar(255),
   mobile                    varchar(255),
   img_url                   varchar(255),
