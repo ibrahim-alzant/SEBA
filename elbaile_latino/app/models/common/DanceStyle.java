@@ -14,6 +14,7 @@ public class DanceStyle extends Model{
 	@Id
 	@GeneratedValue
 	public Long id;	
+	
 	@Required
 	@Column(unique = true)
 	public String danceStyleName;

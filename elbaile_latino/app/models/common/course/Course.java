@@ -9,18 +9,15 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import models.common.DanceStyle;
 import models.common.Language;
 import models.teacher.Teacher;
-import play.db.DB;
 import play.data.validation.Constraints.Required;
+import play.db.DB;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
 
 @Entity
 public class Course extends Model {
@@ -37,7 +34,7 @@ public class Course extends Model {
 	public int id;
 
 	@Required
-	@ManyToOne
+	@ManyToOne	
 	public Teacher teacher;
 
 	@Required
@@ -52,10 +49,15 @@ public class Course extends Model {
 	@Required
 	public Integer numberOfParticipants;
 
+	@Required
 	public Integer maxNumberOfParticipants ;
 
+	@Required
+	@ManyToOne
 	public Language language;
 
+	@Required
+	@OneToOne
 	public DanceStyle danceStyle;
 
 	@Required
@@ -94,12 +96,7 @@ public class Course extends Model {
 			e.getStackTrace();
 			
 		}	
-		System.out.println("number of courses for " + teacher.userName + " is " + result_list.size());
 		return result_list;
 	}
-
-//	public static Course findByDanceStyle(String danceStyle){
-//		return find.where().eq("DanceStyle", courseName).findUnique();
-//	}
 
 }
