@@ -1,5 +1,8 @@
 package models.common.course;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -7,9 +10,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
 import models.common.DanceStyle;
 import models.common.Language;
 import models.teacher.Teacher;
+import play.db.DB;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
@@ -28,6 +36,8 @@ public class Course extends Model {
 	@GeneratedValue
 	public int id;
 
+	@Required
+	@ManyToOne
 	public Teacher teacher;
 
 	@Required
@@ -59,6 +69,33 @@ public class Course extends Model {
 	
 	public static List<Course> findByTitle(String title){
 		return find.where().eq("title", title).findList();
+	}
+	
+	public static List<Course> findByTeacher(Teacher teacher){
+		Connection connection = DB.getConnection();
+		List<Course> result_list = new ArrayList<>();
+
+		try{
+			ResultSet result = connection.prepareStatement(" Select course.id "
+					+" from course"
+					+" where course.teacher_id="+teacher.id).executeQuery();
+			
+			connection.close();
+			
+			while(result.next()){
+				
+				Long courseId = result.getLong(1);
+				Course courseFound = Course.find.byId(courseId);
+				result_list.add(courseFound);	
+				
+			}
+					
+		}catch(Exception e){
+			e.getStackTrace();
+			
+		}	
+		System.out.println("number of courses for " + teacher.userName + " is " + result_list.size());
+		return result_list;
 	}
 
 //	public static Course findByDanceStyle(String danceStyle){

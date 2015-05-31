@@ -1,8 +1,20 @@
-@(teacherProfile : models.teacher.Teacher)
+@(teacherProfile : models.teacher.Teacher, courses :List[models.common.course.Course])
 
 @import helper._
 
 <h1>Teacher Profile</h1>
 @main("vvv") {
 	@teacherProfile.userName;
+	@for(course <- courses) {
+				<tr>
+				<td>@course.id</td>
+					<td>@course.title</td>
+					<!-- <td>course.danceStyle.danceStyleName</td>  -->
+					<td>@course.danceLevel</td>
+					<td>course.language.languageName</td>					
+					
+				</tr>
+	}
+	<a href="@controllers.course.routes.CourseController.newCourseForm()">create new course</a>
+	
 }

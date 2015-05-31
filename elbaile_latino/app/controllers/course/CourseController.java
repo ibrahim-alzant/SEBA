@@ -23,7 +23,6 @@ public class CourseController extends Controller {
 			return badRequest(views.html.course.newCourse.render(form));
 		}
 		CourseController.CourseForm courseForm = form.get();
-
 		Course course = new Course();
 		course.title = courseForm.title;
 		course.maxNumberOfParticipants = courseForm.maxNumberOfParticipants;
@@ -31,7 +30,9 @@ public class CourseController extends Controller {
 		course.language = Language.findByName(courseForm.language);
 		course.startDate = new Date(); //TODO get proper date
 		course.danceStyle = DanceStyle.findByName(courseForm.danceStyle);
-		//course.teacher = get that from session
+		
+		course.teacher = Teacher.findByUsername(ctx().session().get("userName"));
+		System.out.println("teacher in the session is " + course.teacher.userName);
 		course.status = courseForm.status;
 		course.danceLevel = courseForm.danceLevel;
 		

@@ -10,6 +10,8 @@ GET     /teachers                   controllers.teacher.TeacherController.list()
 GET     /teacher/:username          controllers.teacher.TeacherController.show(username:String)
 GET     /teachers/new/              controllers.teacher.TeacherController.newTeacherForm()
 POST    /teachers/post/ 			controllers.teacher.TeacherController.createTeacher()
+GET     /teacher/login/				controllers.teacher.LoginController.loginForm()
+POST    /teacher/login/post/		controllers.teacher.LoginController.authenticate()
 
 # Course pages
 GET     /courses                    controllers.course.CourseController.list()

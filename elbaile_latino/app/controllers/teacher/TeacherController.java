@@ -6,16 +6,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 import models.common.DanceStyle;
 import models.common.Language;
 import models.common.course.Course;
 import models.teacher.Teacher;
 import play.data.Form;
 import play.data.validation.Constraints;
-import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -34,7 +30,7 @@ public class TeacherController extends Controller {
 		if(teacher == null){
 			return notFound();
 		} else {
-			return ok(views.html.teacherProfile.render(teacher));
+			return ok(views.html.teacherProfile.render(teacher,Course.findByTeacher(teacher)));
 		}
 	}
 	
@@ -54,6 +50,7 @@ public class TeacherController extends Controller {
 		teacher.firstName = teacherForm.firstName;
 		teacher.lastName = teacherForm.lastName;
 		teacher.userName = teacherForm.userName;
+		teacher.password = teacherForm.password;
 		teacher.email = teacherForm.email;
 		teacher.mobile = teacherForm.mobile;
 		teacher.imgURL = teacherForm.imgURL;
@@ -90,6 +87,8 @@ public class TeacherController extends Controller {
         public String lastName;
         @Constraints.Required
         public String userName;
+        @Constraints.Required
+        public String password;
         @Constraints.Required        
         public String email;
         @Constraints.Required

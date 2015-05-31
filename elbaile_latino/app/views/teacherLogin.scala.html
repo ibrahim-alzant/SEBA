@@ -1,0 +1,13 @@
+@(loginForm : Form[controllers.teacher.LoginController.LoginForm])
+
+@import helper._
+
+@main("teacher login"){
+
+@form(controllers.teacher.routes.LoginController.authenticate()){
+		@inputText(loginForm("userName"))
+		@inputText(loginForm("password"))
+		<input type="submit"  value="Submit" />
+}
+
+}

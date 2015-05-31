@@ -5,6 +5,7 @@
 
 create table course (
   id                        integer not null,
+  teacher_id                bigint,
   title                     varchar(255),
   start_date                timestamp,
   number_of_classes         integer,
@@ -31,8 +32,10 @@ create table language (
 create table teacher (
   id                        bigint not null,
   first_name                varchar(255),
+  firstkk_name              varchar(255),
   last_name                 varchar(255),
   user_name                 varchar(255),
+  password                  varchar(255),
   email                     varchar(255),
   mobile                    varchar(255),
   img_url                   varchar(255),
@@ -50,6 +53,8 @@ create sequence language_seq;
 
 create sequence teacher_seq;
 
+alter table course add constraint fk_course_teacher_1 foreign key (teacher_id) references teacher (id) on delete restrict on update restrict;
+create index ix_course_teacher_1 on course (teacher_id);
 
 
 
