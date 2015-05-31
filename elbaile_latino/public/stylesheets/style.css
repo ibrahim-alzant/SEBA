@@ -1,0 +1,122 @@
+
+.flip-container {
+	-webkit-perspective: 1000;
+	-moz-perspective: 1000;
+	-ms-perspective: 1000;
+	perspective: 1000;
+	display:-webkit-inline-box;
+	display:-moz-inline-box;
+	
+}
+
+.flip-container:hover .back {
+	-webkit-transform: rotateY(0deg);
+	-moz-transform: rotateY(0deg);
+	-ms-transform: rotateY(0deg);
+	transform: rotateY(0deg);
+	background-color:rgba(44, 62, 80, 1);
+}
+
+.flip-container:hover .front {
+	-webkit-transform: rotateY(180deg);
+	-moz-transform: rotateY(180deg);
+	-ms-transform: rotateY(180deg);
+	transform: rotateY(180deg)
+}
+
+.flip-container, .front, .back {
+	width: 24%;
+	height: 24%;
+	color:#ffffff;
+	font-weight:bold;
+	min-height: 225px;
+	min-width: 225px;
+}
+
+.back{
+padding-top:80px;
+}
+
+.flipper {
+	-webkit-transition: .6s;
+	-moz-transition: .6s;
+	-ms-transition: .6s;
+	transition: .6s;
+	position: relative
+}
+
+.front, .back {
+	-webkit-backface-visibility: hidden;
+	-webkit-transition: .6s;
+	-moz-backface-visibility: hidden;
+	-moz-transition: .6s;
+	-ms-backface-visibility: hidden;
+	-ms-transition: .6s;
+	backface-visibility: hidden;
+	transition: .6s;
+	position: absolute;
+	left: 0;
+	
+}
+
+.front {
+	z-index: 2;
+	-webkit-transform: rotateY(0deg);
+	-moz-transform: rotateY(0deg);
+	-ms-transform: rotateY(0deg);
+	transform: rotateY(0deg);	
+}
+
+.back {
+	-webkit-transform: rotateY(-180deg);
+	-moz-transform: rotateY(-180deg);
+	-ms-transform: rotateY(-180deg);
+	transform: rotateY(-180deg);
+}
+
+.blocks{
+	width: 100%;
+	display:inline-block;
+	
+}
+
+.style1{
+background-image:url("../../images/styles/style1.png");
+background-color:rgba(251, 0, 0, .5);
+}
+
+.style2{
+background-image:url("../../images/styles/style2.png");
+background-color:rgba(17, 153, 68, .5);
+}
+
+.style3{
+background-image:url("../../images/styles/style3.png");
+background-color:rgba(75, 75, 75, .5);
+}
+
+.style4{
+background-image:url("../../images/styles/style4.png");
+background-color:rgba(0, 0, 0, .5);
+}
+
+.style5{
+background-image:url("../../images/styles/style5.png");
+background-color:rgba(255, 252, 0, .5);
+}
+
+.style6{
+background-image:url("../../images/styles/style6.png");
+background-color:rgba(17, 153, 68, .8);
+}
+
+.style7{
+background-image:url("../../images/styles/style7.png");
+background-color:rgba(64, 53, 208, .5);
+}
+
+.style8{
+background-image:url("../../images/styles/style8.png");
+background-color:rgba(251, 0, 0, .6);
+}
+
