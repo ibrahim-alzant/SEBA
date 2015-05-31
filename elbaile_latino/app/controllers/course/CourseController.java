@@ -32,7 +32,6 @@ public class CourseController extends Controller {
 		course.danceStyle = DanceStyle.findByName(courseForm.danceStyle);
 		
 		course.teacher = Teacher.findByUsername(ctx().session().get("userName"));
-		System.out.println("teacher in the session is " + course.teacher.userName);
 		course.status = courseForm.status;
 		course.danceLevel = courseForm.danceLevel;
 		

@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import play.data.validation.Constraints.Required;
@@ -57,7 +59,7 @@ public class Teacher extends  Model{
 	public String nationality;
 	
 	@Required
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	public List<Language> spokenLanguages;
 	
 	@Required
@@ -65,7 +67,7 @@ public class Teacher extends  Model{
 	public Date dateOfBirth;
 	
 	@Required
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	public List<DanceStyle> danceStyles;
 
 	public static Finder<Long, Teacher> find = new Finder<Long, Teacher>(

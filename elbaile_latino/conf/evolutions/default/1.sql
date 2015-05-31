@@ -20,7 +20,6 @@ create table course (
 
 create table dance_style (
   id                        bigint not null,
-  teacher_id                bigint not null,
   dance_style_name          varchar(255),
   constraint uq_dance_style_dance_style_name unique (dance_style_name),
   constraint pk_dance_style primary key (id))
@@ -28,7 +27,6 @@ create table dance_style (
 
 create table language (
   id                        bigint not null,
-  teacher_id                bigint not null,
   language_name             varchar(255),
   constraint uq_language_language_name unique (language_name),
   constraint pk_language primary key (id))
@@ -51,6 +49,18 @@ create table teacher (
   constraint pk_teacher primary key (id))
 ;
 
+
+create table teacher_language (
+  teacher_id                     bigint not null,
+  language_id                    bigint not null,
+  constraint pk_teacher_language primary key (teacher_id, language_id))
+;
+
+create table teacher_dance_style (
+  teacher_id                     bigint not null,
+  dance_style_id                 bigint not null,
+  constraint pk_teacher_dance_style primary key (teacher_id, dance_style_id))
+;
 create sequence course_seq;
 
 create sequence dance_style_seq;
@@ -65,12 +75,16 @@ alter table course add constraint fk_course_language_2 foreign key (language_id)
 create index ix_course_language_2 on course (language_id);
 alter table course add constraint fk_course_danceStyle_3 foreign key (dance_style_id) references dance_style (id) on delete restrict on update restrict;
 create index ix_course_danceStyle_3 on course (dance_style_id);
-alter table dance_style add constraint fk_dance_style_teacher_4 foreign key (teacher_id) references teacher (id) on delete restrict on update restrict;
-create index ix_dance_style_teacher_4 on dance_style (teacher_id);
-alter table language add constraint fk_language_teacher_5 foreign key (teacher_id) references teacher (id) on delete restrict on update restrict;
-create index ix_language_teacher_5 on language (teacher_id);
 
 
+
+alter table teacher_language add constraint fk_teacher_language_teacher_01 foreign key (teacher_id) references teacher (id) on delete restrict on update restrict;
+
+alter table teacher_language add constraint fk_teacher_language_language_02 foreign key (language_id) references language (id) on delete restrict on update restrict;
+
+alter table teacher_dance_style add constraint fk_teacher_dance_style_teache_01 foreign key (teacher_id) references teacher (id) on delete restrict on update restrict;
+
+alter table teacher_dance_style add constraint fk_teacher_dance_style_dance__02 foreign key (dance_style_id) references dance_style (id) on delete restrict on update restrict;
 
 # --- !Downs
 
@@ -83,6 +97,10 @@ drop table if exists dance_style;
 drop table if exists language;
 
 drop table if exists teacher;
+
+drop table if exists teacher_language;
+
+drop table if exists teacher_dance_style;
 
 SET REFERENTIAL_INTEGRITY TRUE;
 
