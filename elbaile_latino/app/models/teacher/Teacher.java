@@ -11,10 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 import models.common.DanceStyle;
+import models.common.Gender;
 import models.common.Language;
 import play.data.format.Formats;
 
@@ -32,6 +34,10 @@ public class Teacher extends  Model{
 	
 	@Required
 	public String firstName;
+	
+	@OneToOne
+	@Required
+	public Gender gender;
 	
 	@Required
 	public String lastName;

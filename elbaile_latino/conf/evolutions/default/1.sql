@@ -25,6 +25,13 @@ create table dance_style (
   constraint pk_dance_style primary key (id))
 ;
 
+create table gender (
+  id                        bigint not null,
+  gender_name               varchar(255),
+  constraint uq_gender_gender_name unique (gender_name),
+  constraint pk_gender primary key (id))
+;
+
 create table language (
   id                        bigint not null,
   language_name             varchar(255),
@@ -35,6 +42,7 @@ create table language (
 create table teacher (
   id                        bigint not null,
   first_name                varchar(255),
+  gender_id                 bigint,
   last_name                 varchar(255),
   user_name                 varchar(255),
   password                  varchar(255),
@@ -64,6 +72,8 @@ create sequence course_seq;
 
 create sequence dance_style_seq;
 
+create sequence gender_seq;
+
 create sequence language_seq;
 
 create sequence teacher_seq;
@@ -74,6 +84,8 @@ alter table course add constraint fk_course_language_2 foreign key (language_id)
 create index ix_course_language_2 on course (language_id);
 alter table course add constraint fk_course_danceStyle_3 foreign key (dance_style_id) references dance_style (id) on delete restrict on update restrict;
 create index ix_course_danceStyle_3 on course (dance_style_id);
+alter table teacher add constraint fk_teacher_gender_4 foreign key (gender_id) references gender (id) on delete restrict on update restrict;
+create index ix_teacher_gender_4 on teacher (gender_id);
 
 
 
@@ -93,6 +105,8 @@ drop table if exists course;
 
 drop table if exists dance_style;
 
+drop table if exists gender;
+
 drop table if exists language;
 
 drop table if exists teacher;
@@ -106,6 +120,8 @@ SET REFERENTIAL_INTEGRITY TRUE;
 drop sequence if exists course_seq;
 
 drop sequence if exists dance_style_seq;
+
+drop sequence if exists gender_seq;
 
 drop sequence if exists language_seq;
 
