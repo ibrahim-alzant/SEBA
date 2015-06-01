@@ -5,10 +5,21 @@
 # Home page
 GET     /                           controllers.Application.index()
 
-GET     /teachers                   controllers.teacher.TeacherController.list()
-GET     /teacher/:username          controllers.teacher.TeacherController.show(username:String)
-GET     /teachers/new/              controllers.teacher.TeacherController.newTeacherForm()
-POST    /teachers/post/ 			controllers.teacher.TeacherController.createTeacher()
+# Teacher pages
+GET     /teacher/list/                   	controllers.teacher.TeacherController.list()
+GET     /teacher/:username          		controllers.teacher.TeacherController.show(username:String)
+GET     /teacher/new/              			controllers.teacher.TeacherController.newTeacherForm()
+POST    /teacher/post/						controllers.teacher.TeacherController.createTeacher()
+GET     /teacher/login/						controllers.teacher.LoginController.loginForm()
+POST    /teacher/doLogin/					controllers.teacher.LoginController.authenticate()
+
+
+# Course pages
+GET     /course/list/                    	controllers.course.CourseController.list()
+GET     /course/title/:title             	controllers.course.CourseController.showByTitle(title:String)
+GET     /course/id/:id/         	        controllers.course.CourseController.showById(id:Long)
+GET     /course/new/	            	    controllers.course.CourseController.newCourseForm()
+POST    /course/post/ 			    		controllers.course.CourseController.createCourse()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

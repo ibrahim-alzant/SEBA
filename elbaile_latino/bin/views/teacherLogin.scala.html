@@ -1,7 +1,7 @@
-@(loginForm : Form[controllers.teacher.LoginController.LoginForm],userName: String)
+@(loginForm : Form[controllers.teacher.LoginController.LoginForm])
 
 @import helper._ 
-@main("Teacher login",userName){
+@main("Teacher login"){
 
 <form class="form-horizontal" action="/teacher/doLogin/" method="post">	
 	<fieldset>

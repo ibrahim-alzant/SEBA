@@ -1,10 +1,13 @@
 package models.common;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import models.common.course.Course;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
@@ -23,6 +26,10 @@ public class DanceStyle extends Model{
 	
 	public static DanceStyle findByName(String danceStyleName){
 		return find.where().eq("danceStyleName", danceStyleName).findUnique();
+	}
+	
+	public static List<DanceStyle> findAll(){
+		return find.all();
 	}
 	
 

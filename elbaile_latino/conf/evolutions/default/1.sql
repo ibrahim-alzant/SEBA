@@ -42,7 +42,6 @@ create table teacher (
   mobile                    varchar(255),
   img_url                   varchar(255),
   professional_experience   varchar(255),
-  nationality               varchar(255),
   date_of_birth             timestamp,
   constraint uq_teacher_user_name unique (user_name),
   constraint uq_teacher_email unique (email),

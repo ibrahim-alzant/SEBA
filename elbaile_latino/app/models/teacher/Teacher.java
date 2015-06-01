@@ -52,11 +52,7 @@ public class Teacher extends  Model{
 
 	public String imgURL;	
 	
-	@Required
 	public String professionalExperience;
-	
-	@Required
-	public String nationality;
 	
 	@Required
 	@ManyToMany(cascade = CascadeType.ALL)

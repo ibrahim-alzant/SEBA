@@ -11,17 +11,17 @@ import models.common.Language;
 import models.common.course.Course;
 import models.teacher.Teacher;
 import play.data.Form;
-import play.data.validation.Constraints;
+import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 
 
 public class TeacherController extends Controller {
-	
+	 
 	public static Result list(){
 		List<Teacher> teachers = Teacher.find.all();
-		return ok(views.html.list.render(teachers));
+		return ok(views.html.list.render(teachers,ctx().session().get("userName")));
 	}
 	
 	
@@ -30,19 +30,45 @@ public class TeacherController extends Controller {
 		if(teacher == null){
 			return notFound();
 		} else {
-			return ok(views.html.teacherProfile.render(teacher,Course.findByTeacher(teacher)));
+			return ok(views.html.teacherProfile.render(teacher,Course.findByTeacher(teacher),ctx().session().get("userName")));
 		}
 	}
 	
 	public static Result newTeacherForm(){
+//		Language l1  = new Language();
+//		l1.languageName = "Arabic";
+//		Language l2  = new Language();
+//		l2.languageName = "English";
+//		Language l3  = new Language();
+//		l3.languageName = "German";
+//		Language l4  = new Language();
+////		l4.languageName = "French";
+////		
+//		DanceStyle s1 = new DanceStyle();
+//		s1.danceStyleName = "Tango";
+////		
+////		DanceStyle s2 = new DanceStyle();
+////		s2.danceStyleName = "Samba";
+//		
+//		l1.save();
+//		l2.save();
+//		l3.save();
+//		l4.save();
+//		
+//		s1.save();
+////		s2.save();
+		if(ctx().session().get("userName") != null){
+			return redirect(controllers.teacher.routes.TeacherController.show(ctx().session().get("userName")));
+		}
 		Form<TeacherController.TeacherForm> teacherForm = form(TeacherController.TeacherForm.class);
-		return ok(views.html.newTeacher.render(teacherForm,null));
+		return ok(views.html.newTeacher.render(teacherForm,DanceStyle.findAll(),ctx().session().get("userName")));
 	}
 	
 	public static Result createTeacher(){
 		Form<TeacherForm> form = form(TeacherForm.class).bindFromRequest();
-		if (form.hasErrors()) {    		
-    		return badRequest(views.html.newTeacher.render(form,"message"));
+		if (form.hasErrors()) {    	
+			System.out.println("form has errors");
+    		return badRequest(views.html.newTeacher.render(form,DanceStyle.findAll(),ctx().session().get("userName")));
         }
 		TeacherController.TeacherForm teacherForm = form.get();
 		
@@ -53,57 +79,68 @@ public class TeacherController extends Controller {
 		teacher.password = teacherForm.password;
 		teacher.email = teacherForm.email;
 		teacher.mobile = teacherForm.mobile;
-		teacher.imgURL = teacherForm.imgURL;
+		teacher.imgURL = "img.jpg";
 		teacher.professionalExperience = teacherForm.professionalExperience;
-		teacher.dateOfBirth = new Date();
-		teacher.nationality = teacherForm.nationality;
+		teacher.dateOfBirth = new Date(); //TODO
 		teacher.spokenLanguages = getLanguages(teacherForm.spokenLanguages);
 		teacher.danceStyles = getDanceStyles(teacherForm.danceStyles);
 		teacher.save();
-		return redirect(controllers.teacher.routes.TeacherController.list());
+		return redirect(controllers.teacher.routes.LoginController.loginForm());
 	}
 	
+//	public static Result upload() {
+//		  File file = request().body().asRaw().asFile();
+//		  return ok("File uploaded");
+//		}
+//	
 	
-	
-	
-	private static List<Language> getLanguages(String languges){
-		List<Language> languages = new ArrayList<Language>();		
-		//TODO get tokens and for loop
-		languages.add(Language.findByName(languges));
-		return languages;
+	private static List<Language> getLanguages(String languages){
+		List<Language> languagesList = new ArrayList<Language>();		
+		String []languagesInputs = languages.split(",");
+		for(String lang : languagesInputs){
+			languagesList.add(Language.findByName(lang));
+		}
+		return languagesList;
 	}
 	
 	private static List<DanceStyle> getDanceStyles(String stylesString){
 		List<DanceStyle> styles = new ArrayList<DanceStyle>();
-		//TODO get tokens and search base on tokens
-		styles.add(DanceStyle.findByName(stylesString));
+		String []danceStylesInputs = stylesString.split(",");
+		for(String style : danceStylesInputs){
+			styles.add(DanceStyle.findByName(style));
+		}
 		return styles;
 	}
 	
 	public static class TeacherForm {
-		@Constraints.Required
+		@Required
         public String firstName;
-        @Constraints.Required
+        @Required
         public String lastName;
-        @Constraints.Required
+        @Required
         public String userName;
-        @Constraints.Required
+        @Required
         public String password;
-        @Constraints.Required        
+        @Required
+        public String passwordConfirm;
+        
+        @Required        
         public String email;
-        @Constraints.Required
+        
+        @Required        
+        public String emailConfirm;
+        
+        @Required
     	public String mobile;
-        @Constraints.Required
+        @Required
     	public String imgURL;
-        @Constraints.Required
-    	public String professionalExperience;
-        @Constraints.Required
-    	public String nationality;
-        @Constraints.Required
+
+        public String professionalExperience;        
+        
     	public String spokenLanguages;
-        @Constraints.Required
+        @Required
     	public String dateOfBirth;
-        @Constraints.Required
+        
     	public String danceStyles;
         
         public String validate (){
@@ -112,7 +149,34 @@ public class TeacherController extends Controller {
             }
         	if (isBlank(lastName)) {
                 return "Last name is required";
-            }        	
+            }       
+        	if (isBlank(userName)) {
+                return "User Name is required";
+            }       
+        	if (isBlank(dateOfBirth)) {
+                return "Date of birth is required";
+            }       
+        	if (isBlank(password)) {
+                return "Password is required";
+            }  
+        	if (isBlank(passwordConfirm)) {
+                return "Password confirmation is required";
+            }  
+        	if (isBlank(email)) {
+                return "Email is required";
+            }       
+        	if (isBlank(emailConfirm)) {
+                return "Email confirmation is required";
+            }       
+        	if (isBlank(mobile)) {
+                return "Mobile is required";
+            }       
+        	if (isBlank(spokenLanguages)) {
+                return "At least one language is required is required";
+            }       
+        	if (isBlank(danceStyles)) {
+                return "At least one dance style is required is required";
+            }       
         	
             return null;
         }
@@ -120,7 +184,7 @@ public class TeacherController extends Controller {
         private boolean isBlank(String input) {
             return input == null || input.isEmpty() || input.trim().isEmpty();
         }
-        
+        //TODO continue with form validation
         
 	}
 	

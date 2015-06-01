@@ -1,8 +1,8 @@
-@(course : models.common.course.Course)
+@(course : models.common.course.Course,userName: String)
 
 @import helper._
 
 <h1>course Profile</h1>
-@main("vvv") {
+@main("vvv",userName) {
 	@course.title;
 }

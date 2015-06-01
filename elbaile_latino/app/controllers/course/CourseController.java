@@ -20,7 +20,7 @@ public class CourseController extends Controller {
 	public static Result createCourse() {
 		Form<CourseForm> form = form(CourseForm.class).bindFromRequest();
 		if (form.hasErrors()) {
-			return badRequest(views.html.course.newCourse.render(form));
+			return badRequest(views.html.course.newCourse.render(form,DanceStyle.findAll(),ctx().session().get("userName")));
 		}
 		CourseController.CourseForm courseForm = form.get();
 		Course course = new Course();
@@ -36,12 +36,12 @@ public class CourseController extends Controller {
 		course.danceLevel = courseForm.danceLevel;
 		
 		course.save();
-		return redirect(controllers.course.routes.CourseController.list());
+		return redirect(controllers.teacher.routes.TeacherController.show(ctx().session().get("userName")));
 	}
 
 	public static Result list() {
 		List<Course> courses = Course.find.all();
-		return ok(views.html.course.list.render(courses));
+		return ok(views.html.course.list.render(courses,ctx().session().get("userName")));
 	}
 
 	public static Result showByTitle(String title) {
@@ -49,7 +49,7 @@ public class CourseController extends Controller {
 		if (course == null) {
 			return notFound();
 		} else {
-			return ok(views.html.course.list.render(course));
+			return ok(views.html.course.list.render(course,ctx().session().get("userName")));
 		}
 	}
 	
@@ -58,13 +58,13 @@ public class CourseController extends Controller {
 		if (course == null) {
 			return notFound();
 		} else {
-			return ok(views.html.course.coursePage.render(course));
+			return ok(views.html.course.coursePage.render(course,ctx().session().get("userName")));
 		}
 	}
 
 	public static Result newCourseForm() {
 		Form<CourseController.CourseForm> courseForm = form(CourseController.CourseForm.class);
-		return ok(views.html.course.newCourse.render(courseForm));
+		return ok(views.html.course.newCourse.render(courseForm,DanceStyle.findAll(),ctx().session().get("userName")));
 	}
 
 	private static List<Language> getLanguages(String languges) {
