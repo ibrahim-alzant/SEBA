@@ -52,7 +52,7 @@ public class CourseController extends Controller {
 			return ok(views.html.course.list.render(course,ctx().session().get("userName")));
 		}
 	}
-	
+
 	public static Result showById(Long id) {
 		Course course = Course.find.byId(id);
 		if (course == null) {
@@ -79,6 +79,16 @@ public class CourseController extends Controller {
 		// TODO get tokens and search base on tokens
 		styles.add(DanceStyle.findByName(stylesString));
 		return styles;
+	}
+
+	public static Result searchByKeyword(){
+		String keyword =  Form.form().bindFromRequest().get("seachBox").toUpperCase();
+		return ok(views.html.course.coursesSearch.render(Course.findByKeyword(keyword),ctx().session().get("userName"), keyword));
+	}
+
+	public static Result searchByCategory(String catName){
+		String keyword =  catName.toUpperCase();
+		return ok(views.html.course.coursesSearch.render(Course.findByKeyword(keyword),ctx().session().get("userName"), keyword));
 	}
 
 	public static class CourseForm {

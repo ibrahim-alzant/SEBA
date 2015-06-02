@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.avaje.ebean.Expr;
 import models.common.DanceStyle;
 import models.common.Language;
 import models.teacher.Teacher;
@@ -96,6 +97,41 @@ public class Course extends Model {
 			e.getStackTrace();
 			
 		}	
+		return result_list;
+	}
+
+	public static List<Course> findByKeyword(String keyword){
+	//Provided filter courses by title
+	//TODO: Filter by dance style, language
+	//Note: Used this methodology because  the find() doesn't support more than 2
+	// OR in the where statement
+
+		Connection connection = DB.getConnection();
+		List<Course> result_list = new ArrayList<>();
+
+		try{
+			ResultSet result = connection.prepareStatement(" Select course.id "
+					+" from course"
+			).executeQuery();
+
+			connection.close();
+
+			while(result.next()){
+
+				Long courseId = result.getLong(1);
+				Course courseFound = Course.find.byId(courseId);
+
+				if(courseFound.title.toUpperCase().contains(keyword) || courseFound.status.toUpperCase().contains(keyword) ||
+				courseFound.teacher.firstName.toUpperCase().contains(keyword) || courseFound.teacher.lastName.toUpperCase().contains(keyword)||
+				courseFound.danceLevel.toUpperCase().contains(keyword) || courseFound.language.languageName.toUpperCase().contains(keyword) ||
+				courseFound.danceStyle.danceStyleName.toUpperCase().contains(keyword) || courseFound.startDate.toString().toUpperCase().contains(keyword))
+					result_list.add(courseFound);
+			}
+
+		}catch(Exception e){
+			e.getStackTrace();
+
+		}
 		return result_list;
 	}
 

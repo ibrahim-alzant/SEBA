@@ -2,26 +2,212 @@
 
 @import helper._
 
-<h1>course Profile</h1>
-@main("vvv",userName) {
-	@course.title;
+@main(course.title + " Details",userName) {
+			<div class="panel  panel-primary">
+			<div class="panel-heading">@course.title</div>
+				<div class="panel-body">
+				<form class="form-horizontal">
+				<fieldset>
+				<div class="form-group" style="margin-top: 20px;">
+					<label for="startDate" class="col-lg-2 control-label">Start date</label>
+					<div class="col-lg-6">
+						<input class="form-control" id="startDate" name="startDate" readonly
+						placeholder="Start date" type="text" value="@course.startDate">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="numberOfClasses" class="col-lg-2 control-label">Number of classes</label>
+					<div class="col-lg-6">
+						<input class="form-control" id="numberOfClasses" name="Number of classes" readonly
+						placeholder="Number of classes" type="text" value="@course.numberOfClasses">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="numberOfParticipants" class="col-lg-2 control-label">Number Of Participants</label>
+					<div class="col-lg-6">
+						<input class="form-control" id="numberOfParticipants" name="numberOfParticipants" readonly
+						placeholder="Number Of Participants" type="text" value="@course.numberOfParticipants">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="maxNumberOfParticipants" class="col-lg-2 control-label">Max Number Of Participants</label>
+					<div class="col-lg-6">
+						<input class="form-control" id="maxNumberOfParticipants" name="maxNumberOfParticipants" readonly
+						placeholder="Max Number Of Participants" type="text" value="@course.maxNumberOfParticipants">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="language" class="col-lg-2 control-label">Language</label>
+					<div class="col-lg-6">
+						<input class="form-control" id="language" name="language" value="@course.language.languageName"
+						placeholder="Language" type="text" readonly>
+					</div>
+				</div>
+					<div class="form-group">
+						<label for="danceStyle" class="col-lg-2 control-label">Dance Style</label>
+						<div class="col-lg-6">
+							<input class="form-control" id="danceStyle" name="danceStyle" value="@course.danceStyle.danceStyleName"
+							placeholder="danceStyle" type="text" readonly>
+						</div>
+					</div>
+				<div class="form-group">
+					<label for="danceLevel" class="col-lg-2 control-label">Dance Level</label>
+					<div class="col-lg-6">
+						<input class="form-control" id="danceLevel" name="danceLevel" readonly
+						placeholder="Dance Level" type="text" value="@course.danceLevel">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="status" class="col-lg-2 control-label">Status of course</label>
+					<div class="col-lg-6">
+						<input class="form-control" id="status" name="status" readonly
+						placeholder="Status of course" type="text" value="@course.status">
+					</div>
+				</div>
+				</fieldset>
+					<button type="button"class="btn btn-primary" data-toggle="modal" data-target="#registrationBox">Register Temporary</button>
+					<button type="button"class="btn btn-primary" data-toggle="modal" data-target="#registerAndPayBox">Register & Pay</button>
+					<div class="modal fade" id="registrationBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title" id="myModalLabel">Register Temporary</h4>
+								</div>
+								<form class="form-horizontal">
+								<div class="modal-body">
+									Please enter your details. A reservation can be made for 1 week and will be confirmed after successful payment.
+											<fieldset>
+												<div class="form-group" style="margin-top: 20px;">
+													<input class="form-control" id="firstName" name="firstName"
+													placeholder="First Name" type="text">
+												</div>
+												<div class="form-group" style="margin-top: 20px;">
+													<input class="form-control" id="lastName" name="lastName"
+													placeholder="Last Name" type="text">
+												</div>
+												<div class="form-group" style="margin-top: 20px;">
+													<input class="form-control" id="email" name="email"
+													placeholder="E-mail" type="text">
+												</div>
+												<div class="form-group" style="margin-top: 20px;">
+													<textarea class="form-control" rows="3" name="questions" id="questions" placeholder="Questions or Remarks?"></textarea>
+												</div>
+											</fieldset>
+									</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" data-dismiss="modal">Go Back</button>
+									<button type="button" class="btn btn-primary" data-dismiss="modal">Register</button>
+								</div>
+								</form>
+							</div>
+						</div>
+					</div>
 
-<div class="modal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title">Modal title</h4>
-			</div>
-			<div class="modal-body">
-				<p>One fine body…</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
+
+					<div class="modal fade" id="registerAndPayBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title" id="myModalLabel">Register & Pay</h4>
+								</div>
+								<form class="form-horizontal">
+									<div class="modal-body">
+										Please enter your details.
+										<fieldset>
+											<div class="form-group" style="margin-top: 20px;">
+
+												<input class="form-control" id="firstName" name="firstName"
+												placeholder="First Name" type="text">
+
+											</div>
+											<div class="form-group" style="margin-top: 20px;">
+
+												<input class="form-control" id="lastName" name="lastName"
+												placeholder="Last Name" type="text">
+
+											</div>
+											<div class="form-group" style="margin-top: 20px;">
+												<input class="form-control" id="email" name="email"
+												placeholder="E-mail" type="text">
+											</div>
+											Please select the payment method you would like to use:
+											<div class="form-group">
+												<div class="col-lg-10">
+													<div class="radio">
+														<label>
+															<input name="optionsRadios" id="optionsRadios1" value="option1" checked="" type="radio">
+															Credit card
+														</label>
+													</div>
+													<div class="radio">
+														<label>
+															<input name="optionsRadios" id="optionsRadios2" value="option2" type="radio">
+															Paypal
+														</label>
+													</div>
+													<div class="radio">
+														<label>
+															<input name="optionsRadios" id="optionsRadios2" value="option2" type="radio">
+															SofortUberweisung.de
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group" style="margin-top: 20px;">
+												<textarea class="form-control" rows="3" name="questions" id="questions" placeholder="Questions or Remarks?"></textarea>
+											</div>
+										</fieldset>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" data-dismiss="modal">Go Back</button>
+										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#payBox">Proceed</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal fade" id="payBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title" id="myModalLabel">Payment</h4>
+								</div>
+								<form class="form-horizontal">
+									<div class="modal-body">
+										Please enter your payment information.
+										<fieldset>
+											<div class="form-group" style="margin-top: 20px;">
+												<input class="form-control" type="text" value="Credit Card">
+											</div>
+											<div class="form-group" style="margin-top: 20px;">
+												<input class="form-control" placeholder="Name of cardholder" type="text">
+											</div>
+											<div class="form-group" style="margin-top: 20px;">
+												<input class="form-control" placeholder="Card Number" type="text">
+												<input class="form-control" placeholder="Expiration Date" type="date">
+											</div>
+											<div class="form-group" style="margin-top: 20px;">
+												<input class="form-control" placeholder="Security Code" type="text">
+												<img src="@routes.Assets.at("images/master_card.png")" width="250">
+											</div>
+											<div class="form-group" style="margin-top: 20px;">
+												<strong>Total amount:</strong><p></p><strong>130 EUR</strong>
+											</div>
+										</fieldset>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+										<button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+			</form>
 			</div>
 		</div>
-	</div>
-</div>
-
 }

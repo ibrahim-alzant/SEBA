@@ -3,23 +3,25 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+GET         /                           controllers.Application.index()
 
 # Teacher pages
-GET     /teacher/list/                   	controllers.teacher.TeacherController.list()
-GET     /teacher/:username          		controllers.teacher.TeacherController.show(username:String)
-GET     /teacher/new/              			controllers.teacher.TeacherController.newTeacherForm()
-POST    /teacher/post/						controllers.teacher.TeacherController.createTeacher()
-GET     /teacher/login/						controllers.teacher.LoginController.loginForm()
-POST    /teacher/doLogin/					controllers.teacher.LoginController.authenticate()
-GET		/teacher/signOut/					controllers.teacher.LoginController.signOut()
+GET         /teacher/list/              controllers.teacher.TeacherController.list()
+GET         /teacher/:username          controllers.teacher.TeacherController.show(username:String)
+GET         /teacher/new/               controllers.teacher.TeacherController.newTeacherForm()
+POST        /teacher/post/              controllers.teacher.TeacherController.createTeacher()
+GET         /teacher/login/             controllers.teacher.LoginController.loginForm()
+POST        /teacher/doLogin/           controllers.teacher.LoginController.authenticate()
+GET         /teacher/signOut/           controllers.teacher.LoginController.signOut()
 
 # Course pages
-GET     /course/list/                    	controllers.course.CourseController.list()
-GET     /course/title/:title             	controllers.course.CourseController.showByTitle(title:String)
-GET     /course/id/:id/         	        controllers.course.CourseController.showById(id:Long)
-GET     /course/new/	            	    controllers.course.CourseController.newCourseForm()
-POST    /course/post/ 			    		controllers.course.CourseController.createCourse()
+GET         /course/list/               controllers.course.CourseController.list()
+GET         /course/title/:title        controllers.course.CourseController.showByTitle(title:String)
+GET         /course/id/:id/             controllers.course.CourseController.showById(id:Long)
+GET         /course/new/                controllers.course.CourseController.newCourseForm()
+POST        /course/post/               controllers.course.CourseController.createCourse()
+POST        /course/search/             controllers.course.CourseController.searchByKeyword()
+GET        /course/category/:catName   controllers.course.CourseController.searchByCategory(catName:String)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET         /assets/*file               controllers.Assets.at(path="/public", file)
