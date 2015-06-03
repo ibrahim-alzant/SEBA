@@ -6,15 +6,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import com.avaje.ebean.Expr;
 import models.common.DanceStyle;
 import models.common.Language;
+import models.common.TimeSlot;
 import models.teacher.Teacher;
 import play.data.validation.Constraints.Required;
 import play.db.DB;
@@ -66,6 +63,19 @@ public class Course extends Model {
 
 	@Required
 	public String status;
+
+	//TODO use the new fields in the create and details view
+	//Add those to the UML
+	@Required
+	public String location;
+
+	//@ManyToMany
+	//public List<TimeSlot> timeSlots;
+
+	@Required
+	public float participantFee;
+
+	//TODO Add students list, image and video
 	
 	public static Finder<Long, Course> find = new Finder<Long, Course>(
 			Long.class, Course.class);

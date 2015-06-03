@@ -25,11 +25,14 @@ public class CourseController extends Controller {
 		CourseController.CourseForm courseForm = form.get();
 		Course course = new Course();
 		course.title = courseForm.title;
+		course.numberOfParticipants = courseForm.numberOfParticipants;
 		course.maxNumberOfParticipants = courseForm.maxNumberOfParticipants;
 		course.numberOfClasses = courseForm.numberOfClasses;
 		course.language = Language.findByName(courseForm.language);
 		course.startDate = new Date(); //TODO get proper date
 		course.danceStyle = DanceStyle.findByName(courseForm.danceStyle);
+		course.participantFee = courseForm.participantFee;
+		course.location = courseForm.location;
 		
 		course.teacher = Teacher.findByUsername(ctx().session().get("userName"));
 		course.status = courseForm.status;
@@ -91,6 +94,10 @@ public class CourseController extends Controller {
 		return ok(views.html.course.coursesSearch.render(Course.findByKeyword(keyword),ctx().session().get("userName"), keyword));
 	}
 
+	public static Result showPaymentForm(){
+		return ok(views.html.course.coursePayment.render(ctx().session().get("userName")));
+	}
+
 	public static class CourseForm {
 
 		@Required
@@ -119,6 +126,12 @@ public class CourseController extends Controller {
 
 		@Required
 		public String status;
+
+		@Required
+		public String location;
+
+		@Required
+		public float participantFee;
 
 		public String validate() {
 			if (isBlank(title)) {
