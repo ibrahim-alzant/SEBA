@@ -26,3 +26,7 @@ POST        /course/payment/                 controllers.course.CourseController
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                    controllers.Assets.at(path="/public", file)
+
+# Student pages
+GET         /student/new/                    controllers.student.StudentController.newStudentForm()
+GET         /student/:username               controllers.student.StudentController.show(username:String)

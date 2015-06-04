@@ -14,7 +14,7 @@
 	-moz-transform: rotateY(0deg);
 	-ms-transform: rotateY(0deg);
 	transform: rotateY(0deg);
-	background-color:rgba(44, 62, 80, 1);
+	background-color:#18bc9c;
 }
 
 .flip-container:hover .front {
@@ -80,43 +80,43 @@ padding-top:80px;
 	
 }
 
-.style1{
-background-image:url("../images/styles/style1.png");
+.style8{
+background-image:url("../images/styles2/salsa.jpg");
 background-color:rgba(60, 157, 167, .8);
 }
 
 .style2{
-background-image:url("../images/styles/style2.png");
+background-image:url("../images/styles2/samba.jpg");
 background-color:rgba(55, 57, 70, .8);
 }
 
 .style3{
-background-image:url("../images/styles/style3.png");
+background-image:url("../images/styles2/tango.jpg");
 background-color:rgba(115, 112, 130, .8);
 }
 
-.style4{
-background-image:url("../images/styles/style4.png");
+.style7{
+background-image:url("../images/styles2/rumba.jpg");
 background-color:rgba(202, 179, 61, .8);
 }
 
-.style5{
-background-image:url("../images/styles/style5.png");
+.style4{
+background-image:url("../images/styles2/danza.jpg");
 background-color:rgba(93, 151, 120, .8);
 }
 
 .style6{
-background-image:url("../images/styles/style6.png");
+background-image:url("../images/styles2/jive.jpg");
 background-color:rgba(34, 95, 126, .8);
 }
 
-.style7{
-background-image:url("../images/styles/style7.png");
+.style5{
+background-image:url("../images/styles2/raggaeton.jpg");
 background-color: rgba(213, 81, 38, 0.8);
 }
 
-.style8{
-background-image:url("../images/styles/style8.png");
+.style1{
+background-image:url("../images/styles2/bachata.jpg");
 background-color:rgba(105, 101, 56, .8);
 }
 
@@ -124,4 +124,9 @@ body{
 	background-position:top left;
 	background-attachment:fixed;
 	background-size:cover;
+}
+.green_text{
+	color: #18bc9c !important;
+	font-weight: bolder;
+	padding-top: 20px;
 }
