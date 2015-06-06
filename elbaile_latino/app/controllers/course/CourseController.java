@@ -98,6 +98,12 @@ public class CourseController extends Controller {
 		return ok(views.html.course.coursePayment.render(ctx().session().get("userName")));
 	}
 
+	public static Result showCourseSettings(){
+		//TODO: Send the course ID as parameter (will do it later)
+		Course tmpCourse = new Course();
+		return ok(views.html.course.courseSettings.render(tmpCourse,ctx().session().get("userName")));
+	}
+
 	public static class CourseForm {
 
 		@Required
