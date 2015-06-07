@@ -51,10 +51,15 @@
 				</li>
 			    <li><a href="#">About</a></li>
 				<li> <a href="#">Contact</a></li>
-				@if(userName != null){
-					<li><a href="/teacher/@userName"><strong>Profile</Strong>[@userName]</a></li>
-					<li><a href="/teacher/signOut/"><strong>Sign Out</Strong></a></li>
-				}else{
+                  @if(userName != null) {
+                      @if(models.student.Student.findByUsername(userName) != null) {
+                          <li><a href="/student/@userName"><strong>Profile</Strong>[@userName]</a></li>
+                          <li><a href="/student/signOut/"><strong>Sign Out</Strong></a></li>
+                      } else {
+                          <li><a href="/teacher/@userName"><strong>Profile</Strong>[@userName]</a></li>
+                          <li><a href="/teacher/signOut/"><strong>Sign Out</Strong></a></li>
+                      }
+                  } else {
 					<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sign up<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">

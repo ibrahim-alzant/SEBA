@@ -31,8 +31,7 @@ public class StudentController extends Controller {
 		if(student == null){
 			return notFound();
 		} else {
-            return notFound();
-//			return ok(views.html.studentProfile.render(student,Course.findByTeacher(student),ctx().session().get("userName")));
+			return ok(views.html.studentProfile.render(student,ctx().session().get("userName"), new StudentProfileController()));
 		}
 	}
 
