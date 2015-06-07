@@ -65,6 +65,8 @@
 							<th>Level</th>
 							<th>Language</th>
 							<th>Status</th>
+							<th></th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -82,6 +84,8 @@
 							} 
 							@course.status
 							</span></td>
+							<td><a href="@controllers.course.routes.CourseController.editById(course.id)" class="btn btn-primary btn-sm">Details</a></td>
+							<td><a href="@controllers.course.routes.CourseController.showCourseSettings()" class="btn btn-primary btn-sm">Settings</a></td>
 						</tr>
 						}
 						

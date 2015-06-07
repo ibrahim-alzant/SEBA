@@ -1,0 +1,54 @@
+@(course : models.common.course.Course,userName: String)
+
+@import helper._
+@main("Course Settings",userName) {
+    <div class="panel  panel-primary">
+        <div class="panel-heading">Course settings</div>
+        <div class="panel-body">
+
+            <h4>Do you want to cancel a course or send a message?</h4>
+
+            <div class="form-group">
+               <!-- <label class="col-lg-2 control-label">Decide!</label> -->
+                <div class="col-lg-10">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                            Cancel a class
+                        </label>
+
+
+                    <div class="form-group" >
+                        <p class="text-muted">To cancel a class, please enter the concerned date.</p>
+                        <input type="date" class="form-control">
+                        <textarea class="form-control" rows="3" id="cancelReaseom" placeholder="Enter a reason for the cancellation and additional information."></textarea>
+                    </div>
+                    </div>
+
+
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                            Send a message to participants
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="textArea" class="col-lg-2 control-label"><Message></Message></label>
+                    <div class="col-lg-10">
+                        <textarea class="form-control" rows="3" id="participantsMessage" placeholder="Enter your message"></textarea>
+                        <span class="help-block">Your message will be sent to all registered participants of the course.</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="reset" class="btn btn-default">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+}

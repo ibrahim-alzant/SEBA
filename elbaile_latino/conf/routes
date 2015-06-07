@@ -23,6 +23,8 @@ POST        /course/post/                    controllers.course.CourseController
 POST        /course/search/                  controllers.course.CourseController.searchByKeyword()
 GET         /course/category/:catName        controllers.course.CourseController.searchByCategory(catName:String)
 POST        /course/payment/                 controllers.course.CourseController.showPaymentForm()
+GET         /course/edit/id/:id/             controllers.course.CourseController.editById(id:Long)
+GET         /course/settings/                controllers.course.CourseController.showCourseSettings()
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                    controllers.Assets.at(path="/public", file)

@@ -1,4 +1,4 @@
-@(course : models.common.course.Course,userName: String)
+@(course : models.common.course.Course,userName: String, isEditable : Boolean)
 
 @import helper._
 
@@ -6,47 +6,76 @@
 			<div class="panel  panel-primary">
 			<div class="panel-heading">@course.title</div>
 				<div class="panel-body">
-				<form class="form-horizontal">
+				@if(isEditable == true){
+				<form class="form-horizontal" action="/course/post/" method="post">}else{
+				<form class="form-horizontal">}
 				<fieldset>
 				<div class="form-group" style="margin-top: 20px;">
 					<label for="startDate" class="col-lg-2 control-label">Start date</label>
 					<div class="col-lg-6">
-						<input class="form-control" id="startDate" name="startDate" readonly
+						<input class="form-control" id="startDate" name="startDate" @if(!isEditable) {readonly}
 						placeholder="Start date" type="text" value="@course.startDate">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="location" class="col-lg-2 control-label">Location</label>
 					<div class="col-lg-6">
-						<input class="form-control" id="location" name="Location" readonly
+						<input class="form-control" id="location" name="Location" @if(!isEditable) {readonly}
 						placeholder="Location" type="text" value="@course.location">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="map" class="col-lg-2 control-label"></label>
+					<div class="col-lg-6">
+						<script src="http://maps.googleapis.com/maps/api/js"></script>
+						<script>
+						function initialize() {
+						  var myLatlng = new google.maps.LatLng(48.2628618,11.6681671);
+							var mapOptions = {
+							zoom: 16,
+							center: myLatlng,
+							mapTypeId:google.maps.MapTypeId.ROADMAP
+							}
+
+
+						  var map=new google.maps.Map(document.getElementById("googleMap"),mapOptions);
+
+						   var marker = new google.maps.Marker({
+							position: myLatlng,
+							map: map,
+							title: 'TUM Dancing Course'
+							});
+						}
+						google.maps.event.addDomListener(window, 'load', initialize);
+						</script>
+						<div id="googleMap" style="width:530px;height:300px;"></div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="numberOfClasses" class="col-lg-2 control-label">Number of classes</label>
 					<div class="col-lg-6">
-						<input class="form-control" id="numberOfClasses" name="Number of classes" readonly
+						<input class="form-control" id="numberOfClasses" name="Number of classes" @if(!isEditable) {readonly}
 						placeholder="Number of classes" type="text" value="@course.numberOfClasses">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="participantFee" class="col-lg-2 control-label">Participant Fee</label>
 					<div class="col-lg-6">
-						<input class="form-control" id="participantFee" name="Participant Fee" readonly
+						<input class="form-control" id="participantFee" name="Participant Fee" @if(!isEditable) {readonly}
 						placeholder="Participant Fee" type="text" value="@course.numberOfClasses">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="numberOfParticipants" class="col-lg-2 control-label">Number Of Participants</label>
 					<div class="col-lg-6">
-						<input class="form-control" id="numberOfParticipants" name="numberOfParticipants" readonly
+						<input class="form-control" id="numberOfParticipants" name="numberOfParticipants" @if(!isEditable) {readonly}
 						placeholder="Number Of Participants" type="text" value="@course.numberOfParticipants">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="maxNumberOfParticipants" class="col-lg-2 control-label">Max Number Of Participants</label>
 					<div class="col-lg-6">
-						<input class="form-control" id="maxNumberOfParticipants" name="maxNumberOfParticipants" readonly
+						<input class="form-control" id="maxNumberOfParticipants" name="maxNumberOfParticipants" @if(!isEditable) {readonly}
 						placeholder="Max Number Of Participants" type="text" value="@course.maxNumberOfParticipants">
 					</div>
 				</div>
@@ -54,40 +83,55 @@
 					<label for="language" class="col-lg-2 control-label">Language</label>
 					<div class="col-lg-6">
 						<input class="form-control" id="language" name="language" value="@course.language.languageName"
-						placeholder="Language" type="text" readonly>
+						placeholder="Language" type="text" @if(!isEditable) {readonly}>
 					</div>
 				</div>
 					<div class="form-group">
 						<label for="danceStyle" class="col-lg-2 control-label">Dance Style</label>
 						<div class="col-lg-6">
 							<input class="form-control" id="danceStyle" name="danceStyle" value="@course.danceStyle.danceStyleName"
-							placeholder="danceStyle" type="text" readonly>
+							placeholder="danceStyle" type="text" @if(!isEditable) {readonly}>
 						</div>
 					</div>
 				<div class="form-group">
 					<label for="danceLevel" class="col-lg-2 control-label">Dance Level</label>
 					<div class="col-lg-6">
-						<input class="form-control" id="danceLevel" name="danceLevel" readonly
+						<input class="form-control" id="danceLevel" name="danceLevel" @if(!isEditable) {readonly}
 						placeholder="Dance Level" type="text" value="@course.danceLevel">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="status" class="col-lg-2 control-label">Status of course</label>
 					<div class="col-lg-6">
-						<input class="form-control" id="status" name="status" readonly
+						<input class="form-control" id="status" name="status" @if(!isEditable) {readonly}
 						placeholder="Status of course" type="text" value="@course.status">
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="status" class="col-lg-2 control-label">Motivation</label>
-					<video width="400" height="300" controls>
+					<label for="picture" class="col-lg-2 control-label">Picture</label>
+					<div class="col-lg-6">
+						<img src="@routes.Assets.at("images/class.jpg")" width="530">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="status" class="col-lg-2 control-label">Video</label>
+				<div class="col-lg-6">
+					<video width="530" controls>
 						<source src="@routes.Assets.at("videos/video.mp4")" type="video/mp4">
 					</video>
 				</div>
+				</div>
 
 				</fieldset>
-					<button type="button"class="btn btn-primary" data-toggle="modal" data-target="#registrationBox">Register Temporary</button>
-					<button type="button"class="btn btn-primary" data-toggle="modal" data-target="#registerAndPayBox">Register & Pay</button>
+					<div class="col-lg-2"> </div>
+					@if(isEditable == true){
+						<button type="submit" class="btn btn-primary">Submit</button>
+						<a class="btn btn-primary" href="/teacher/@userName">Cancel</a>
+					}else{
+						<button type="button"class="btn btn-primary" data-toggle="modal" data-target="#registrationBox">Register Temporary</button>
+						<button type="button"class="btn btn-primary" data-toggle="modal" data-target="#registerAndPayBox">Register & Pay</button>
+					}
+				</form>
 					<div class="modal fade" id="registrationBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
@@ -189,7 +233,6 @@
 							</div>
 						</div>
 					</div>
-			</form>
 			</div>
 		</div>
 }

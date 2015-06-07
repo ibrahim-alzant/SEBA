@@ -61,7 +61,16 @@ public class CourseController extends Controller {
 		if (course == null) {
 			return notFound();
 		} else {
-			return ok(views.html.course.coursePage.render(course,ctx().session().get("userName")));
+			return ok(views.html.course.coursePage.render(course,ctx().session().get("userName"),false));
+		}
+	}
+
+	public static Result editById(Long id) {
+		Course course = Course.find.byId(id);
+		if (course == null) {
+			return notFound();
+		} else {
+			return ok(views.html.course.coursePage.render(course,ctx().session().get("userName"),true));
 		}
 	}
 
@@ -96,6 +105,12 @@ public class CourseController extends Controller {
 
 	public static Result showPaymentForm(){
 		return ok(views.html.course.coursePayment.render(ctx().session().get("userName")));
+	}
+
+	public static Result showCourseSettings(){
+		//TODO: Send the course ID as parameter (will do it later)
+		Course tmpCourse = new Course();
+		return ok(views.html.course.courseSettings.render(tmpCourse,ctx().session().get("userName")));
 	}
 
 	public static class CourseForm {
