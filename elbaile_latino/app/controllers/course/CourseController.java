@@ -61,7 +61,16 @@ public class CourseController extends Controller {
 		if (course == null) {
 			return notFound();
 		} else {
-			return ok(views.html.course.coursePage.render(course,ctx().session().get("userName")));
+			return ok(views.html.course.coursePage.render(course,ctx().session().get("userName"),false));
+		}
+	}
+
+	public static Result editById(Long id) {
+		Course course = Course.find.byId(id);
+		if (course == null) {
+			return notFound();
+		} else {
+			return ok(views.html.course.coursePage.render(course,ctx().session().get("userName"),true));
 		}
 	}
 
