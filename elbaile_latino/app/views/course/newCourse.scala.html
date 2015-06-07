@@ -2,7 +2,9 @@
 
 @import helper._
 @main("New course",userName) {
-
+<div class="panel  panel-primary">
+	<div class="panel-heading">Offer new course</div>
+	<div class="panel-body">
 <form class="form-horizontal" action="/course/post/" method="post">
 	@if(courseForm.hasGlobalErrors){
 	<div class="alert alert-error">
@@ -11,7 +13,6 @@
 	</div>
 	}
 	<fieldset>
-		<legend>Offer new course</legend>
 		<div class="form-group">
 			<label for="title" class="col-lg-2 control-label">Title of course</label>
 			<div class="col-lg-6">
@@ -96,6 +97,7 @@
         <button type="submit" class="btn btn-primary">Submit</button>
         <a class="btn btn-primary" href="/teacher/@userName">Cancel</a></button>
 </form>
-
+</div>
+</div>
 	
 }
