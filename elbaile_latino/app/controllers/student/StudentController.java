@@ -96,7 +96,7 @@ public class StudentController extends Controller {
         student.password = studentForm.password;
         student.email = studentForm.email;
         student.mobile = studentForm.mobile;
-        student.imgURL = "img.jpg";
+        student.imgURL = studentForm.imgURL;
         student.additionalInformation = studentForm.additionalInformation;
         student.height = Integer.parseInt(studentForm.height);
         student.dateOfBirth = new Date(); //TODO

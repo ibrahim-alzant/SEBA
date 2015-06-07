@@ -23,9 +23,9 @@ public class LoginController extends Controller {
         if (loginForm.hasErrors()) {
             return badRequest(views.html.studentLogin.render(loginForm,ctx().session().get("userName")));
         } else {
-            session("userName", loginForm.get().userName);            
+            session("userName", loginForm.get().userName);
             Student student = Student.findByUsername(loginForm.get().userName);
-            return ok(views.html.studentProfile.render(student, ctx().session().get("userName")));
+            return ok(views.html.studentProfile.render(student, ctx().session().get("userName"), new StudentProfileController()));
         }
     }
     

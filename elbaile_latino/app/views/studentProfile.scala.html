@@ -1,75 +1,79 @@
-@(studentProfile: models.student.Student, userName: String)
-@import helper._
-@main("Student Profile", userName) {
+@(studentProfile: models.student.Student, userName: String, studentProfileController: controllers.student.StudentProfileController)
+    @import helper._
+    @main("Student Profile", userName) {
 
-    <div class="panel panel-success">
-        <div class="panel-heading">@studentProfile.firstName @studentProfile.lastName</div>
-        <div class="panel-body">
-            <div class="list-group">
-                <div class="panel panel-info">
-                    <div class="panel-heading">Personal Information</div>
-                    <div class="panel-body">
-                        <div class="col-lg-3">
-                            <img src="@routes.Assets.at("images/profile/defualt_male.png")" height="200" width="200">
-                        </div>
-                        <div class="well col-lg-5" style="height : 200 px">
-                            <div>@studentProfile.firstName @studentProfile.lastName </div>
-                            <div>@studentProfile.email</div>
-                            <div>@studentProfile.mobile</div>
-                            @*<div>image exists?: @studentProfileController.testImage("http://www.lawyersweekly.com.au/images/LW_Media_Library/594partner-profile-pic-An.jpg")</div>*@
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-info">
-                    <div class="panel-heading">Details</div>
-                    <div class="panel-body">
+        <div class="panel panel-success">
+            <div class="panel-heading">@studentProfile.firstName @studentProfile.lastName</div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Personal Information</div>
+                        <div class="panel-body">
+                            <div class="col-lg-3">
+                                @if(studentProfileController.testImage(studentProfile.imgURL)){
+                                    <img src="@studentProfile.imgURL" height="200" width="200">
+                                }else{
+                                    <img src="@routes.Assets.at("images/profile/defualt_male.png")" height="200" width="200">
+                                }
 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Additional information</h3>
                             </div>
-                            <div class="panel-body">
-                            @studentProfile.additionalInformation</div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Height</h3>
-                            </div>
-                            <div class="panel-body">
-                            @studentProfile.height</div>
-                        </div>
-
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Dance Styles</h3>
-                            </div>
-                            <div class="panel-body">
-                            @for(danceStyle <- studentProfile.danceStyles) {
-                                <span
-                                class="label label-info">@danceStyle.danceStyleName</span>
-                            }
-                            </div>
-                        </div>
-
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Spoken Languages</h3>
-                            </div>
-                            <div class="panel-body">
-                            @for(language <- studentProfile.spokenLanguages) {
-                                <span
-                                class="label label-info">@language.languageName</span>
-                            }
+                            <div class="well col-lg-5" style="height : 200 px">
+                                <div>@studentProfile.firstName @studentProfile.lastName </div>
+                                <div>@studentProfile.email</div>
+                                <div>@studentProfile.mobile</div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Details</div>
+                        <div class="panel-body">
 
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Additional information</h3>
+                                </div>
+                                <div class="panel-body">
+                                @studentProfile.additionalInformation</div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Height</h3>
+                                </div>
+                                <div class="panel-body">
+                                @studentProfile.height</div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Dance Styles</h3>
+                                </div>
+                                <div class="panel-body">
+                                @for(danceStyle <- studentProfile.danceStyles) {
+                                    <span
+                                    class="label label-info">@danceStyle.danceStyleName</span>
+                                }
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Spoken Languages</h3>
+                                </div>
+                                <div class="panel-body">
+                                @for(language <- studentProfile.spokenLanguages) {
+                                    <span
+                                    class="label label-info">@language.languageName</span>
+                                }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
 
-}
+    }
 
 
 
