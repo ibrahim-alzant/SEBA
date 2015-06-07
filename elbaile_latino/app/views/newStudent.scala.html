@@ -1,12 +1,12 @@
-@(teacherForm: Form[controllers.student.StudentController.StudentForm],
+@(studentForm: Form[controllers.student.StudentController.StudentForm],
         danceStyles: List[models.common.DanceStyle], genders: List[models.common.Gender], userName: String)
 
 @import helper._
 
-@main("Register as a teacher", userName) {
+@main("Register as a student", userName) {
     <div class="panel panel-success">
         <div class="panel-heading">Register as a student</div>
-        <form class="form-horizontal" action="/teacher/post/" method="post">
+        <form class="form-horizontal" action="/student/post/" method="post">
 
             <fieldset>
                 <br>
@@ -92,10 +92,16 @@
 
                 <div class="form-group">
                     <label for="professionalExperience" class="col-lg-2 control-label">
-                        Professional Experience</label>
+                        Additional Information</label>
                     <div class="col-lg-6">
-                        <textarea class="form-control" rows="3" name="professionalExperience" id="professionalExperience"></textarea>
-                        <span class="help-block">Please write briefly about your previous experience.</span>
+                        <textarea class="form-control" rows="3" name="additionalInformation" id="additionalInformation"></textarea>
+                        <span class="help-block">Please write any information you want to mention.</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="mobile" class="col-lg-2 control-label">Height</label>
+                    <div class="col-lg-6">
+                        <input class="form-control" id="height" name="height" placeholder="Height" type="text">
                     </div>
                 </div>
 

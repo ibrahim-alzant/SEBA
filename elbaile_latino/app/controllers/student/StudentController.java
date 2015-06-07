@@ -3,12 +3,13 @@ package controllers.student;
 import models.common.DanceStyle;
 import models.common.Gender;
 import models.common.Language;
-import models.common.course.Course;
 import models.student.Student;
 import play.data.Form;
 import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.newStudent;
+import views.html.newTeacher;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,10 +20,10 @@ import static play.data.Form.form;
 
 public class StudentController extends Controller {
 
-    //	public static Result list(){
-//		List<Student> students = Student.find.all();
-////		return ok(views.html.list.render(students,ctx().session().get("userName")));
-//	}
+    	public static Result list(){
+		List<Student> students = Student.find.all();
+		return ok(views.html.student_list.render(students,ctx().session().get("userName")));
+	}
 //
 //
 	public static Result show(String username){
@@ -36,6 +37,42 @@ public class StudentController extends Controller {
 	}
 
     public static Result newStudentForm() {
+        Language l1  = new Language();
+        l1.languageName = "Arabic";
+        Language l2  = new Language();
+        l2.languageName = "English";
+        Language l3  = new Language();
+        l3.languageName = "German";
+        Language l4  = new Language();
+        l4.languageName = "French";
+
+        DanceStyle s1 = new DanceStyle();
+        s1.danceStyleName = "Salsa";
+
+        DanceStyle s2 = new DanceStyle();
+        s2.danceStyleName = "Samba";
+
+        DanceStyle s3 = new DanceStyle();
+        s3.danceStyleName = "Tango";
+
+        Gender g1 = new Gender();
+        g1.genderName = "Male";
+
+        Gender g2 = new Gender();
+        g2.genderName = "Female";
+
+//		l1.save();
+//		l2.save();
+//		l3.save();
+//		l4.save();
+//
+//		s1.save();
+//		s2.save();
+//		s3.save();
+//
+//		g1.save();
+//		g2.save();
+
         if (ctx().session().get("userName") != null) {
             return redirect(controllers.student.routes.StudentController.show(ctx().session().get("userName")));
         }
@@ -43,7 +80,48 @@ public class StudentController extends Controller {
         return ok(views.html.newStudent.render(studentForm, DanceStyle.findAll(), Gender.find.all(), ctx().session().get("userName")));
     }
 
+    public static Result createStudent(){
+        Form<StudentForm> form = form(StudentForm.class).bindFromRequest();
+        if (form.hasErrors()) {
+            System.out.println("form has errors");
+            return badRequest(newStudent.render(form, DanceStyle.findAll(), Gender.find.all(), ctx().session().get("userName")));
+        }
+        StudentForm studentForm = form.get();
 
+        Student student = new Student();
+        student.firstName = studentForm.firstName;
+        student.lastName = studentForm.lastName;
+        student.userName = studentForm.userName;
+        student.gender = Gender.findByName(studentForm.gender);
+        student.password = studentForm.password;
+        student.email = studentForm.email;
+        student.mobile = studentForm.mobile;
+        student.imgURL = "img.jpg";
+        student.additionalInformation = studentForm.additionalInformation;
+        student.height = Integer.parseInt(studentForm.height);
+        student.dateOfBirth = new Date(); //TODO
+        student.spokenLanguages = getLanguages(studentForm.spokenLanguages);
+        student.danceStyles = getDanceStyles(studentForm.danceStyles);
+        student.save();
+        return redirect(controllers.student.routes.LoginController.loginForm());
+    }
+    private static List<Language> getLanguages(String languages){
+        List<Language> languagesList = new ArrayList<Language>();
+        String []languagesInputs = languages.split(",");
+        for(String lang : languagesInputs){
+            languagesList.add(Language.findByName(lang));
+        }
+        return languagesList;
+    }
+
+    private static List<DanceStyle> getDanceStyles(String stylesString){
+        List<DanceStyle> styles = new ArrayList<DanceStyle>();
+        String []danceStylesInputs = stylesString.split(",");
+        for(String style : danceStylesInputs){
+            styles.add(DanceStyle.findByName(style));
+        }
+        return styles;
+    }
     public static class StudentForm {
         @Required
         public String firstName;
@@ -69,7 +147,9 @@ public class StudentController extends Controller {
 
         public String imgURL;
 
-        public String professionalExperience;
+        public String additionalInformation;
+
+        public String height;
 
         @Required
         public String spokenLanguages;
@@ -114,7 +194,6 @@ public class StudentController extends Controller {
         private boolean isBlank(String input) {
             return input == null || input.isEmpty() || input.trim().isEmpty();
         }
-        //TODO continue with form validation
 
     }
 

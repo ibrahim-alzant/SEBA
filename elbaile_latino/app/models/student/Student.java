@@ -14,7 +14,8 @@ import java.util.List;
 /**
  * Created by Admin on 03.06.2015.
  */
-public class Student {
+@Entity
+public class Student  extends  Model{
     private static final long serialVersionUID = -6738879617416559361L;
 
     @Id

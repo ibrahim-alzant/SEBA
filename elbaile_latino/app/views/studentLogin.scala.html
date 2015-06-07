@@ -1,0 +1,48 @@
+@(loginForm: Form[controllers.student.LoginController.LoginForm], userName: String)
+
+@import helper._
+@main("Student login", userName) {
+    <div class="panel panel-success">
+        <div class="panel-heading">Student Login</div>
+        <form class="form-horizontal" action="/student/doLogin/" method="post">
+            <br>
+            <fieldset>
+                @if(loginForm.hasGlobalErrors) {
+                    <div class="alert alert-dismissible alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>@loginForm.globalError.message </strong>
+                    </div>
+                }
+                <div class="form-group">
+                    <label for="userName" class="col-lg-2 control-label">User
+                        name</label>
+                    <div class="col-lg-4">
+                        <input class="form-control" id="userName" name="userName"
+                        placeholder="Username" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-lg-2 control-label">Password</label>
+                    <div class="col-lg-4">
+                        <input class="form-control" id="password" name="password"
+                        placeholder="Password" type="password">
+                        <div class="checkbox">
+                            <label> <input type="checkbox"> Keep me logged in
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button type="reset" class="btn btn-default">Cancel</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+}
+
+
+
+

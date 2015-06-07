@@ -30,3 +30,7 @@ GET         /assets/*file                    controllers.Assets.at(path="/public
 # Student pages
 GET         /student/new/                    controllers.student.StudentController.newStudentForm()
 GET         /student/:username               controllers.student.StudentController.show(username:String)
+GET         /student/list/                   controllers.student.StudentController.list()
+POST        /student/post/                   controllers.student.StudentController.createStudent()
+GET         /student/login/                  controllers.student.LoginController.loginForm()
+POST        /student/doLogin/                controllers.student.LoginController.authenticate()
