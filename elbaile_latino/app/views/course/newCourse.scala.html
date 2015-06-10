@@ -2,7 +2,7 @@
 
 @import helper._
 @main("New course",userName) {
-<div class="panel  panel-primary">
+<div class="panel  panel-success">
 	<div class="panel-heading">Offer new course</div>
 	<div class="panel-body">
 <form class="form-horizontal" action="/course/post/" method="post">
@@ -17,21 +17,21 @@
 			<label for="title" class="col-lg-2 control-label">Title of course</label>
 			<div class="col-lg-6">
 				<input class="form-control" id="title" name="title"
-					placeholder="Title of course" type="text">
+					placeholder="Title of course" type="text" value="Salsa Course 1">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="startDate" class="col-lg-2 control-label">Start date</label>
 			<div class="col-lg-6">
 				<input class="form-control" id="startDate" name="startDate"
-					placeholder="Start date" type="text">
+					placeholder="Start date" type="text" value="30.06.2015">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="location" class="col-lg-2 control-label">Location</label>
 			<div class="col-lg-6">
 				<input class="form-control" id="location" name="Location"
-				placeholder="Location" type="text">
+				placeholder="Location" type="text" value="TUM, Garching, Forschungszentrum">
 			</div>
 		</div>
 		<div class="form-group">
@@ -65,35 +65,35 @@
 			<label for="numberOfClasses" class="col-lg-2 control-label">Number of classes</label>
 			<div class="col-lg-6">
 				<input class="form-control" id="numberOfClasses" name="Number of classes"
-					placeholder="Number of classes" type="text">
+					placeholder="Number of classes" type="text" value="15">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="participantFee" class="col-lg-2 control-label">Participant Fee</label>
 			<div class="col-lg-6">
 				<input class="form-control" id="participantFee" name="Participant Fee"
-				placeholder="Participant Fee" type="text">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="numberOfParticipants" class="col-lg-2 control-label">Number Of Participants</label>
-			<div class="col-lg-6">
-				<input class="form-control" id="numberOfParticipants" name="numberOfParticipants"
-					placeholder="Number Of Participants" type="text">
+				placeholder="Participant Fee" type="text" value="150">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="maxNumberOfParticipants" class="col-lg-2 control-label">Max Number Of Participants</label>
 			<div class="col-lg-6">
 				<input class="form-control" id="maxNumberOfParticipants" name="maxNumberOfParticipants"
-					placeholder="Max Number Of Participants" type="text">
+					placeholder="Max Number Of Participants" type="text" value="20">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="numberOfParticipants" class="col-lg-2 control-label">Number Of Participants</label>
+			<div class="col-lg-6">
+				<input class="form-control" id="numberOfParticipants" name="numberOfParticipants"
+				placeholder="Number Of Participants" type="text" value="0" readonly>
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="language" class="col-lg-2 control-label">Language</label>
 			<div class="col-lg-6">
 				<input class="form-control" id="language" name="language"
-					placeholder="Language" type="text">
+					placeholder="Language" type="text" value="English">
 			</div>
 		</div>
 		<div class="form-group">
@@ -110,14 +110,14 @@
 			<label for="danceLevel" class="col-lg-2 control-label">Dance Level</label>
 			<div class="col-lg-6">
 				<input class="form-control" id="danceLevel" name="danceLevel"
-					placeholder="Dance Level" type="text">
+					placeholder="Dance Level" type="text" value="Basic">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="status" class="col-lg-2 control-label">Status of course</label>
 			<div class="col-lg-6">
 				<input class="form-control" id="status" name="status"
-					placeholder="Status of course" type="text">
+					placeholder="Status of course" type="text" value="open">
 			</div>
 		</div>
 		<div class="form-group">
