@@ -76,6 +76,9 @@ public class Course extends Model {
 	public float participantFee;
 
 	//TODO Add students list, image and video
+
+	public String pictureURL;
+	public String videoURL;
 	
 	public static Finder<Long, Course> find = new Finder<Long, Course>(
 			Long.class, Course.class);

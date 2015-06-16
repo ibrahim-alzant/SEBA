@@ -37,6 +37,8 @@ public class CourseController extends Controller {
 		course.teacher = Teacher.findByUsername(ctx().session().get("userName"));
 		course.status = courseForm.status;
 		course.danceLevel = courseForm.danceLevel;
+		course.pictureURL = courseForm.pictureURL;
+		course.videoURL = courseForm.videoURL;
 		
 		course.save();
 		return redirect(controllers.teacher.routes.TeacherController.show(ctx().session().get("userName")));
@@ -147,6 +149,10 @@ public class CourseController extends Controller {
 
 		@Required
 		public float participantFee;
+
+		public String pictureURL;
+
+		public String videoURL;
 
 		public String validate() {
 			if (isBlank(title)) {

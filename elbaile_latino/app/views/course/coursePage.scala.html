@@ -139,15 +139,15 @@
 				<div class="form-group">
 					<label for="numberOfClasses" class="col-lg-2 control-label">Number of classes</label>
 					<div class="col-lg-6">
-						<input class="form-control" id="numberOfClasses" name="Number of classes" @if(!isEditable) {readonly}
-						placeholder="Number of classes" type="text" value="15">
+						<input class="form-control" id="numberOfClasses" name="numberOfClasses" @if(!isEditable) {readonly}
+						placeholder="Number of classes" type="text" value="@course.numberOfClasses">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="participantFee" class="col-lg-2 control-label">Participant Fee</label>
 					<div class="col-lg-6">
-						<input class="form-control" id="participantFee" name="Participant Fee" @if(!isEditable) {readonly}
-						placeholder="Participant Fee" type="text" value="150">
+						<input class="form-control" id="participantFee" name="participantFee" @if(!isEditable) {readonly}
+						placeholder="Participant Fee" type="text" value="@course.participantFee">
 					</div>
 				</div>
 				<div class="form-group">
@@ -195,26 +195,26 @@
 					<div class="form-group">
 						<label for="picture" class="col-lg-2 control-label">Picture</label>
 						<div class="col-lg-6">
-							<input class="form-control" id="picture" name="picture"
+							<input class="form-control" id="pictureURL" name="pictureURL" value="@course.pictureURL"
 							placeholder="Insert image URL" type="text" onkeyup="onImageURLChange()" onchange="onImageURLChange()">
 							<script>
-					function onImageURLChange(){var urlInput = (document.getElementById('picture'));var imageInput = (document.getElementById('imgContainer')); imageInput.src=urlInput.value;}
+					function onImageURLChange(){var urlInput = (document.getElementById('pictureURL'));var imageInput = (document.getElementById('imgContainer')); imageInput.src=urlInput.value;}
 				</script>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-lg-2 control-label"></label>
 						<div class="col-lg-6">
-							<img id="imgContainer" src="@routes.Assets.at("images/class.jpg")" height="300" width="530">
+							<img id="imgContainer" src="@course.pictureURL" height="300" width="530">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="video" class="col-lg-2 control-label">Video</label>
 						<div class="col-lg-6">
-							<input class="form-control" id="video" name="video"
+							<input class="form-control" id="videoURL" name="videoURL" value="@course.videoURL"
 							placeholder="Insert MP4 video URL" type="text" onkeyup="onVideoURLChange()" onchange="onVideoURLChange()">
 							<script>
-					function onVideoURLChange(){var videoUrlInput = (document.getElementById('video'));var videoInput = (document.getElementById('videoSource')); videoInput.src=videoUrlInput.value;}
+					function onVideoURLChange(){var videoUrlInput = (document.getElementById('videoURL'));var videoInput = (document.getElementById('videoSource')); videoInput.src=videoUrlInput.value;}
 				</script>
 						</div>
 					</div>
@@ -222,7 +222,7 @@
 						<label for="video" class="col-lg-2 control-label"></label>
 						<div class="col-lg-6">
 							<video id="videoSource" width="530" controls>
-								<source src="@routes.Assets.at("videos/video.mp4")" type="video/mp4">
+								<source src="@course.videoURL" type="video/mp4">
 							</video>
 						</div>
 					</div>

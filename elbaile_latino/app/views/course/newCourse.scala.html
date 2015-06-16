@@ -149,7 +149,7 @@
 		<div class="form-group">
 			<label for="numberOfClasses" class="col-lg-2 control-label">Number of classes</label>
 			<div class="col-lg-6">
-				<input class="form-control" id="numberOfClasses" name="Number of classes"
+				<input class="form-control" id="numberOfClasses" name="numberOfClasses"
 					placeholder="Number of classes" type="text" value="15">
 			</div>
 		</div>
@@ -208,10 +208,10 @@
 		<div class="form-group">
 			<label for="picture" class="col-lg-2 control-label">Picture</label>
 			<div class="col-lg-6">
-				<input class="form-control" id="picture" name="picture"
+				<input class="form-control" id="pictureURL" name="pictureURL"
 				placeholder="Insert image URL" type="text" onkeyup="onImageURLChange()" onchange="onImageURLChange()">
 				<script>
-					function onImageURLChange(){var urlInput = (document.getElementById('picture'));var imageInput = (document.getElementById('imgContainer')); imageInput.src=urlInput.value;}
+					function onImageURLChange(){var urlInput = (document.getElementById('pictureURL'));var imageInput = (document.getElementById('imgContainer')); imageInput.src=urlInput.value;}
 				</script>
 			</div>
 		</div>
@@ -224,10 +224,10 @@
 		<div class="form-group">
 			<label for="video" class="col-lg-2 control-label">Video</label>
 			<div class="col-lg-6">
-				<input class="form-control" id="video" name="video"
+				<input class="form-control" id="videoURL" name="videoURL"
 				placeholder="Insert MP4 video URL" type="text" onkeyup="onVideoURLChange()" onchange="onVideoURLChange()">
 				<script>
-					function onVideoURLChange(){var videoUrlInput = (document.getElementById('video'));var videoInput = (document.getElementById('videoSource')); videoInput.src=videoUrlInput.value;}
+					function onVideoURLChange(){var videoUrlInput = (document.getElementById('videoURL'));var videoInput = (document.getElementById('videoSource')); videoInput.src=videoUrlInput.value;}
 				</script>
 			</div>
 		</div>
