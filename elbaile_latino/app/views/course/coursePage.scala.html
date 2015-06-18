@@ -6,6 +6,16 @@
 			<div class="panel  panel-success">
 			<div class="panel-heading">@course.title</div>
 				<div class="panel-body">
+
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#details" data-toggle="tab">Details</a></li>
+				@if(isEditable == false) {
+					<li><a href="#reviews" data-toggle="tab">Reviews</a></li>
+					<li><a href="#register" data-toggle="tab">Register</a></li>
+				}
+			</ul>
+			<div id="myTabContent" class="tab-content">
+				<div class="tab-pane fade active in" id="details">
 				@if(isEditable == true){
 				<form class="form-horizontal" action="/course/post/" method="post">}else{
 				<form class="form-horizontal">}
@@ -233,48 +243,92 @@
 						<a class="btn btn-primary" href="/teacher/@userName">Submit</a>
 						<a class="btn btn-primary" href="/teacher/@userName">Cancel</a>
 					}else{
-						<button type="button"class="btn btn-primary" data-toggle="modal" data-target="#registrationBox">Register Temporary</button>
-						<button type="button"class="btn btn-primary" data-toggle="modal" data-target="#registerAndPayBox">Register & Pay</button>
+						@*<button type="button"class="btn btn-primary" data-toggle="modal" data-target="#registrationBox">Register Temporary</button>*@
+						@*<button type="button"class="btn btn-primary" data-toggle="modal" data-target="#registerAndPayBox">Register & Pay</button>*@
 					}
-				</form>
-					<div class="modal fade" id="registrationBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<h4 class="modal-title" id="myModalLabel">Register Temporary</h4>
+				</form></div>
+				<div class="tab-pane fade" id="reviews">
+					<form class="form-horizontal">
+						<fieldset>
+							<div class="form-group">
+								<div class="col-lg-3">
+									<img src="@course.pictureURL" width="250"/>
 								</div>
-								<form class="form-horizontal">
-								<div class="modal-body">
-									Please enter your details. A reservation can be made for 1 week and will be confirmed after successful payment.
-											<fieldset>
-												<div class="form-group" style="margin-top: 20px;">
-													<input class="form-control" id="firstName" name="firstName"
-													placeholder="First Name" type="text">
-												</div>
-												<div class="form-group" style="margin-top: 20px;">
-													<input class="form-control" id="lastName" name="lastName"
-													placeholder="Last Name" type="text">
-												</div>
-												<div class="form-group" style="margin-top: 20px;">
-													<input class="form-control" id="email" name="email"
-													placeholder="E-mail" type="text">
-												</div>
-												<div class="form-group" style="margin-top: 20px;">
-													<textarea class="form-control" rows="3" name="questions" id="questions" placeholder="Questions or Remarks?"></textarea>
-												</div>
-											</fieldset>
-									</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-primary" data-dismiss="modal">Go Back</button>
-									<button type="button" class="btn btn-primary" data-dismiss="modal">Register</button>
+								<div class="col-lg-7" style="padding-top:23px;">
+									<p>To touch, to move, to inspire. This is the true gift of dance.</p>
+									<p>Dance isn't something that can be explained in words. It has to be danced.</p>
+									<p>The dance is over, the applause subsided, but the joy and feeling will stay with you forever.</p>
+									<p>Dance is like wine; it matures with every performance.</p>
 								</div>
-								</form>
 							</div>
-						</div>
-					</div>
+							<div class="form-group">
+								<div class="col-lg-12">
+									<hr width="100%" >
+								</div>
+							</div>
+							<div class="form-group" style="background-color: #f5f5f5">
+								<div class="col-lg-3" style="padding-top:23px;">
+									<img src="@routes.Assets.at("images/ratings.png")"/>
+								</div>
+								<div class="col-lg-4" style="background-color: #f5f5f5">
+									<img src="@routes.Assets.at("images/reviews.png")"/>
+								</div>
+								<div class="col-lg-4" style="background-color: #f5f5f5">
+									<img src="@routes.Assets.at("images/reviews1.png")"/>
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				<div class="tab-pane fade" id="register">
 
-
+					<form class="form-horizontal">
+						<fieldset>
+							<div class="form-group">
+								<div class="col-lg-2 control-label"></div>
+								<h4 class="col-lg-6" id="myModalLabel">Register Temporary</h4>
+							</div>
+							<div class="form-group">
+								<div class="col-lg-2 control-label"></div>
+								<div class="col-lg-6"> Please enter your details. A reservation can be made for 1 week and will be confirmed after successful payment.
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="firstName" class="col-lg-2 control-label">First Name</label>
+								<div class="col-lg-6">
+									<input class="form-control" id="firstName" name="firstName"
+									placeholder="First Name" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastName" class="col-lg-2 control-label">Last Name</label>
+								<div class="col-lg-6">
+									<input class="form-control" id="lastName" name="lastName"
+									placeholder="Last Name" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="email" class="col-lg-2 control-label">Email</label>
+								<div class="col-lg-6">
+									<input class="form-control" id="email" name="email"
+									placeholder="Email" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="questions" class="col-lg-2 control-label">Questions</label>
+								<div class="col-lg-6">
+									<textarea class="form-control" id="questions" name="questions"
+									placeholder="Questions or Remarks?" type="text"></textarea>
+								</div>
+							</div>
+						</fieldset>
+						<div class="col-lg-2"> </div>
+							<button type="button" class="btn btn-primary" >Register</button>
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerAndPayBox">Proceed to payment</button>
+					</form>
+				</div>
+				</div>
+			</div>
 					<div class="modal fade" id="registerAndPayBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
@@ -286,22 +340,6 @@
 									<div class="modal-body">
 										Please enter your details.
 										<fieldset>
-											<div class="form-group" style="margin-top: 20px;">
-
-												<input class="form-control" id="firstName" name="firstName"
-												placeholder="First Name" type="text">
-
-											</div>
-											<div class="form-group" style="margin-top: 20px;">
-
-												<input class="form-control" id="lastName" name="lastName"
-												placeholder="Last Name" type="text">
-
-											</div>
-											<div class="form-group" style="margin-top: 20px;">
-												<input class="form-control" id="email" name="email"
-												placeholder="E-mail" type="text">
-											</div>
 											Please select the payment method you would like to use:
 											<div class="form-group">
 												<div class="col-lg-10">
@@ -324,9 +362,6 @@
 														</label>
 													</div>
 												</div>
-											</div>
-											<div class="form-group" style="margin-top: 20px;">
-												<textarea class="form-control" rows="3" name="questions" id="questions" placeholder="Questions or Remarks?"></textarea>
 											</div>
 										</fieldset>
 									</div>
