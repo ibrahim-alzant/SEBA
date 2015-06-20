@@ -26,7 +26,7 @@
 						<tr>
 							<td>@course.danceStyle.danceStyleName</td>
 							<td>@course.title</td>
-							<td>@course.startDate</td>
+							<td>@course.startDate.format("dd.MM.yyyy")</td>
 							<td>@course.danceLevel</td>
 							<td>@course.language.languageName</td>
 							<td>@if(course.status == "open"){

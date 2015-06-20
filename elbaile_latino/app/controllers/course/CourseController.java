@@ -1,5 +1,7 @@
 package controllers.course;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,51 +25,38 @@ public class CourseController extends Controller {
 			return badRequest(views.html.course.newCourse.render(form,DanceStyle.findAll(),ctx().session().get("userName")));
 		}
 		CourseController.CourseForm courseForm = form.get();
+
 		Course course = new Course();
+
+		if(courseForm.id > 0)
+			course.id = courseForm.id;
+
 		course.title = courseForm.title;
 		course.numberOfParticipants = courseForm.numberOfParticipants;
 		course.maxNumberOfParticipants = courseForm.maxNumberOfParticipants;
 		course.numberOfClasses = courseForm.numberOfClasses;
 		course.language = Language.findByName(courseForm.language);
-		course.startDate = new Date(); //TODO get proper date
-		course.danceStyle = DanceStyle.findByName(courseForm.danceStyle);
-		course.participantFee = courseForm.participantFee;
-		course.location = courseForm.location;
-		
-		course.teacher = Teacher.findByUsername(ctx().session().get("userName"));
-		course.status = courseForm.status;
-		course.danceLevel = courseForm.danceLevel;
-		course.pictureURL = courseForm.pictureURL;
-		course.videoURL = courseForm.videoURL;
-		
-		course.save();
-		return redirect(controllers.teacher.routes.TeacherController.show(ctx().session().get("userName")));
-	}
-
-	public static Result updateCourse(int courseID) {
-		Form<CourseForm> form = form(CourseForm.class).bindFromRequest();
-		if (form.hasErrors()) {
-			return badRequest(views.html.course.newCourse.render(form,DanceStyle.findAll(),ctx().session().get("userName")));
+		Date courseStartdate;
+		try {
+			courseStartdate = new SimpleDateFormat("dd.MM.yyyy").parse(courseForm.startDate);
+		} catch (ParseException e) {
+			courseStartdate = new Date();
 		}
-		CourseController.CourseForm courseForm = form.get();
-		Course course = new Course();
-		course.id = courseID;
-		course.title = courseForm.title;
-		course.numberOfParticipants = courseForm.numberOfParticipants;
-		course.maxNumberOfParticipants = courseForm.maxNumberOfParticipants;
-		course.numberOfClasses = courseForm.numberOfClasses;
-		course.language = Language.findByName(courseForm.language);
-		course.startDate = new Date(); //TODO get proper date
+
+		course.startDate = courseStartdate; //TODO get proper date
 		course.danceStyle = DanceStyle.findByName(courseForm.danceStyle);
 		course.participantFee = courseForm.participantFee;
 		course.location = courseForm.location;
-
+		
 		course.teacher = Teacher.findByUsername(ctx().session().get("userName"));
 		course.status = courseForm.status;
 		course.danceLevel = courseForm.danceLevel;
 		course.pictureURL = courseForm.pictureURL;
 		course.videoURL = courseForm.videoURL;
 
+		if(courseForm.id > 0)
+			course.update();
+		else
 		course.save();
 		return redirect(controllers.teacher.routes.TeacherController.show(ctx().session().get("userName")));
 	}
@@ -145,6 +134,8 @@ public class CourseController extends Controller {
 	}
 
 	public static class CourseForm {
+
+		public int id;
 
 		@Required
 		public String title;
