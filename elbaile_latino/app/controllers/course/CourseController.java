@@ -47,6 +47,7 @@ public class CourseController extends Controller {
 		course.danceStyle = DanceStyle.findByName(courseForm.danceStyle);
 		course.participantFee = courseForm.participantFee;
 		course.location = courseForm.location;
+		course.locationCode = courseForm.locationCode;
 		
 		course.teacher = Teacher.findByUsername(ctx().session().get("userName"));
 		course.status = courseForm.status;
@@ -166,6 +167,8 @@ public class CourseController extends Controller {
 
 		@Required
 		public String location;
+
+		public String locationCode;
 
 		@Required
 		public float participantFee;

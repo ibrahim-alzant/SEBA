@@ -31,7 +31,8 @@
 			<label for="location" class="col-lg-2 control-label">Location</label>
 			<div class="col-lg-6">
 				<input class="form-control" id="location" name="Location"
-				placeholder="Location" type="text" value="TUM, Garching, Forschungszentrum">
+				placeholder="Location" type="text" value="">
+				<input id="locationCode" name="locationCode" type="hidden" value="48.263418850644165,11.66921496347640">
 			</div>
 		</div>
 		<div class="form-group">
@@ -41,10 +42,19 @@
 				<script>
 						var map;
 						var markers = [];
+						var geocoder;
+						var lating1;
+						var lating2;
+						var infowindow = new google.maps.InfoWindow();
 						function initialize() {
 
+						geocoder = new google.maps.Geocoder();
+						var latingValue = "48.263418850644165,11.66921496347640";
 
-						var haightAshbury = new google.maps.LatLng(48.2628618,11.6681671);
+						lating1 = latingValue.split(",")[0];
+						lating2 = latingValue.split(",")[1];
+
+						var haightAshbury = new google.maps.LatLng(48.263418850644165,11.66921496347640);
 						var mapOptions = {
 						zoom: 16,
 						center: haightAshbury,
@@ -67,6 +77,8 @@
 						    //deleteMarkers();
 						   // searchBox.value = event.latLng;
 							addMarker(event.latLng);
+							var locationInputBox = (document.getElementById('locationCode'));
+							locationInputBox.value = String(event.latLng).substring(1,String(event.latLng).length -2).replace(" ", "");
 						  });
 
 
@@ -115,6 +127,8 @@
 							var bounds = map.getBounds();
 							searchBox.setBounds(bounds);
 						  });
+
+						   codeLatLng();
 						}
 
 						function addMarker(location) {
@@ -139,6 +153,32 @@
 						for (var i = 0; i < markers.length; i++) {
 						markers[i].setMap(map);
 						}
+						}
+
+						function codeLatLng() {
+							var lat = parseFloat(lating1);
+							var lng = parseFloat(lating2);
+							var latlng = new google.maps.LatLng(lat, lng);
+							geocoder.geocode({'latLng': latlng}, function(results, status) {
+							if (status == google.maps.GeocoderStatus.OK) {
+							if (results[1]) {
+							map.setZoom(16);
+							marker = new google.maps.Marker({
+							position: latlng,
+							map: map
+							});
+							infowindow.setContent(results[1].formatted_address);
+							infowindow.open(map, marker);
+							var locationInputBox = (document.getElementById('location'));
+							locationInputBox.value = results[1].formatted_address;
+							 markers.push(marker);
+							} else {
+							alert('No results found');
+							}
+							} else {
+							alert('Geocoder failed due to: ' + status);
+							}
+							});
 						}
 						google.maps.event.addDomListener(window, 'load', initialize);
 

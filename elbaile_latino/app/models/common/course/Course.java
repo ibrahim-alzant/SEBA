@@ -68,6 +68,7 @@ public class Course extends Model {
 	//Add those to the UML
 	@Required
 	public String location;
+	public String locationCode;
 
 	//@ManyToMany
 	//public List<TimeSlot> timeSlots;
