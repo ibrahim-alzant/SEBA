@@ -36,3 +36,5 @@ GET         /student/list/                   controllers.student.StudentControll
 POST        /student/post/                   controllers.student.StudentController.createStudent()
 GET         /student/login/                  controllers.student.LoginController.loginForm()
 POST        /student/doLogin/                controllers.student.LoginController.authenticate()
+GET         /student/partnerSearch/          controllers.student.PartnerSearchController.newPartnerSearchForm()
+GET         /student/signOut/                controllers.student.LoginController.signOut()

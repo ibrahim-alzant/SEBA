@@ -36,41 +36,6 @@ public class StudentController extends Controller {
 	}
 
     public static Result newStudentForm() {
-        Language l1  = new Language();
-        l1.languageName = "Arabic";
-        Language l2  = new Language();
-        l2.languageName = "English";
-        Language l3  = new Language();
-        l3.languageName = "German";
-        Language l4  = new Language();
-        l4.languageName = "French";
-
-        DanceStyle s1 = new DanceStyle();
-        s1.danceStyleName = "Salsa";
-
-        DanceStyle s2 = new DanceStyle();
-        s2.danceStyleName = "Samba";
-
-        DanceStyle s3 = new DanceStyle();
-        s3.danceStyleName = "Tango";
-
-        Gender g1 = new Gender();
-        g1.genderName = "Male";
-
-        Gender g2 = new Gender();
-        g2.genderName = "Female";
-
-//		l1.save();
-//		l2.save();
-//		l3.save();
-//		l4.save();
-//
-//		s1.save();
-//		s2.save();
-//		s3.save();
-//
-//		g1.save();
-//		g2.save();
 
         if (ctx().session().get("userName") != null) {
             return redirect(controllers.student.routes.StudentController.show(ctx().session().get("userName")));
@@ -94,12 +59,14 @@ public class StudentController extends Controller {
         student.gender = Gender.findByName(studentForm.gender);
         student.password = studentForm.password;
         student.email = studentForm.email;
+        student.address = studentForm.address;
         student.mobile = studentForm.mobile;
         student.imgURL = studentForm.imgURL;
         student.additionalInformation = studentForm.additionalInformation;
         student.height = Integer.parseInt(studentForm.height);
         student.dateOfBirth = new Date(); //TODO
         student.spokenLanguages = getLanguages(studentForm.spokenLanguages);
+        //TODO if dance style doesn't exist create one
         student.danceStyles = getDanceStyles(studentForm.danceStyles);
         student.save();
         return redirect(controllers.student.routes.LoginController.loginForm());
@@ -132,7 +99,8 @@ public class StudentController extends Controller {
         public String password;
         @Required
         public String passwordConfirm;
-
+        @Required
+        public String address;
         @Required
         public String email;
 
