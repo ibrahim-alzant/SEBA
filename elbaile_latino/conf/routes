@@ -25,6 +25,7 @@ GET         /course/category/:catName        controllers.course.CourseController
 POST        /course/payment/                 controllers.course.CourseController.showPaymentForm()
 GET         /course/edit/id/:id/             controllers.course.CourseController.editById(id:Long)
 GET         /course/settings/                controllers.course.CourseController.showCourseSettings()
+POST        /course/register/                controllers.course.CourseController.registerStudent()
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                    controllers.Assets.at(path="/public", file)
