@@ -25,6 +25,7 @@ GET         /course/category/:catName        controllers.course.CourseController
 POST        /course/payment/                 controllers.course.CourseController.showPaymentForm()
 GET         /course/edit/id/:id/             controllers.course.CourseController.editById(id:Long)
 GET         /course/settings/                controllers.course.CourseController.showCourseSettings()
+POST        /course/register/                controllers.course.CourseController.registerStudent()
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                    controllers.Assets.at(path="/public", file)
@@ -36,3 +37,9 @@ GET         /student/list/                   controllers.student.StudentControll
 POST        /student/post/                   controllers.student.StudentController.createStudent()
 GET         /student/login/                  controllers.student.LoginController.loginForm()
 POST        /student/doLogin/                controllers.student.LoginController.authenticate()
+GET         /student/partnerSearch/          controllers.student.PartnerSearchController.newPartnerSearchForm()
+GET         /student/signOut/                controllers.student.LoginController.signOut()
+GET         /student/all/                    models.student.Student.allStudentsJson()
+
+#Language
+GET         /language/all                    models.common.Language.allLanguagesJson()

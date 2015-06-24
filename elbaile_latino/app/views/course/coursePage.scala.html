@@ -6,63 +6,208 @@
 			<div class="panel  panel-success">
 			<div class="panel-heading">@course.title</div>
 				<div class="panel-body">
-				@if(isEditable == true){
-				<form class="form-horizontal" action="/course/post/" method="post">}else{
-				<form class="form-horizontal">}
+
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#details" data-toggle="tab">Details</a></li>
+				@if(isEditable == false) {
+					<li><a href="#reviews" data-toggle="tab">Reviews</a></li>
+					<li><a href="#register" data-toggle="tab">Register</a></li>
+				}
+				@if(isEditable == true) {
+					<li><a href="#participants" data-toggle="tab">Participants</a></li>
+				}
+			</ul>
+			<div id="myTabContent" class="tab-content">
+				<div class="tab-pane fade active in" id="details">
+				<form class="form-horizontal" @if(isEditable) {action="/course/post/" method="post"}>
 				<fieldset>
 				<div class="form-group" style="margin-top: 20px;">
 					<label for="startDate" class="col-lg-2 control-label">Start date</label>
 					<div class="col-lg-6">
 						<input class="form-control" id="startDate" name="startDate" @if(!isEditable) {readonly}
-						placeholder="Start date" type="text" value="@course.startDate">
+						placeholder="Start date" type="text" value="@course.startDate.format("dd.MM.yyyy")">
+						<input class="form-control" id="id" name="id"
+						placeholder="Start date" type="hidden" value="@course.id">
+						<input class="form-control" id="title" name="title"
+						placeholder="Start date" type="hidden" value="@course.title">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="location" class="col-lg-2 control-label">Location</label>
 					<div class="col-lg-6">
-						<input class="form-control" id="location" name="Location" @if(!isEditable) {readonly}
-						placeholder="Location" type="text" value="@course.location">
+						<input id="location" name="location" class="form-control" type="text" placeholder="Search location Box"
+						@if(!isEditable) {readonly} value="@course.location">
+						<input id="locationCode" name="locationCode" type="hidden" value="@course.locationCode">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="map" class="col-lg-2 control-label"></label>
 					<div class="col-lg-6">
-						<script src="http://maps.googleapis.com/maps/api/js"></script>
+						<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 						<script>
+						var map;
+						var markers = [];
+						var geocoder;
+						var lating1;
+						var lating2;
+						var infowindow = new google.maps.InfoWindow();
 						function initialize() {
-						  var myLatlng = new google.maps.LatLng(48.2628618,11.6681671);
-							var mapOptions = {
-							zoom: 16,
-							center: myLatlng,
-							mapTypeId:google.maps.MapTypeId.ROADMAP
+
+
+						geocoder = new google.maps.Geocoder();
+						var latingValue = "48.263418850644165,11.66921496347640";
+
+						lating1 = 48.263418850644165;
+						lating2 = 11.66921496347640;
+
+						var haightAshbury = new google.maps.LatLng(48.263418850644165,11.66921496347640);
+						var mapOptions = {
+						zoom: 16,
+						center: haightAshbury,
+						mapTypeId: google.maps.MapTypeId.TERRAIN
+						};
+						map = new google.maps.Map(document.getElementById('map-canvas'),
+						mapOptions);
+
+						  // Create the search box and link it to the UI element.
+						  var input = (document.getElementById('location'));
+						//  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+						  var searchBox = new google.maps.places.SearchBox((input));
+
+						  // [START region_getplaces]
+						  // Listen for the event fired when the user selects an item from the
+						  // pick list. Retrieve the matching places for that item.
+						  // This event listener will call addMarker() when the map is clicked.
+						  google.maps.event.addListener(map, 'click', function(event) {
+							addMarker(event.latLng);
+							var locationInputBox = (document.getElementById('locationCode'));
+							locationInputBox.value = String(event.latLng).substring(1,String(event.latLng).length -2).replace(" ", "");
+						  });
+
+						  google.maps.event.addListener(searchBox, 'places_changed', function() {
+							var places = searchBox.getPlaces();
+
+							if (places.length == 0) {
+							  return;
+							}
+							for (var i = 0, marker; marker = markers[i]; i++) {
+							  marker.setMap(null);
 							}
 
+							// For each place, get the icon, place name, and location.
+							markers = [];
+							var bounds = new google.maps.LatLngBounds();
+							for (var i = 0, place; place = places[i]; i++) {
+							  var image = {
+								url: place.icon,
+								size: new google.maps.Size(71, 71),
+								origin: new google.maps.Point(0, 0),
+								anchor: new google.maps.Point(17, 34),
+								scaledSize: new google.maps.Size(25, 25)
+							  };
 
-						  var map=new google.maps.Map(document.getElementById("googleMap"),mapOptions);
+							  // Create a marker for each place.
+							  var marker = new google.maps.Marker({
+								map: map,
+								icon: image,
+								title: place.name,
+								position: place.geometry.location
+							  });
 
-						   var marker = new google.maps.Marker({
-							position: myLatlng,
-							map: map,
-							title: 'TUM Dancing Course'
+							  markers.push(marker);
+
+							  bounds.extend(place.geometry.location);
+							}
+
+							map.fitBounds(bounds);
+						  });
+						  // [END region_getplaces]
+
+						  // Bias the SearchBox results towards places that are within the bounds of the
+						  // current map's viewport.
+						  google.maps.event.addListener(map, 'bounds_changed', function() {
+							var bounds = map.getBounds();
+							searchBox.setBounds(bounds);
+						  });
+
+						if(@course.locationCode.length > 0)
+						{
+							var locationCodeValueInputBox = (document.getElementById('locationCode'));
+							lating1 = locationCodeValueInputBox.value.substring(0,locationCodeValueInputBox.value.indexOf(","));
+							lating2 = locationCodeValueInputBox.value.substring(locationCodeValueInputBox.value.indexOf(",")+1);
+						}
+
+						  codeLatLng();
+						}
+
+						function addMarker(location) {
+						deleteMarkers();
+						  var marker = new google.maps.Marker({
+							position: location,
+							map: map
+						  });
+						  markers.push(marker);
+						}
+
+						function deleteMarkers() {
+						  clearMarkers();
+						  markers = [];
+						}
+						// Removes the markers from the map, but keeps them in the array.
+						function clearMarkers() {
+						  setAllMap(null);
+						}
+
+						function setAllMap(map) {
+						for (var i = 0; i < markers.length; i++) {
+						markers[i].setMap(map);
+						}
+						}
+
+						function codeLatLng() {
+							var lat = parseFloat(lating1);
+							var lng = parseFloat(lating2);
+							var latlng = new google.maps.LatLng(lat, lng);
+							geocoder.geocode({'latLng': latlng}, function(results, status) {
+							if (status == google.maps.GeocoderStatus.OK) {
+							if (results[1]) {
+							map.setZoom(16);
+							marker = new google.maps.Marker({
+							position: latlng,
+							map: map
+							});
+							infowindow.setContent(results[1].formatted_address);
+							infowindow.open(map, marker);
+							var locationInputBox = (document.getElementById('location'));
+							locationInputBox.value = results[1].formatted_address;
+							 markers.push(marker);
+							} else {
+							alert('No results found');
+							}
+							} else {
+							alert('Geocoder failed due to: ' + status);
+							}
 							});
 						}
 						google.maps.event.addDomListener(window, 'load', initialize);
+
 						</script>
-						<div id="googleMap" style="width:530px;height:300px;"></div>
+						<div id="map-canvas" style="width:530px;height:300px;"></div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="numberOfClasses" class="col-lg-2 control-label">Number of classes</label>
 					<div class="col-lg-6">
-						<input class="form-control" id="numberOfClasses" name="Number of classes" @if(!isEditable) {readonly}
-						placeholder="Number of classes" type="text" value="15">
+						<input class="form-control" id="numberOfClasses" name="numberOfClasses" @if(!isEditable) {readonly}
+						placeholder="Number of classes" type="text" value="@course.numberOfClasses">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="participantFee" class="col-lg-2 control-label">Participant Fee</label>
 					<div class="col-lg-6">
-						<input class="form-control" id="participantFee" name="Participant Fee" @if(!isEditable) {readonly}
-						placeholder="Participant Fee" type="text" value="150">
+						<input class="form-control" id="participantFee" name="participantFee" @if(!isEditable) {readonly}
+						placeholder="Participant Fee" type="text" value="@course.participantFee">
 					</div>
 				</div>
 				<div class="form-group">
@@ -107,69 +252,173 @@
 						placeholder="Status of course" type="text" value="@course.status">
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="picture" class="col-lg-2 control-label">Picture</label>
-					<div class="col-lg-6">
-						<img src="@routes.Assets.at("images/class.jpg")" width="530">
+					<div class="form-group">
+						<label for="picture" class="col-lg-2 control-label">Picture</label>
+						<div class="col-lg-6">
+							<input class="form-control" id="pictureURL" name="pictureURL" value="@course.pictureURL"
+							placeholder="Insert image URL" type="text" onkeyup="onImageURLChange()" onchange="onImageURLChange()">
+							<script>
+					function onImageURLChange(){var urlInput = (document.getElementById('pictureURL'));var imageInput = (document.getElementById('imgContainer')); imageInput.src=urlInput.value;}
+				</script>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="status" class="col-lg-2 control-label">Video</label>
-				<div class="col-lg-6">
-					<video width="530" controls>
-						<source src="@routes.Assets.at("videos/video.mp4")" type="video/mp4">
-					</video>
-				</div>
-				</div>
+					<div class="form-group">
+						<label class="col-lg-2 control-label"></label>
+						<div class="col-lg-6">
+							<img id="imgContainer" src="@course.pictureURL" height="300" width="530">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="video" class="col-lg-2 control-label">Video</label>
+						<div class="col-lg-6">
+							<input class="form-control" id="videoURL" name="videoURL" value="@course.videoURL"
+							placeholder="Insert MP4 video URL" type="text" onkeyup="onVideoURLChange()" onchange="onVideoURLChange()">
+							<script>
+					function onVideoURLChange(){var videoUrlInput = (document.getElementById('videoURL'));var videoInput = (document.getElementById('videoSource')); videoInput.src=videoUrlInput.value;}
+				</script>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="video" class="col-lg-2 control-label"></label>
+						<div class="col-lg-6">
+							<video id="videoSource" width="530" controls>
+								<source src="@course.videoURL" type="video/mp4">
+							</video>
+						</div>
+					</div>
 
 				</fieldset>
 					<div class="col-lg-2"> </div>
 					@if(isEditable == true){
-						<a class="btn btn-primary" href="/teacher/@userName">Submit</a>
+						<button class="btn btn-primary" type="submit">Submit</button>
 						<a class="btn btn-primary" href="/teacher/@userName">Cancel</a>
 					}else{
-						<button type="button"class="btn btn-primary" data-toggle="modal" data-target="#registrationBox">Register Temporary</button>
-						<button type="button"class="btn btn-primary" data-toggle="modal" data-target="#registerAndPayBox">Register & Pay</button>
+						@*<button type="button"class="btn btn-primary" data-toggle="modal" data-target="#registrationBox">Register Temporary</button>*@
+						@*<button type="button"class="btn btn-primary" data-toggle="modal" data-target="#registerAndPayBox">Register & Pay</button>*@
 					}
-				</form>
-					<div class="modal fade" id="registrationBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<h4 class="modal-title" id="myModalLabel">Register Temporary</h4>
+				</form></div>
+				<div class="tab-pane fade" id="reviews">
+					<form class="form-horizontal">
+						<fieldset>
+							<div class="form-group">
+								<div class="col-lg-3">
+									<img src="@course.pictureURL" width="250"/>
 								</div>
-								<form class="form-horizontal">
-								<div class="modal-body">
-									Please enter your details. A reservation can be made for 1 week and will be confirmed after successful payment.
-											<fieldset>
-												<div class="form-group" style="margin-top: 20px;">
-													<input class="form-control" id="firstName" name="firstName"
-													placeholder="First Name" type="text">
-												</div>
-												<div class="form-group" style="margin-top: 20px;">
-													<input class="form-control" id="lastName" name="lastName"
-													placeholder="Last Name" type="text">
-												</div>
-												<div class="form-group" style="margin-top: 20px;">
-													<input class="form-control" id="email" name="email"
-													placeholder="E-mail" type="text">
-												</div>
-												<div class="form-group" style="margin-top: 20px;">
-													<textarea class="form-control" rows="3" name="questions" id="questions" placeholder="Questions or Remarks?"></textarea>
-												</div>
-											</fieldset>
-									</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-primary" data-dismiss="modal">Go Back</button>
-									<button type="button" class="btn btn-primary" data-dismiss="modal">Register</button>
+								<div class="col-lg-7" style="padding-top:23px;">
+									<p>To touch, to move, to inspire. This is the true gift of dance.</p>
+									<p>Dance isn't something that can be explained in words. It has to be danced.</p>
+									<p>The dance is over, the applause subsided, but the joy and feeling will stay with you forever.</p>
+									<p>Dance is like wine; it matures with every performance.</p>
 								</div>
-								</form>
 							</div>
+							<div class="form-group">
+								<div class="col-lg-12">
+									<hr width="100%" >
+								</div>
+							</div>
+							<div class="form-group" style="background-color: #f5f5f5">
+								<div class="col-lg-3" style="padding-top:23px;">
+									<img src="@routes.Assets.at("images/ratings.png")"/>
+								</div>
+								<div class="col-lg-4" style="background-color: #f5f5f5">
+									<img src="@routes.Assets.at("images/reviews.png")"/>
+								</div>
+								<div class="col-lg-4" style="background-color: #f5f5f5">
+									<img src="@routes.Assets.at("images/reviews1.png")"/>
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				<div class="tab-pane fade" id="register">
+
+					<form class="form-horizontal" action="/course/register/" method="post">
+						<fieldset>
+							<div class="form-group">
+								<div class="col-lg-2 control-label"></div>
+								<h4 class="col-lg-6" id="myModalLabel">Register Temporary</h4>
+							</div>
+							<div class="form-group">
+								<div class="col-lg-2 control-label"></div>
+								<div class="col-lg-6"> If you are interested in joining this course, please register below.
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-lg-2 control-label"></div>
+								<div class="col-lg-6">
+									A reservation can be made for 1 week and will be confirmed after successful payment.
+								</div>
+							</div>
+							<input class="form-control" id="courseId" name="courseId" type="hidden" value="@course.id">
+							@*<div class="form-group">*@
+								@*<label for="firstName" class="col-lg-2 control-label">First Name</label>*@
+								@*<div class="col-lg-6">*@
+									@*<input class="form-control" id="firstName" name="firstName"*@
+									@*placeholder="First Name" type="text">*@
+								@*</div>*@
+							@*</div>*@
+							@*<div class="form-group">*@
+								@*<label for="lastName" class="col-lg-2 control-label">Last Name</label>*@
+								@*<div class="col-lg-6">*@
+									@*<input class="form-control" id="lastName" name="lastName"*@
+									@*placeholder="Last Name" type="text">*@
+								@*</div>*@
+							@*</div>*@
+							@*<div class="form-group">*@
+								@*<label for="email" class="col-lg-2 control-label">Email</label>*@
+								@*<div class="col-lg-6">*@
+									@*<input class="form-control" id="email" name="email"*@
+									@*placeholder="Email" type="text">*@
+								@*</div>*@
+							@*</div>*@
+							<div class="form-group">
+								<label for="questions" class="col-lg-2 control-label">Questions</label>
+								<div class="col-lg-6">
+									<textarea class="form-control" id="questions" name="questions"
+									placeholder="Questions or Remarks?" type="text"></textarea>
+								</div>
+							</div>
+						</fieldset>
+						<div class="col-lg-2"> </div>
+							<button class="btn btn-primary" type="submit">Register</button>
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerAndPayBox">Proceed to payment</button>
+					</form>
+				</div>
+				<div class="tab-pane fade" id="participants">
+					<div class="panel panel-success">
+						<div class="panel-heading"></div>
+						<div class="panel-body">
+							<table class="table table-striped table-hover ">
+								<thead>
+									<tr>
+										<th>First Name @course.participants.size()</th>
+										<th>Last Name</th>
+										<th>Gender</th>
+										<th>Height</th>
+										<th>Email</th>
+										<th>Mobile</th>
+									</tr>
+								</thead>
+								<tbody>
+									@if(course.participants != null){
+								@for(participant <- course.participants) {
+									<tr>
+										<td>@participant.firstName</td>
+										<td>@participant.lastName</td>
+										<td>@participant.gender.genderName</td>
+										<td>@participant.height</td>
+										<td>@participant.email</td>
+										<td>@participant.mobile</td>
+									</tr>
+								}}
+								</tbody>
+
+							</table>
 						</div>
 					</div>
-
-
+				</div>
+				</div>
+			</div>
 					<div class="modal fade" id="registerAndPayBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
@@ -181,22 +430,6 @@
 									<div class="modal-body">
 										Please enter your details.
 										<fieldset>
-											<div class="form-group" style="margin-top: 20px;">
-
-												<input class="form-control" id="firstName" name="firstName"
-												placeholder="First Name" type="text">
-
-											</div>
-											<div class="form-group" style="margin-top: 20px;">
-
-												<input class="form-control" id="lastName" name="lastName"
-												placeholder="Last Name" type="text">
-
-											</div>
-											<div class="form-group" style="margin-top: 20px;">
-												<input class="form-control" id="email" name="email"
-												placeholder="E-mail" type="text">
-											</div>
 											Please select the payment method you would like to use:
 											<div class="form-group">
 												<div class="col-lg-10">
@@ -218,10 +451,8 @@
 															SofortUberweisung.de
 														</label>
 													</div>
+													<input class="form-control" id="amount" name="amount" type="hidden" value="@course.participantFee">
 												</div>
-											</div>
-											<div class="form-group" style="margin-top: 20px;">
-												<textarea class="form-control" rows="3" name="questions" id="questions" placeholder="Questions or Remarks?"></textarea>
 											</div>
 										</fieldset>
 									</div>
@@ -234,5 +465,4 @@
 						</div>
 					</div>
 			</div>
-		</div>
 }

@@ -1,5 +1,7 @@
 package controllers.course;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,11 +9,14 @@ import java.util.List;
 import models.common.DanceStyle;
 import models.common.Language;
 import models.common.course.Course;
+import models.student.Student;
 import models.teacher.Teacher;
 import play.data.Form;
 import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
+import scala.Int;
+
 import static play.data.Form.form;
 
 
@@ -23,21 +28,39 @@ public class CourseController extends Controller {
 			return badRequest(views.html.course.newCourse.render(form,DanceStyle.findAll(),ctx().session().get("userName")));
 		}
 		CourseController.CourseForm courseForm = form.get();
+
 		Course course = new Course();
+
+		if(courseForm.id > 0)
+			course.id = courseForm.id;
+
 		course.title = courseForm.title;
 		course.numberOfParticipants = courseForm.numberOfParticipants;
 		course.maxNumberOfParticipants = courseForm.maxNumberOfParticipants;
 		course.numberOfClasses = courseForm.numberOfClasses;
 		course.language = Language.findByName(courseForm.language);
-		course.startDate = new Date(); //TODO get proper date
+		Date courseStartdate;
+		try {
+			courseStartdate = new SimpleDateFormat("dd.MM.yyyy").parse(courseForm.startDate);
+		} catch (ParseException e) {
+			courseStartdate = new Date();
+		}
+
+		course.startDate = courseStartdate; //TODO get proper date
 		course.danceStyle = DanceStyle.findByName(courseForm.danceStyle);
 		course.participantFee = courseForm.participantFee;
 		course.location = courseForm.location;
+		course.locationCode = courseForm.locationCode;
 		
 		course.teacher = Teacher.findByUsername(ctx().session().get("userName"));
 		course.status = courseForm.status;
 		course.danceLevel = courseForm.danceLevel;
-		
+		course.pictureURL = courseForm.pictureURL;
+		course.videoURL = courseForm.videoURL;
+
+		if(courseForm.id > 0)
+			course.update();
+		else
 		course.save();
 		return redirect(controllers.teacher.routes.TeacherController.show(ctx().session().get("userName")));
 	}
@@ -104,7 +127,8 @@ public class CourseController extends Controller {
 	}
 
 	public static Result showPaymentForm(){
-		return ok(views.html.course.coursePayment.render(ctx().session().get("userName")));
+		String amount = Form.form().bindFromRequest().get("amount");
+		return ok(views.html.course.coursePayment.render(ctx().session().get("userName"),amount));
 	}
 
 	public static Result showCourseSettings(){
@@ -113,7 +137,23 @@ public class CourseController extends Controller {
 		return ok(views.html.course.courseSettings.render(tmpCourse,ctx().session().get("userName")));
 	}
 
+	public static Result registerStudent(){
+		Student tmpStudent = Student.findByUsername(ctx().session().get("userName"));
+		int courseId =  Integer.parseInt(Form.form().bindFromRequest().get("courseId"));
+		Course tmpCourse = Course.findById(courseId);
+
+		if(tmpCourse.participants == null)
+			tmpCourse.participants = new ArrayList<Student>();
+
+		tmpCourse.participants.add(tmpStudent);
+		tmpCourse.save();
+
+		return redirect(controllers.student.routes.StudentController.show(ctx().session().get("userName")));
+	}
+
 	public static class CourseForm {
+
+		public int id;
 
 		@Required
 		public String title;
@@ -145,8 +185,14 @@ public class CourseController extends Controller {
 		@Required
 		public String location;
 
+		public String locationCode;
+
 		@Required
 		public float participantFee;
+
+		public String pictureURL;
+
+		public String videoURL;
 
 		public String validate() {
 			if (isBlank(title)) {

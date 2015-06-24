@@ -1,0 +1,1 @@
+var ElBaileLatino = angular.module('ElBaileLatino', ['ngCookies']);

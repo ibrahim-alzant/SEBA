@@ -1,0 +1,130 @@
+@(userName: String, styles: List[models.common.DanceStyle], student: models.student.Student)
+@import helper._
+@main("Partner search", userName) {
+    <script src="@routes.Assets.at("controllers/PartnerSearchController.js")"></script>
+    <input id="userName" type="hidden" value="@userName">
+    <div class="panel panel-success" ng-controller="PartnerSearchController">
+
+
+        <div class="panel-heading">Partner search</div>
+
+        <form class="form-horizontal" style="padding : 20px" >
+            <fieldset >
+                @*filter part*@
+                <div class="col-md-3 well bs-component" >
+
+                    @*gender*@
+                    <div>
+                        <label class="control-label" for="gender">Gender</label>
+                        <div>
+                            <label class="radio-inline" for="radios-female">
+                                <input type="radio" value="2" ng-model="gender">
+                                female
+                            </label>
+                            <label class="radio-inline" for="radios-male">
+                                <input type="radio"  value="1" ng-model="gender">
+                                male
+                            </label>
+                        </div>
+                    </div>
+
+                    @*age*@
+                    <div>
+                        <label class="control-label">Age</label><br/> 1
+                        <input id="age" type="text" class="span2" style="width : 85%"
+                        data-slider-min="1" data-slider-max="99" data-slider-step="5" data-slider-value="[18,35]"/>
+                        99
+                        <script type="text/javascript">
+                          $('#age').slider({
+                             formatter: function(value) {
+                                return 'Age range: ' + value;
+                             }
+                          });
+                                </script>
+
+                    </div>
+
+                    @*distance*@
+                    <div style="padding-top : 10px">
+                        <label>Distance</label><br/>
+                        10 km
+                        <input id="distance" type="text" class="span2" style="width : 65%"
+                        data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="80"/>
+                        1000 km
+                        <script type="text/javascript">
+                              $('#distance').slider({
+                                 formatter: function(value) {
+                                    return 'Distance: ' + value;
+                                 }
+                              });
+                            </script>
+                    </div>
+
+                    @*dancing style*@
+                    <div style="padding-top : 10px">
+                        <label>Dancing style</label><br/>
+                        <select class="form-control" id="style" name="style">
+                        @for(style <- styles) {
+                            <option>@style.danceStyleName</option>
+                        }
+                        </select>
+                    </div>
+
+                    @*height*@
+                    <div style="padding-top : 10px">
+                        <label>Height</label><br/>
+                        140 cm
+                        <input id="height" type="text" class="span2" style="width : 65%"
+                        data-slider-min="140" data-slider-max="220" data-slider-step="5" data-slider-value="[160,200]"/>
+                        220 cm
+                        <script type="text/javascript">
+                          $('#height').slider({
+                             formatter: function(value) {
+                                return 'Height range: ' + value;
+                             }
+                          });
+                        </script>
+                    </div>
+
+                    @*languages*@
+                    <div style="padding-top : 10px">
+                        <label>Languages</label><br/>
+                        <div ng-repeat="lan in languages"><input type="checkbox" ng-model="lan.checked">
+                            {{" "+lan.languageName}}</div>
+                    </div>
+                </div>
+
+                @*result part*@
+                <div class="col-md-9" >
+                    @*{{student}}*@
+                    <div style="border-bottom: dashed; border-bottom-color: #18bc9c; border-bottom-width: thin;">
+                        <label> Results </label>
+                        <span class="label label-success label-as-badge" style="margin-left: 5px">{{selectedStudents().length}}</span>
+                    </div>
+
+                    <div class="search_result_div" ng-repeat="student in selectedStudents()">
+                      @*{{student}}*@
+                        <img src="{{student.imgURL}}" height="100" width="100" style="vertical-align: top !important;">
+                        <div style="padding-left: 10px; display: inline-block; vertical-align: top">
+                            <span style=" font-family: 'Lobster'; color:#337ab7; font-size: 20px ">{{student.firstName+" "+student.lastName}}</span>
+                            <br>
+                            {{student.additionalInformation}}
+                            <br>
+                            <span class="label label-info" ng-repeat="lan in student.spokenLanguages" style="margin-right: 5px">{{lan.languageName}}</span>
+                            <br>
+                        </div>
+                        <button class="btn btn-success" style="margin-top: 20px; float: right;">
+                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Send message
+                        </button>
+
+
+                    </div>
+                </div>
+            </fieldset>
+
+
+        </form>
+
+
+    </div>
+}

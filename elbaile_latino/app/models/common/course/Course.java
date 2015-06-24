@@ -12,6 +12,7 @@ import com.avaje.ebean.Expr;
 import models.common.DanceStyle;
 import models.common.Language;
 import models.common.TimeSlot;
+import models.student.Student;
 import models.teacher.Teacher;
 import play.data.validation.Constraints.Required;
 import play.db.DB;
@@ -64,18 +65,18 @@ public class Course extends Model {
 	@Required
 	public String status;
 
-	//TODO use the new fields in the create and details view
-	//Add those to the UML
 	@Required
 	public String location;
+	public String locationCode;
 
-	//@ManyToMany
-	//public List<TimeSlot> timeSlots;
+	@ManyToMany(cascade = CascadeType.ALL)
+	public List<Student> participants;
 
 	@Required
 	public float participantFee;
 
-	//TODO Add students list, image and video
+	public String pictureURL;
+	public String videoURL;
 	
 	public static Finder<Long, Course> find = new Finder<Long, Course>(
 			Long.class, Course.class);
@@ -143,6 +144,10 @@ public class Course extends Model {
 
 		}
 		return result_list;
+	}
+
+	public static Course findById(int courseId){
+		return find.where().eq("id", courseId).findUnique();
 	}
 
 }
