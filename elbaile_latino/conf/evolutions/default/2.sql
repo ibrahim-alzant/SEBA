@@ -23,25 +23,25 @@ INSERT INTO student (id, first_name, gender_id, last_name, address, user_name, p
 email, mobile, img_url, additional_information,  height, date_of_birth )
 VALUES (1, 'Frank', 1, 'Mueller', 'Sabener Strasse 51-57, 81547 Munchen', 'frank','123', 'frank@gmail.com', '+4874562386',
  'https://lh5.googleusercontent.com/-ZadaXoUTBfs/AAAAAAAAAAI/AAAAAAAAAGA/19US52OmBqc/photo.jpg',
- 'I have been taking salsa classes since 2013', 185, '1990-09-01 00:00:00.00');
+ 'I have been taking salsa classes since 2013', 185, TIMESTAMP '1990-09-01 00:00:00.00');
 
  INSERT INTO student (id, first_name, gender_id, last_name, address, user_name, password,
 email, mobile, img_url, additional_information,  height, date_of_birth )
 VALUES (3, 'Albert', 1, 'Volkov', ' Arcisstrasse 21, D-80333 Munich', 'albert_000','123', 'albert@gmail.com', '+487456686',
  'http://organicthemes.com/demo/profile/files/2012/12/profile_img.png',
- 'Im just a beginner', 175, '1989-08-01 00:00:00.00');
+ 'Im just a beginner', 175, TIMESTAMP '1989-08-01 00:00:00.00');
 
   INSERT INTO student (id, first_name, gender_id, last_name, address, user_name, password,
 email, mobile, img_url, additional_information,  height, date_of_birth )
 VALUES (4, 'Aleksander', 1, 'Produn', 'Jochbergweg 7, 85748, Garcheng b. Muenchen ', 'alex','123', 'alex@gmail.com', '+487456686',
  'https://pbs.twimg.com/profile_images/1456072735/TwitterProfileSquare_sm.jpg',
- 'Not a professional. Like dancing salsa on weekends', 183, '1991-08-01 00:00:00.00');
+ 'Not a professional. Like dancing salsa on weekends', 183, TIMESTAMP '1991-08-01 00:00:00.00');
 
  INSERT INTO student (id, first_name, gender_id, last_name, address, user_name, password,
 email, mobile, img_url, additional_information,  height, date_of_birth )
 VALUES (2, 'Anna', 2, 'Dallawer', 'Sabener Strasse 40, 81547 Munchen', 'anna', '123', 'anna@gmail.com', '+4874562386',
  'http://www.google.com/+/images/learnmore/getstarted/feat-profile.png',
- 'I like salsa', 165, '1992-09-01 00:00:00.00');
+ 'I like salsa', 165, TIMESTAMP '1992-09-01 00:00:00.00');
 
  INSERT INTO student_language (student_id, language_id ) VALUES (1,1);
  INSERT INTO student_language (student_id, language_id ) VALUES (1,2);
