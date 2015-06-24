@@ -104,11 +104,7 @@ public class TeacherController extends Controller {
 		return redirect(controllers.teacher.routes.LoginController.loginForm());
 	}
 	
-//	public static Result upload() {
-//		  File file = request().body().asRaw().asFile();
-//		  return ok("File uploaded");
-//		}
-//	
+
 	
 	private static List<Language> getLanguages(String languages){
 		List<Language> languagesList = new ArrayList<Language>();		
