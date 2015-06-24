@@ -9,11 +9,14 @@ import java.util.List;
 import models.common.DanceStyle;
 import models.common.Language;
 import models.common.course.Course;
+import models.student.Student;
 import models.teacher.Teacher;
 import play.data.Form;
 import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
+import scala.Int;
+
 import static play.data.Form.form;
 
 
@@ -132,6 +135,20 @@ public class CourseController extends Controller {
 		//TODO: Send the course ID as parameter (will do it later)
 		Course tmpCourse = new Course();
 		return ok(views.html.course.courseSettings.render(tmpCourse,ctx().session().get("userName")));
+	}
+
+	public static Result registerStudent(){
+		Student tmpStudent = Student.findByUsername(ctx().session().get("userName"));
+		int courseId =  Integer.parseInt(Form.form().bindFromRequest().get("courseId"));
+		Course tmpCourse = Course.findById(courseId);
+
+		if(tmpCourse.participants == null)
+			tmpCourse.participants = new ArrayList<Student>();
+
+		tmpCourse.participants.add(tmpStudent);
+		tmpCourse.save();
+
+		return redirect(controllers.student.routes.StudentController.show(ctx().session().get("userName")));
 	}
 
 	public static class CourseForm {
