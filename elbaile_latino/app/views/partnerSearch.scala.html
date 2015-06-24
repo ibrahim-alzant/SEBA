@@ -18,11 +18,11 @@
                         <label class="control-label" for="gender">Gender</label>
                         <div>
                             <label class="radio-inline" for="radios-female">
-                                <input type="radio" name="gender" id="radios-female" value="female" checked="checked">
+                                <input type="radio" value="2" ng-model="gender">
                                 female
                             </label>
                             <label class="radio-inline" for="radios-male">
-                                <input type="radio" name="gender" id="radios-male" value="male">
+                                <input type="radio"  value="1" ng-model="gender">
                                 male
                             </label>
                         </div>
@@ -96,6 +96,7 @@
 
                 @*result part*@
                 <div class="col-md-9" >
+                    @*{{student}}*@
                     <div style="border-bottom: dashed; border-bottom-color: #18bc9c; border-bottom-width: thin;">
                         <label> Results </label>
                         <span class="label label-success label-as-badge" style="margin-left: 5px">{{selectedStudents().length}}</span>
