@@ -39,3 +39,7 @@ GET         /student/login/                  controllers.student.LoginController
 POST        /student/doLogin/                controllers.student.LoginController.authenticate()
 GET         /student/partnerSearch/          controllers.student.PartnerSearchController.newPartnerSearchForm()
 GET         /student/signOut/                controllers.student.LoginController.signOut()
+GET         /student/all/                    models.student.Student.allStudentsJson()
+
+#Language
+GET         /language/all                    models.common.Language.allLanguagesJson()

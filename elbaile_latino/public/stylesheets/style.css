@@ -130,3 +130,12 @@ body{
 	font-weight: bolder;
 	padding-top: 20px;
 }
+.label-as-badge {
+	border-radius: 1em;
+}
+.search_result_div{
+	border-bottom: solid;
+	border-bottom-color: #ecf0f1;
+	border-bottom-width: thin;
+	padding : 10px;
+}

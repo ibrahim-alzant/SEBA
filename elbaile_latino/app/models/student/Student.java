@@ -7,10 +7,13 @@ import play.api.libs.json.Json;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
+import play.mvc.Result;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
+import static play.mvc.Results.ok;
 
 /**
  * Created by Admin on 03.06.2015.
@@ -75,6 +78,15 @@ public class Student extends Model {
 
     public static List<Student> find(Json searchQuery) {
         return null;
+    }
+
+    public static List<Student> findAll() {
+        return find.all();
+    }
+
+    public static Result allStudentsJson() {
+        List<Student> students = findAll();
+        return ok(play.libs.Json.toJson(students));
     }
 
     public static Student authenticate(String userName, String password) {

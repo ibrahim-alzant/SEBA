@@ -16,7 +16,10 @@ create table course (
   dance_level               varchar(255),
   status                    varchar(255),
   location                  varchar(255),
+  location_code             varchar(255),
   participant_fee           float,
+  picture_url               varchar(255),
+  video_url                 varchar(255),
   constraint pk_course primary key (id))
 ;
 
@@ -46,6 +49,7 @@ create table student (
   first_name                varchar(255),
   gender_id                 bigint,
   last_name                 varchar(255),
+  address                   varchar(255),
   user_name                 varchar(255),
   password                  varchar(255),
   email                     varchar(255),
@@ -83,6 +87,12 @@ create table time_slot (
   constraint pk_time_slot primary key (id))
 ;
 
+
+create table course_student (
+  course_id                      integer not null,
+  student_id                     bigint not null,
+  constraint pk_course_student primary key (course_id, student_id))
+;
 
 create table student_language (
   student_id                     bigint not null,
@@ -134,6 +144,10 @@ create index ix_teacher_gender_5 on teacher (gender_id);
 
 
 
+alter table course_student add constraint fk_course_student_course_01 foreign key (course_id) references course (id) on delete restrict on update restrict;
+
+alter table course_student add constraint fk_course_student_student_02 foreign key (student_id) references student (id) on delete restrict on update restrict;
+
 alter table student_language add constraint fk_student_language_student_01 foreign key (student_id) references student (id) on delete restrict on update restrict;
 
 alter table student_language add constraint fk_student_language_language_02 foreign key (language_id) references language (id) on delete restrict on update restrict;
@@ -155,6 +169,8 @@ alter table teacher_dance_style add constraint fk_teacher_dance_style_dance__02 
 SET REFERENTIAL_INTEGRITY FALSE;
 
 drop table if exists course;
+
+drop table if exists course_student;
 
 drop table if exists dance_style;
 

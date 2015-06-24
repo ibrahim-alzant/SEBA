@@ -1,6 +1,7 @@
 package controllers.student;
 
 import models.common.DanceStyle;
+import models.common.Language;
 import models.student.Student;
 import play.mvc.Controller;
 import play.mvc.Result;
