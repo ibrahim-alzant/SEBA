@@ -1,11 +1,10 @@
-@(courses:List[models.common.course.Course],userName: String, keyword: String, styles: List[models.common.DanceStyle])
+@import models.common.course.SearchFilter
+@(courses:List[models.common.course.Course],userName: String, keyword: String, styles: List[models.common.DanceStyle], criteria: SearchFilter, languages: List[models.common.Language])
 @import helper._
 @main("Search Courses",userName) {
-<script src="@routes.Assets.at("controllers/SearchController.js")"></script>
-<input id="userName" type="hidden" value="@userName">
-<div class="panel panel-success" ng-controller="SearchController">
+<div class="panel panel-success">
 <div class="panel-heading">Search courses (@if(keyword.length > 0){@keyword}@if(keyword.length == 0){All}) </div>
-		<form class="form-horizontal" style="padding : 20px" >
+		<form class="form-horizontal" style="padding : 20px" action="/course/filter/" method="post">
 			<fieldset >
 				@*filter part*@
 				<div class="col-md-3 well bs-component" >
@@ -13,42 +12,38 @@
 					@*dates*@
 					<div style="padding-top : 10px">
 						<label>Starts from</label><br/>
-						<input type="date" class="form-control" id="startDate" name="startDate"
-						placeholder="dd.MM.yyyy" />
+						<input type="text" class="form-control" id="startDateFrom" name="startDateFrom"
+						placeholder="dd.MM.yyyy" value="@criteria.dateFrom"/>
+					</div>
+
+					<div style="padding-top : 10px">
+						<label>To</label><br/>
+						<input type="text" class="form-control" id="startDateTo" name="startDateTo"
+						placeholder="dd.MM.yyyy" value="@criteria.dateTo"/>
 					</div>
 
 					@*dancing style*@
 					<div style="padding-top : 10px">
 						<label>Dancing style</label><br/>
-						<select class="form-control" id="style" name="style">
+						<select class="form-control" id="danceStyle" name="danceStyle">
 							<option>All</option>
 						@for(style <- styles) {
-							<option>@style.danceStyleName</option>
+							<option @if(criteria.danceStyle == style.danceStyleName) {selected}>@style.danceStyleName</option>
 						}
 						</select>
 					</div>
 
-					@*languages*@
+					@*Language*@
 					<div style="padding-top : 10px">
-						<label>Languages</label><br/>
-						<div ng-repeat="lan in languages"><input type="checkbox" ng-model="lan.checked">
-							{{" "+lan.languageName}}</div>
+						<label>Language</label><br/>
+						<select class="form-control" id="language" name="language">
+							<option>All</option>
+							@for(language <- languages) {
+								<option @if(criteria.language == language.languageName) {selected}>@language.languageName</option>
+							}
+						</select>
 					</div>
-					@*distance*@
-					<div style="padding-top : 10px">
-						<label>Distance</label><br/>
-						10
-						<input id="distance" type="text" class="span2" style="width : 65%"
-						data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="80"/>
-						1000 km
-						<script type="text/javascript">
-                              $('#distance').slider({
-                                 formatter: function(value) {
-                                    return 'Distance: ' + value;
-                                 }
-                              });
-                            </script>
-					</div>
+
 					<div style="padding-top : 10px">
 						<button type="submit" class="btn btn-success">Filter</button>
 					</div>
