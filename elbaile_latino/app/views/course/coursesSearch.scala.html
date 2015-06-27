@@ -1,53 +1,113 @@
-@(courses:List[models.common.course.Course],userName: String, keyword: String)
+@(courses:List[models.common.course.Course],userName: String, keyword: String, styles: List[models.common.DanceStyle])
 @import helper._
 @main("Search Courses",userName) {
+<script src="@routes.Assets.at("controllers/SearchController.js")"></script>
+<input id="userName" type="hidden" value="@userName">
+<div class="panel panel-success" ng-controller="SearchController">
+<div class="panel-heading">Search courses (@if(keyword.length > 0){@keyword}@if(keyword.length == 0){All}) </div>
+		<form class="form-horizontal" style="padding : 20px" >
+			<fieldset >
+				@*filter part*@
+				<div class="col-md-3 well bs-component" >
 
-<div class="panel panel-success">
-<div class="panel-heading">Search Courses</div>
-<div class="panel-body">
-	<div class="list-group">
-		<div class="panel panel-success">
-			<div class="panel-heading">@keyword</div>
-			<div class="panel-body">
-				<table class="table table-striped table-hover ">
-					<thead>
-						<tr>
-							<th>Dance Style</th>
-							<th>Title</th>
-							<th>Start Date</th>
-							<th>Level</th>
-							<th>Language</th>
-							<th>Status</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						@for(course <- courses) {
-						<tr>
-							<td>@course.danceStyle.danceStyleName</td>
-							<td>@course.title</td>
-							<td>@course.startDate.format("dd.MM.yyyy")</td>
-							<td>@course.danceLevel</td>
-							<td>@course.language.languageName</td>
-							<td>@if(course.status == "open"){
-								<span class="label label-success">
-							} else{
-								<span class="label label-danger">
-							} 
-							@course.status
-							</span></td>
-							<td><a href="@controllers.course.routes.CourseController.showById(course.id)" class="btn btn-primary btn-sm">Details</a></td>
-						</tr>
+					@*dates*@
+					<div style="padding-top : 10px">
+						<label>Starts from</label><br/>
+						<input type="date" class="form-control" id="startDate" name="startDate"
+						placeholder="dd.MM.yyyy" />
+					</div>
+
+					@*dancing style*@
+					<div style="padding-top : 10px">
+						<label>Dancing style</label><br/>
+						<select class="form-control" id="style" name="style">
+							<option>All</option>
+						@for(style <- styles) {
+							<option>@style.danceStyleName</option>
 						}
-						
-					</tbody>
-					
-				</table>
-			</div>
-		</div>
+						</select>
+					</div>
+
+					@*languages*@
+					<div style="padding-top : 10px">
+						<label>Languages</label><br/>
+						<div ng-repeat="lan in languages"><input type="checkbox" ng-model="lan.checked">
+							{{" "+lan.languageName}}</div>
+					</div>
+					@*distance*@
+					<div style="padding-top : 10px">
+						<label>Distance</label><br/>
+						10
+						<input id="distance" type="text" class="span2" style="width : 65%"
+						data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="80"/>
+						1000 km
+						<script type="text/javascript">
+                              $('#distance').slider({
+                                 formatter: function(value) {
+                                    return 'Distance: ' + value;
+                                 }
+                              });
+                            </script>
+					</div>
+					<div style="padding-top : 10px">
+						<button type="submit" class="btn btn-success">Filter</button>
+					</div>
+
+				</div>
+
+				@*result part*@
+				<div class="col-md-9" >
+					@*{{student}}*@
+					<div style="border-bottom: dashed; border-bottom-color: #18bc9c; border-bottom-width: thin;">
+						<label> Courses </label>
+						<span class="label label-success label-as-badge" style="margin-left: 5px">{{@courses.length}}</span>
+					</div>
+
+					<div class="search_result_div">
+						<table class="table table-striped table-hover ">
+							<thead>
+								<tr style="background-color: #18bc9c; color: #ffffff;">
+									<th></th>
+									<th>Title</th>
+									<th>Dance Style</th>
+									<th>Start Date</th>
+									<th>Level</th>
+									<th>Language</th>
+									<th>Status</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+							@for(course <- courses) {
+								<tr>
+									<td><img src="@course.pictureURL" height="50" width="50" style="vertical-align: top !important;"></td>
+									<td style="padding-top: 20px;">@course.title</td>
+									<td style="padding-top: 20px;">@course.danceStyle.danceStyleName</td>
+									<td style="padding-top: 20px;">@course.startDate.format("dd.MM.yyyy")</td>
+									<td style="padding-top: 20px;">@course.danceLevel</td>
+									<td style="padding-top: 20px;">@course.language.languageName</td>
+									<td style="padding-top: 20px;">@if(course.status == "open"){
+										<span class="label label-success">
+										} else{
+										<span class="label label-danger">
+										}
+										@course.status
+									</span></td>
+									<td style="padding-top: 15px;"><a href="@controllers.course.routes.CourseController.showById(course.id)" class="btn btn-success btn-sm">Details</a></td>
+								</tr>
+							}
+
+							</tbody>
+
+						</table>
+					</div>
+				</div>
+			</fieldset>
+
+
+		</form>
+
 	</div>
-</div>
-</div>
 
 }
 

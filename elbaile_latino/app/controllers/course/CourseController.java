@@ -118,17 +118,18 @@ public class CourseController extends Controller {
 
 	public static Result searchByKeyword(){
 		String keyword =  Form.form().bindFromRequest().get("seachBox").toUpperCase();
-		return ok(views.html.course.coursesSearch.render(Course.findByKeyword(keyword),ctx().session().get("userName"), keyword));
+		return ok(views.html.course.coursesSearch.render(Course.findByKeyword(keyword),ctx().session().get("userName"), keyword, DanceStyle.findAll()));
 	}
 
 	public static Result searchByCategory(String catName){
 		String keyword =  catName.toUpperCase();
-		return ok(views.html.course.coursesSearch.render(Course.findByKeyword(keyword),ctx().session().get("userName"), keyword));
+		return ok(views.html.course.coursesSearch.render(Course.findByKeyword(keyword),ctx().session().get("userName"), keyword, DanceStyle.findAll()));
 	}
 
 	public static Result showPaymentForm(){
 		String amount = Form.form().bindFromRequest().get("amount");
-		return ok(views.html.course.coursePayment.render(ctx().session().get("userName"),amount));
+		String courseId = Form.form().bindFromRequest().get("courseId");
+		return ok(views.html.course.coursePayment.render(ctx().session().get("userName"),amount, courseId));
 	}
 
 	public static Result showCourseSettings(){

@@ -1,11 +1,11 @@
-@(userName: String, amount: String)
+@(userName: String, amount: String, courseId: String)
 
 @import helper._
 @main("payment",userName) {
 <div class="panel panel-success">
 	<div class="panel-heading">Payment</div>
 	<div class="panel-body">
-		<form class="form-horizontal">
+		<form class="form-horizontal" action="/course/register/" method="post">
 			<fieldset>
 				<legend>Please enter your payment information</legend>
 				<div class="form-group" style="margin-top: 20px; padding-left: 15px; padding-right: 15px;">
@@ -29,9 +29,10 @@
 				<div class="form-group" style="margin-top: 20px; padding-left: 15px; padding-right: 15px;">
 					<strong>Total amount:</strong><p></p><strong>@amount EUR</strong>
 				</div>
+				<input class="form-control" id="courseId" name="courseId" type="hidden" value="@courseId">
 			</fieldset>
-				<a class="btn btn-primary" href="/">Cancel</a>
-				<a class="btn btn-primary" href="/">Confirm</a>
+				<a class="btn btn-success" href="/">Cancel</a>
+				<button type="submit" class="btn btn-success">Confirm</button>
 		</form>
 	</div>
 </div>
