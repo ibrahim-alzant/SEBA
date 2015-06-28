@@ -113,10 +113,11 @@
                             <br>
                             {{student.additionalInformation}}
                             <br>
-                            <span class="label label-info" ng-repeat="lan in student.spokenLanguages" style="margin-right: 5px">{{lan.languageName}}</span>
+                            <span class="label label-default" ng-class="languageLabelClass(lan.id)"
+                                ng-repeat="lan in student.spokenLanguages" style="margin-right: 5px">{{lan.languageName}}</span>
                             <br/>
                             <span class="label label-default" ng-class="styleLabelClass(style.danceStyleName)"
-                            ng-repeat="style in student.danceStyles" style="margin-right: 5px">{{style.danceStyleName}}</span>
+                                ng-repeat="style in student.danceStyles" style="margin-right: 5px">{{style.danceStyleName}}</span>
                             <br/>
                         </div>
                         <button class="btn btn-success" style="margin-top: 20px; float: right;">

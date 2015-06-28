@@ -44,6 +44,7 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http) {
                 ( student.height >= parseFloat($scope.height.split(',')[0])) &&
                 ( student.height <= parseFloat($scope.height.split(',')[1])) &&
                 ( student.hasStyle($scope.style)) &&
+                ( student.hasCheckedLanguages()) &&
                 (
                     (!student.hasOwnProperty('distance')) ||
                     (
@@ -66,6 +67,13 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http) {
         if ((user.hasOwnProperty("danceStyles")) && (user.danceStyles.hasOwnProperty("0")) && (user.danceStyles[0].hasOwnProperty("danceStyleName"))) {
             $scope.style = user.danceStyles[0].danceStyleName;
         }
+        angular.forEach(user.spokenLanguages, function (userLanguage) {
+            angular.forEach($scope.languages, function (lan) {
+                if (userLanguage.id == lan.id) {
+                    lan.checked = true;
+                }
+            });
+        });
         geocoder.geocode({'address': user.address}, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 $scope.location = results[0].geometry.location;
@@ -95,18 +103,33 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http) {
         });
         student.hasStyle = function (styleName) {
             return hasStyle(student, styleName);
-        }
+        };
+        student.hasCheckedLanguages = function () {
+            return hasCheckedLanguages(student);
+        };
 
     }
 
     function hasStyle(student, styleName) {
-        isStyle = false;
+        var isStyle = false;
         angular.forEach(student.danceStyles, function (style) {
             if (style.danceStyleName == styleName) {
                 isStyle = true;
             }
         });
         return isStyle;
+    }
+
+    function hasCheckedLanguages(student) {
+        var hasCheckedLanguage = false;
+        angular.forEach(student.spokenLanguages, function (studentLanguage) {
+            angular.forEach($scope.languages, function (lan) {
+                if ((studentLanguage.id == lan.id) && (lan.checked == true)) {
+                    hasCheckedLanguage = true;
+                }
+            });
+        });
+        return hasCheckedLanguage;
     }
 
     function deg2rad(val) {
@@ -135,12 +158,20 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http) {
             return "label label-default";
         }
     };
-    $scope.languageLabelClass = function (languageName) {
-        if (languageName == $scope.language) {
+    $scope.languageLabelClass = function (languageId) {
+        var isLanguageChecked = false;
+        angular.forEach($scope.languages, function (lan) {
+            if ((lan.id == languageId) && (lan.checked)) {
+                isLanguageChecked = true;
+            }
+            ;
+        });
+        if (isLanguageChecked) {
             return "label label-info";
         } else {
             return "label label-default";
         }
+
     }
 
 });
