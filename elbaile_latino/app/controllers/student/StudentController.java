@@ -3,6 +3,7 @@ package controllers.student;
 import models.common.DanceStyle;
 import models.common.Gender;
 import models.common.Language;
+import models.common.course.Course;
 import models.student.Student;
 import play.data.Form;
 import play.data.validation.Constraints.Required;
@@ -32,10 +33,12 @@ public class StudentController extends Controller {
 //
     public static Result show(String username) {
         Student student = Student.findByUsername(username);
+        StudentProfileController controller = new StudentProfileController();
+        List<Course> courses = controller.getCourses(student);
         if (student == null) {
             return notFound();
         } else {
-            return ok(views.html.studentProfile.render(student, ctx().session().get("userName"), new StudentProfileController()));
+            return ok(views.html.studentProfile.render(student, ctx().session().get("userName"), controller, courses));
         }
     }
 

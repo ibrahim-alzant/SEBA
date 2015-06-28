@@ -25,7 +25,9 @@ public class LoginController extends Controller {
         } else {
             session("userName", loginForm.get().userName);
             Student student = Student.findByUsername(loginForm.get().userName);
-            return ok(views.html.studentProfile.render(student, ctx().session().get("userName"), new StudentProfileController()));
+            StudentProfileController controller = new StudentProfileController();
+            List<Course> courses = controller.getCourses(student);
+            return ok(views.html.studentProfile.render(student, ctx().session().get("userName"), controller, courses));
         }
     }
     

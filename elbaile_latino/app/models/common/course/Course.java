@@ -111,6 +111,31 @@ public class Course extends Model {
 		}	
 		return result_list;
 	}
+	public static List<Course> findByStudent(Student student){
+		Connection connection = DB.getConnection();
+		List<Course> result_list = new ArrayList<>();
+
+		try{
+			ResultSet result = connection.prepareStatement(" Select course_student.course_id "
+					+" from course_student"
+					+" where course_student.student_id="+student.id).executeQuery();
+
+			connection.close();
+
+			while(result.next()){
+
+				Long courseId = result.getLong(1);
+				Course courseFound = Course.find.byId(courseId);
+				result_list.add(courseFound);
+
+			}
+
+		}catch(Exception e){
+			e.getStackTrace();
+
+		}
+		return result_list;
+	}
 
 	public static List<Course> findByKeyword(String keyword){
 
