@@ -9,6 +9,7 @@ import java.util.List;
 import models.common.DanceStyle;
 import models.common.Language;
 import models.common.course.Course;
+import models.common.course.SearchFilter;
 import models.student.Student;
 import models.teacher.Teacher;
 import play.data.Form;
@@ -118,17 +119,37 @@ public class CourseController extends Controller {
 
 	public static Result searchByKeyword(){
 		String keyword =  Form.form().bindFromRequest().get("seachBox").toUpperCase();
-		return ok(views.html.course.coursesSearch.render(Course.findByKeyword(keyword),ctx().session().get("userName"), keyword));
+		SearchFilter searchCriteria = new SearchFilter();
+		return ok(views.html.course.coursesSearch.render(Course.findByKeyword(keyword),ctx().session().get("userName"), keyword, DanceStyle.findAll(),searchCriteria, Language.findAll()));
 	}
 
 	public static Result searchByCategory(String catName){
 		String keyword =  catName.toUpperCase();
-		return ok(views.html.course.coursesSearch.render(Course.findByKeyword(keyword),ctx().session().get("userName"), keyword));
+		SearchFilter searchCriteria = new SearchFilter();
+		return ok(views.html.course.coursesSearch.render(Course.findByKeyword(keyword),ctx().session().get("userName"), keyword, DanceStyle.findAll(),searchCriteria, Language.findAll()));
 	}
 
 	public static Result showPaymentForm(){
 		String amount = Form.form().bindFromRequest().get("amount");
-		return ok(views.html.course.coursePayment.render(ctx().session().get("userName"),amount));
+		String courseId = Form.form().bindFromRequest().get("courseId");
+		return ok(views.html.course.coursePayment.render(ctx().session().get("userName"),amount, courseId));
+	}
+
+	public static Result searchByCriteria(){
+		String startDateFrom = Form.form().bindFromRequest().get("startDateFrom");
+		String startDateTo = Form.form().bindFromRequest().get("startDateTo");
+		String danceStyle = Form.form().bindFromRequest().get("danceStyle");
+		String language = Form.form().bindFromRequest().get("language");
+
+		SearchFilter searchCriteria = new SearchFilter();
+		searchCriteria.dateFrom = startDateFrom;
+		searchCriteria.dateTo = startDateTo;
+		searchCriteria.danceStyle = danceStyle;
+		searchCriteria.language = language;
+
+		String keyword = searchCriteria.getFilterString();
+
+		return ok(views.html.course.coursesSearch.render(Course.findByCriteria(searchCriteria),ctx().session().get("userName"), keyword, DanceStyle.findAll(), searchCriteria, Language.findAll()));
 	}
 
 	public static Result showCourseSettings(){

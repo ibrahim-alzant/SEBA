@@ -2,6 +2,7 @@ package models.common.course;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -112,10 +113,6 @@ public class Course extends Model {
 	}
 
 	public static List<Course> findByKeyword(String keyword){
-	//Provided filter courses by title
-	//TODO: Filter by dance style, language
-	//Note: Used this methodology because  the find() doesn't support more than 2
-	// OR in the where statement
 
 		Connection connection = DB.getConnection();
 		List<Course> result_list = new ArrayList<>();
@@ -137,6 +134,69 @@ public class Course extends Model {
 				courseFound.danceLevel.toUpperCase().contains(keyword) || courseFound.language.languageName.toUpperCase().contains(keyword) ||
 				courseFound.danceStyle.danceStyleName.toUpperCase().contains(keyword) || courseFound.startDate.toString().toUpperCase().contains(keyword))
 					result_list.add(courseFound);
+			}
+
+		}catch(Exception e){
+			e.getStackTrace();
+
+		}
+		return result_list;
+	}
+
+	public static List<Course> findByCriteria(SearchFilter filterObject){
+
+		Connection connection = DB.getConnection();
+		List<Course> result_list = new ArrayList<>();
+
+
+
+		try{
+			ResultSet result = connection.prepareStatement(" Select course.id "
+							+" from course"
+			).executeQuery();
+
+			connection.close();
+
+			while(result.next()){
+
+				Long courseId = result.getLong(1);
+				Course courseFound = Course.find.byId(courseId);
+
+				if(filterObject.dateFrom.length() > 0)
+				{
+					Date tmpDate = new SimpleDateFormat("dd.MM.yyyy").parse(filterObject.dateFrom);
+					if(courseFound.startDate.before(tmpDate))
+					{
+						continue;
+					}
+				}
+
+				if(filterObject.dateTo.length() > 0)
+				{
+					Date tmpDate = new SimpleDateFormat("dd.MM.yyyy").parse(filterObject.dateTo);
+					if(courseFound.startDate.after(tmpDate))
+					{
+						continue;
+					}
+				}
+
+				if(filterObject.danceStyle.length() > 0 && !filterObject.danceStyle.contains("All"))
+				{
+					if(!courseFound.danceStyle.danceStyleName.contains(filterObject.danceStyle))
+					{
+						continue;
+					}
+				}
+
+				if(filterObject.language.length() > 0 && !filterObject.language.contains("All"))
+				{
+					if(!courseFound.language.languageName.contains(filterObject.language))
+					{
+						continue;
+					}
+				}
+
+				result_list.add(courseFound);
 			}
 
 		}catch(Exception e){
