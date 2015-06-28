@@ -74,8 +74,8 @@
                     <div style="padding-top : 10px">
                         <label>Height</label><br/>
                         140 cm
-                        <input id="height" type="text" class="span2" style="width : 55%"
-                        data-slider-min="140" data-slider-max="220" data-slider-step="5" data-slider-value="[160,200]"/>
+                        <input id="height" type="text" class="span2" style="width : 55%" ng-model="height"
+                        data-slider-min="140" data-slider-max="220" data-slider-step="1" data-slider-value="[160,200]"/>
                         220 cm
                         <script type="text/javascript">
                           $('#height').slider({
@@ -114,7 +114,8 @@
                             {{student.additionalInformation}}
                             <br>
                             <span class="label label-info" ng-repeat="lan in student.spokenLanguages" style="margin-right: 5px">{{lan.languageName}}</span>
-
+                            <br/>
+                            {{student.height}}
                         </div>
                         <button class="btn btn-success" style="margin-top: 20px; float: right;">
                             <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Send message

@@ -16,6 +16,7 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http) {
     $scope.students = [];
     $scope.age = "18,45";
     $scope.distance = "10";
+    $scope.height = "160,200";
 
     $http({
         method: 'GET',
@@ -39,6 +40,8 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http) {
             if ((student.gender.id == $scope.gender) &&
                 ( student.age >= parseFloat($scope.age.split(',')[0])) &&
                 ( student.age <= parseFloat($scope.age.split(',')[1])) &&
+                ( student.height >= parseFloat($scope.height.split(',')[0])) &&
+                ( student.height <= parseFloat($scope.height.split(',')[1])) &&
                 (
                     (!student.hasOwnProperty('distance')) ||
                     (
