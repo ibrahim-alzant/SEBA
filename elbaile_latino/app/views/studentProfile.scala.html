@@ -3,7 +3,10 @@
     @main("Student Profile", userName) {
 
         <div class="panel panel-success">
-            <div class="panel-heading">@studentProfile.firstName @studentProfile.lastName</div>
+            <div class="panel-heading">
+                @studentProfile.firstName @studentProfile.lastName
+                <a href="/student/new/" style="float: right; color: white"> Edit </a>
+            </div>
             <div class="panel-body">
                 <div class="list-group">
                     <div class="panel panel-info">
