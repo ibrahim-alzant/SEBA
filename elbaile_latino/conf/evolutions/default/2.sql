@@ -53,7 +53,9 @@ VALUES (2, 'Anna', 2, 'Dallawer', 'Sabener Strasse 40, 81547 Munchen', 'anna', '
  INSERT INTO student_dance_style (student_id, dance_style_id ) VALUES (2,1);
  INSERT INTO student_dance_style (student_id, dance_style_id ) VALUES (3,1);
  INSERT INTO student_dance_style (student_id, dance_style_id ) VALUES (4,1);
-
+ INSERT INTO student_dance_style (student_id, dance_style_id ) VALUES (1,2);
+ INSERT INTO student_dance_style (student_id, dance_style_id ) VALUES (2,3);
+ INSERT INTO student_dance_style (student_id, dance_style_id ) VALUES (3,3);
 # --- !Downs
 DELETE FROM student_language;
 DELETE FROM student_dance_style;

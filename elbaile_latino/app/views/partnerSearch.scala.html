@@ -63,7 +63,7 @@
                     @*dancing style*@
                     <div style="padding-top : 10px">
                         <label>Dancing style</label><br/>
-                        <select class="form-control" id="style" name="style">
+                        <select class="form-control" id="style" name="style" ng-model="style">
                         @for(style <- styles) {
                             <option>@style.danceStyleName</option>
                         }
@@ -115,7 +115,9 @@
                             <br>
                             <span class="label label-info" ng-repeat="lan in student.spokenLanguages" style="margin-right: 5px">{{lan.languageName}}</span>
                             <br/>
-                            {{student.height}}
+                            <span class="label label-default" ng-class="styleLabelClass(style.danceStyleName)"
+                            ng-repeat="style in student.danceStyles" style="margin-right: 5px">{{style.danceStyleName}}</span>
+                            <br/>
                         </div>
                         <button class="btn btn-success" style="margin-top: 20px; float: right;">
                             <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Send message

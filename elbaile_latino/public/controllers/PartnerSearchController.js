@@ -17,6 +17,7 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http) {
     $scope.age = "18,45";
     $scope.distance = "10";
     $scope.height = "160,200";
+    $scope.style = "Salsa";
 
     $http({
         method: 'GET',
@@ -42,6 +43,7 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http) {
                 ( student.age <= parseFloat($scope.age.split(',')[1])) &&
                 ( student.height >= parseFloat($scope.height.split(',')[0])) &&
                 ( student.height <= parseFloat($scope.height.split(',')[1])) &&
+                ( student.hasStyle($scope.style)) &&
                 (
                     (!student.hasOwnProperty('distance')) ||
                     (
@@ -60,6 +62,9 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http) {
             $scope.gender = 2;
         } else {
             $scope.gender = 1;
+        }
+        if ((user.hasOwnProperty("danceStyles")) && (user.danceStyles.hasOwnProperty("0")) && (user.danceStyles[0].hasOwnProperty("danceStyleName"))) {
+            $scope.style = user.danceStyles[0].danceStyleName;
         }
         geocoder.geocode({'address': user.address}, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
@@ -88,7 +93,20 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http) {
             var scope = angular.element(e).scope();
             scope.$digest();
         });
+        student.hasStyle = function (styleName) {
+            return hasStyle(student, styleName);
+        }
 
+    }
+
+    function hasStyle(student, styleName) {
+        isStyle = false;
+        angular.forEach(student.danceStyles, function (style) {
+            if (style.danceStyleName == styleName) {
+                isStyle = true;
+            }
+        });
+        return isStyle;
     }
 
     function deg2rad(val) {
@@ -108,6 +126,21 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http) {
                 Math.cos(delta_lon)) * 3963.189;
         var kmdistance = (miledistance * 1.609344).toFixed(1);
         return kmdistance;
+    }
+
+    $scope.styleLabelClass = function (danceStyleName) {
+        if (danceStyleName == $scope.style) {
+            return "label label-info";
+        } else {
+            return "label label-default";
+        }
+    };
+    $scope.languageLabelClass = function (languageName) {
+        if (languageName == $scope.language) {
+            return "label label-info";
+        } else {
+            return "label label-default";
+        }
     }
 
 });
