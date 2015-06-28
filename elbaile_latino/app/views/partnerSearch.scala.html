@@ -22,7 +22,7 @@
                                 female
                             </label>
                             <label class="radio-inline" for="radios-male">
-                                <input type="radio"  value="1" ng-model="gender">
+                                <input type="radio" value="1" ng-model="gender">
                                 male
                             </label>
                         </div>
@@ -49,7 +49,7 @@
                         <label>Distance</label><br/>
                         5 km
                         <input id="distance" type="text" class="span2" style="width : 60%" ng-model="distance"
-                        data-slider-min="5" data-slider-max="100" data-slider-step="1"  data-slider-value="10"/>
+                        data-slider-min="5" data-slider-max="100" data-slider-step="1" data-slider-value="10"/>
                         100 km
                         <script type="text/javascript">
                               $('#distance').slider({
@@ -97,34 +97,36 @@
                 @*result part*@
                 <div class="col-md-9" >
                     @*{{student}}*@
-                    <div style="border-bottom: dashed; border-bottom-color: #18bc9c; border-bottom-width: thin;">
+                    <div style="border-bottom : dashed ; border-bottom-color : #18bc9c ; border-bottom-width : thin ;">
                         <label> Results </label>
-                        <span class="label label-success label-as-badge" style="margin-left: 5px">{{selectedStudents().length}}</span>
+                        <span class="label label-success label-as-badge" style="margin-left : 5px">
+                            {{selectedStudents().length}}</span>
                     </div>
 
                     <div class="search_result_div" ng-repeat="student in selectedStudents()">
 
-                      @*{{student}}*@
-                        <img src="{{student.imgURL}}" height="100" width="100" style="vertical-align: top !important;">
-                        <div style="padding-left: 10px; display: inline-block; vertical-align: top">
-                            <span style=" font-family: 'Lobster'; color:#337ab7; font-size: 20px ">{{student.firstName+" "+student.lastName}}</span>
+                        @*{{student}}*@
+                        <img src="{{student.imgURL}}" height="100" width="100" style="vertical-align : top !important ;">
+                        <div style="padding-left : 10px ; display : inline-block ; vertical-align : top">
+                            <span style=" font-family : 'Lobster' ; color : #337ab7 ; font-size : 20px ">
+                                {{student.firstName+" "+student.lastName}}</span>
                             <br>
                             Age: {{student.age}}
                             <br>
                             {{student.additionalInformation}}
                             <br>
                             <span class="label label-default" ng-class="languageLabelClass(lan.id)"
-                                ng-repeat="lan in student.spokenLanguages" style="margin-right: 5px">{{lan.languageName}}</span>
+                            ng-repeat="lan in student.spokenLanguages" style="margin-right : 5px">
+                                {{lan.languageName}}</span>
                             <br/>
                             <span class="label label-default" ng-class="styleLabelClass(style.danceStyleName)"
-                                ng-repeat="style in student.danceStyles" style="margin-right: 5px">{{style.danceStyleName}}</span>
+                            ng-repeat="style in student.danceStyles" style="margin-right : 5px">
+                                {{style.danceStyleName}}</span>
                             <br/>
                         </div>
-                        <button class="btn btn-success" style="margin-top: 20px; float: right;">
+                        <button class="btn btn-success" style="margin-top : 30px ; float : right ;" ng-click="sendMessage(student)">
                             <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Send message
                         </button>
-
-
                     </div>
                 </div>
             </fieldset>

@@ -1,4 +1,4 @@
-ElBaileLatino.controller('PartnerSearchController', function ($scope, $http) {
+ElBaileLatino.controller('PartnerSearchController', function ($scope, $http, $window) {
 
 
     geocoder = new google.maps.Geocoder();
@@ -172,6 +172,10 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http) {
             return "label label-default";
         }
 
+    };
+
+    $scope.sendMessage = function (student) {
+        $window.location = "mailto:"+student.email+"?subject=ElBaileLatino - dance together &body=";
     }
 
 });
