@@ -30,10 +30,10 @@
 
                     @*age*@
                     <div>
-                        <label class="control-label">Age</label><br/> 1
-                        <input id="age" type="text" class="span2" style="width : 85%"
-                        data-slider-min="1" data-slider-max="99" data-slider-step="5" data-slider-value="[18,35]"/>
-                        99
+                        <label class="control-label">Age</label><br/> 10
+                        <input id="age" type="text" class="span2" style="width : 80%" ng-model="age"
+                        data-slider-min="10" data-slider-max="85" data-slider-step="5" data-slider-value="[18,45]"/>
+                        85
                         <script type="text/javascript">
                           $('#age').slider({
                              formatter: function(value) {
@@ -108,10 +108,12 @@
                         <div style="padding-left: 10px; display: inline-block; vertical-align: top">
                             <span style=" font-family: 'Lobster'; color:#337ab7; font-size: 20px ">{{student.firstName+" "+student.lastName}}</span>
                             <br>
+                            Age: {{student.age}}
+                            <br>
                             {{student.additionalInformation}}
                             <br>
                             <span class="label label-info" ng-repeat="lan in student.spokenLanguages" style="margin-right: 5px">{{lan.languageName}}</span>
-                            <br>
+
                         </div>
                         <button class="btn btn-success" style="margin-top: 20px; float: right;">
                             <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Send message
