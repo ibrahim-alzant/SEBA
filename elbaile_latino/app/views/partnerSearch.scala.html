@@ -32,7 +32,7 @@
                     <div>
                         <label class="control-label">Age</label><br/> 10
                         <input id="age" type="text" class="span2" style="width : 80%" ng-model="age"
-                        data-slider-min="10" data-slider-max="85" data-slider-step="5" data-slider-value="[18,45]"/>
+                        data-slider-min="10" data-slider-max="85" data-slider-step="1" data-slider-value="[18,45]"/>
                         85
                         <script type="text/javascript">
                           $('#age').slider({
@@ -47,13 +47,13 @@
                     @*distance*@
                     <div style="padding-top : 10px">
                         <label>Distance</label><br/>
-                        10 km
-                        <input id="distance" type="text" class="span2" style="width : 65%"
-                        data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="80"/>
-                        1000 km
+                        5 km
+                        <input id="distance" type="text" class="span2" style="width : 60%" ng-model="distance"
+                        data-slider-min="5" data-slider-max="100" data-slider-step="1"  data-slider-value="10"/>
+                        100 km
                         <script type="text/javascript">
                               $('#distance').slider({
-                                 formatter: function(value) {
+                                 formatter: function(value){
                                     return 'Distance: ' + value;
                                  }
                               });
@@ -74,7 +74,7 @@
                     <div style="padding-top : 10px">
                         <label>Height</label><br/>
                         140 cm
-                        <input id="height" type="text" class="span2" style="width : 65%"
+                        <input id="height" type="text" class="span2" style="width : 55%"
                         data-slider-min="140" data-slider-max="220" data-slider-step="5" data-slider-value="[160,200]"/>
                         220 cm
                         <script type="text/javascript">
@@ -103,6 +103,7 @@
                     </div>
 
                     <div class="search_result_div" ng-repeat="student in selectedStudents()">
+
                       @*{{student}}*@
                         <img src="{{student.imgURL}}" height="100" width="100" style="vertical-align: top !important;">
                         <div style="padding-left: 10px; display: inline-block; vertical-align: top">
