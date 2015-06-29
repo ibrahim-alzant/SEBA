@@ -152,6 +152,23 @@ public class CourseController extends Controller {
 		return ok(views.html.course.coursesSearch.render(Course.findByCriteria(searchCriteria),ctx().session().get("userName"), keyword, DanceStyle.findAll(), searchCriteria, Language.findAll()));
 	}
 
+	public static Result showAllCourses(){
+		String startDateFrom = "";
+		String startDateTo = "";
+		String danceStyle = "";
+		String language = "";
+
+		SearchFilter searchCriteria = new SearchFilter();
+		searchCriteria.dateFrom = startDateFrom;
+		searchCriteria.dateTo = startDateTo;
+		searchCriteria.danceStyle = danceStyle;
+		searchCriteria.language = language;
+
+		String keyword = searchCriteria.getFilterString();
+
+		return ok(views.html.course.coursesSearch.render(Course.findByCriteria(searchCriteria),ctx().session().get("userName"), keyword, DanceStyle.findAll(), searchCriteria, Language.findAll()));
+	}
+
 	public static Result showCourseSettings(){
 		//TODO: Send the course ID as parameter (will do it later)
 		Course tmpCourse = new Course();

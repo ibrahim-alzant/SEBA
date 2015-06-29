@@ -27,6 +27,7 @@ GET         /course/edit/id/:id/             controllers.course.CourseController
 GET         /course/settings/                controllers.course.CourseController.showCourseSettings()
 POST        /course/register/                controllers.course.CourseController.registerStudent()
 POST        /course/filter/                  controllers.course.CourseController.searchByCriteria()
+GET         /courses/search/                  controllers.course.CourseController.showAllCourses()
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                    controllers.Assets.at(path="/public", file)
