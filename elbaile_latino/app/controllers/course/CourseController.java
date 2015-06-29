@@ -9,6 +9,7 @@ import java.util.List;
 import models.common.DanceStyle;
 import models.common.Language;
 import models.common.course.Course;
+import models.common.course.Remarks;
 import models.common.course.SearchFilter;
 import models.student.Student;
 import models.teacher.Teacher;
@@ -178,12 +179,23 @@ public class CourseController extends Controller {
 	public static Result registerStudent(){
 		Student tmpStudent = Student.findByUsername(ctx().session().get("userName"));
 		int courseId =  Integer.parseInt(Form.form().bindFromRequest().get("courseId"));
+		String remarksMessaage =  Form.form().bindFromRequest().get("questions");
 		Course tmpCourse = Course.findById(courseId);
 
 		if(tmpCourse.participants == null)
 			tmpCourse.participants = new ArrayList<Student>();
 
 		tmpCourse.participants.add(tmpStudent);
+
+		if(remarksMessaage.length() > 0)
+		{
+			if(tmpCourse.remarks == null)
+				tmpCourse.remarks = new ArrayList<Remarks>();
+
+			Remarks remark = new Remarks(tmpStudent, new Date(), remarksMessaage);
+			tmpCourse.remarks.add(remark);
+		}
+
 		tmpCourse.save();
 
 		return redirect(controllers.student.routes.StudentController.show(ctx().session().get("userName")));

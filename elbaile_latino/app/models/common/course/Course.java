@@ -76,6 +76,9 @@ public class Course extends Model {
 	@Required
 	public float participantFee;
 
+	@ManyToMany(cascade = CascadeType.ALL)
+	public List<Remarks> remarks;
+
 	public String pictureURL;
 	public String videoURL;
 	
