@@ -14,8 +14,12 @@
 					<li><a href="#register" data-toggle="tab">Register</a></li>
 				}
 				@if(isEditable == true) {
-					<li><a href="#participants" data-toggle="tab">Participants</a></li>
-					<li><a href="#remarks" data-toggle="tab">Remarks</a></li>
+					<li><a href="#participants" data-toggle="tab">Participants
+						<span class="label label-success label-as-badge" style="margin-left: 5px">{{@course.participants.size()}}</span></a>
+					</a></li>
+					<li><a href="#remarks" data-toggle="tab">Remarks
+						<span class="label label-success label-as-badge" style="margin-left: 5px">{{@course.remarks.size()}}</span></a>
+					</li>
 				}
 			</ul>
 			<div id="myTabContent" class="tab-content">
@@ -215,7 +219,7 @@
 					<label for="numberOfParticipants" class="col-lg-2 control-label">Number Of Participants</label>
 					<div class="col-lg-6">
 						<input class="form-control" id="numberOfParticipants" name="numberOfParticipants" readonly
-						placeholder="Number Of Participants" type="text" value="@course.numberOfParticipants">
+						placeholder="Number Of Participants" type="text" value="@course.participants.size()">
 					</div>
 				</div>
 				<div class="form-group">
