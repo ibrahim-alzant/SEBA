@@ -86,6 +86,11 @@ public class StudentController extends Controller {
         student.spokenLanguages = getLanguages(studentForm.spokenLanguages);
         student.danceStyles = getDanceStyles(studentForm.danceStyles);
         student.save();
+        if (ctx().session().get("userName") != null) {
+            StudentProfileController controller = new StudentProfileController();
+            List<Course> courses = controller.getCourses(student);
+            return ok(views.html.studentProfile.render(student, ctx().session().get("userName"), controller, courses));
+        }
         return redirect(controllers.student.routes.LoginController.loginForm());
     }
 
