@@ -1,0 +1,148 @@
+@import models.student.Student
+@(studentForm: Form[controllers.student.StudentController.StudentForm],
+        danceStyles: List[models.common.DanceStyle], genders: List[models.common.Gender], userName: String, student: Student)
+
+@import helper._
+
+@main("Edit student profile", userName) {
+    <div class="panel panel-success">
+        <div class="panel-heading">Edit student profile</div>
+        <form class="form-horizontal" action="/student/post/" method="post">
+
+            <fieldset>
+                <br>
+                <div class="form-group">
+                    <label for="firstName" class="col-lg-2 control-label">First name</label>
+                    <div class="col-lg-6">
+                        <input class="form-control" id="firstName" name="firstName" placeholder="First name" type="text" value="@student.firstName" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName" class="col-lg-2 control-label">Last name</label>
+                    <div class="col-lg-6">
+                        <input class="form-control" id="lastName" name="lastName" placeholder="Last Name" type="text" value="@student.lastName">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="select" class="col-lg-2 control-label">Gender</label>
+                    <div class="col-lg-2">
+                        <select class="form-control" id="gender" name="gender" >
+                        @for(gender <- genders) {
+                            @if(gender.id==student.gender.id){
+                                <option selected>@gender.genderName</option>
+                            }else{
+                                <option>@gender.genderName</option>
+                            }
+                        }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="dateOfBirth" class="col-lg-2 control-label">Date of Birth</label>
+                    <div class="col-lg-6">
+                        <input class="form-control" id="dateOfBirth" name="dateOfBirth" placeholder="Date of Birth"
+                        value="@student.getFormattedDate(student)" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="userName" class="col-lg-2 control-label">User name</label>
+                    <div class="col-lg-6">
+                        <input class="form-control" id="userName" name="userName" placeholder="User name" type="text" value="@student.userName">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="col-lg-2 control-label">Password</label>
+                    <div class="col-lg-6">
+                        <input class="form-control" id="password" name="password" placeholder="Password" type="password" value="@student.password">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordConfirm" class="col-lg-2 control-label">Confirm password</label>
+                    <div class="col-lg-6">
+                        <input class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Re-type password" type="password" value="@student.password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-lg-2 control-label">Email</label>
+                    <div class="col-lg-6">
+                        <input class="form-control" id="email" name="email" placeholder="Email" type="text" value="@student.email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="emailConfirm" class="col-lg-2 control-label" >Confirm Email</label>
+                    <div class="col-lg-6">
+                        <input class="form-control" id="emailConfirm" name="emailConfirm" placeholder="Re-Type email" type="text" value="@student.email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="mobile" class="col-lg-2 control-label">Mobile</label>
+                    <div class="col-lg-6">
+                        <input class="form-control" id="mobile" name="mobile" placeholder="Mobile" type="text" value="@student.mobile">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address" class="col-lg-2 control-label">Address</label>
+                    <div class="col-lg-6">
+                        <input class="form-control" id="address" name="address" placeholder="Address" type="text" value="@student.address">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="imgURL" class="col-lg-2 control-label">Profile Picture</label>
+                    <div class="col-lg-6">
+                        <input class="form-control" id="imgURL" name="imgURL" placeholder="Profile Picture" type="text" value="@student.imgURL">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="professionalExperience" class="col-lg-2 control-label">
+                        Additional Information</label>
+                    <div class="col-lg-6">
+                        <textarea class="form-control" rows="3" name="additionalInformation" id="additionalInformation">@student.additionalInformation</textarea>
+                        <span class="help-block">Please write any information you want to mention.</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="mobile" class="col-lg-2 control-label">Height</label>
+                    <div class="col-lg-6">
+                        <input class="form-control" id="height" name="height" placeholder="Height" type="text" value="@student.height">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="spokenLanguages" class="col-lg-2 control-label">Spoken Languages</label>
+                    <div class="col-lg-6">
+                        <input id="spokenLanguages" name="spokenLanguages" type="text" placeholder="Write a language" value="@student.getLanguages(student)"
+                        style="width : 10em !important ;" data-role="tagsinput" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="danceStyles" class="col-lg-2 control-label">Dance Styles</label>
+                    <div class="col-lg-6">
+                        <input id="danceStyles" name="danceStyles" type="text" placeholder="Write a dance style" value="@student.getStyles(student)"
+                        style="width : 10em !important ;" data-role="tagsinput" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="reset" class="btn btn-default">Cancel</button>
+                    </div>
+                </div>
+
+            </fieldset>
+
+        </form>
+    </div>
+
+}

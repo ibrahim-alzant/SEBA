@@ -10,6 +10,8 @@ import play.db.ebean.Model;
 import play.mvc.Result;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -97,6 +99,29 @@ public class Student extends Model {
             }
         }
         return null;
+    }
+
+    public String getLanguages(Student student) {
+        String languages = "";
+        for (Language language : student.spokenLanguages) {
+            languages += language.languageName + ",";
+        }
+        languages = languages.substring(0, languages.length() - 1);
+        return languages;
+    }
+
+    public String getStyles(Student student) {
+        String styles = "";
+        for (DanceStyle style : student.danceStyles) {
+            styles += style.danceStyleName + ",";
+        }
+        styles = styles.substring(0, styles.length() - 1);
+        return styles;
+    }
+
+    public String getFormattedDate(Student student){
+        DateFormat format = new SimpleDateFormat("dd.mm.yyyy");
+        return  format.format(student.dateOfBirth);
     }
 
 }
