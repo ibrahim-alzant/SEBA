@@ -1,5 +1,8 @@
 package controllers.teacher;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import models.common.course.Course;
 import models.teacher.Teacher;
 import play.data.Form;
@@ -22,7 +25,7 @@ public class LoginController extends Controller {
         } else {
             session("userName", loginForm.get().userName);            
             Teacher teacher = Teacher.findByUsername(loginForm.get().userName);
-            return ok(views.html.teacherProfile.render(teacher,Course.findByTeacher(teacher),ctx().session().get("userName")));
+            return ok(views.html.teacherProfile.render(teacher,Course.findByTeacher(teacher),ctx().session().get("userName"),calculateAge(teacher.dateOfBirth)));
         }
     }
     
@@ -35,6 +38,13 @@ public class LoginController extends Controller {
     	ctx().session().clear();
     	return redirect(controllers.routes.Application.index());
     }
+    
+    private static String calculateAge(Date birthDate){
+		Calendar now = Calendar.getInstance();
+		Calendar dob = Calendar.getInstance();
+		dob.setTime(birthDate);
+		return (now.get(Calendar.YEAR) - dob.get(Calendar.YEAR)) + "";
+	}
     
     
     /**

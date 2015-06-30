@@ -1,4 +1,4 @@
-@(teacherProfile : models.teacher.Teacher, courses:List[models.common.course.Course],userName: String)
+@(teacherProfile : models.teacher.Teacher, courses:List[models.common.course.Course],userName: String,age:String)
 @import helper._
 @main("Teacher Profile",userName) {
 
@@ -10,11 +10,29 @@
 			<div class="panel-heading">Personal Information</div>
 			<div class="panel-body">
 				<div class="col-lg-3">
-					<img src="@routes.Assets.at("images/profile/teacher1.jpg")"  height="200" width="200">
+					<img src="@teacherProfile.imgURL"  height="200" width="200">
 				</div>
-				<div class="well col-lg-5" style="height: 200px">
-					<div>@teacherProfile.firstName @teacherProfile.lastName </div>
-					<div>@teacherProfile.email</div>
+				<div class="well col-lg-8" style="height: 200px">
+					<table>
+						<col width="130">
+  						<col width="80">
+						<tr>
+							<td height="40"><span class="teacherDetailsTitles">Name</span></td>
+							<td><span class="teacherDetails">@teacherProfile.firstName @teacherProfile.lastName </span></td>
+						</tr>
+						<tr>
+							<td height="40"><span class="teacherDetailsTitles">Gender</span></td>
+							<td> <span class="teacherDetails">@teacherProfile.gender.genderName </span> </td>
+						</tr>
+						<tr>
+							<td height="40"><span class="teacherDetailsTitles">Age</span></td>
+							<td><span class="teacherDetails"> @age </span> </td>
+						</tr>
+						<tr>
+							<td height="40"><span class="teacherDetailsTitles">Email</span></td>
+							<td><span class="teacherDetails"> @teacherProfile.email </span> </td>
+						</tr>
+					</table>
 				</div>
 			</div>
 		</div>

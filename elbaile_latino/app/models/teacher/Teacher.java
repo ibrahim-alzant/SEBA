@@ -9,16 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import play.data.validation.Constraints.Required;
-import play.db.ebean.Model;
 import models.common.DanceStyle;
 import models.common.Gender;
 import models.common.Language;
 import play.data.format.Formats;
+import play.data.validation.Constraints.Required;
+import play.db.ebean.Model;
 
 @Entity
 public class Teacher extends  Model{
@@ -56,7 +54,7 @@ public class Teacher extends  Model{
 	@Required
 	public String mobile;
 
-	public String imgURL;	
+	public String imgURL;
 	
 	public String professionalExperience;
 	

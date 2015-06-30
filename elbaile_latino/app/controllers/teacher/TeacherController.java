@@ -2,7 +2,11 @@ package controllers.teacher;
 
 import static play.data.Form.form;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -31,46 +35,11 @@ public class TeacherController extends Controller {
 		if(teacher == null){
 			return notFound();
 		} else {
-			return ok(views.html.teacherProfile.render(teacher,Course.findByTeacher(teacher),ctx().session().get("userName")));
+			return ok(views.html.teacherProfile.render(teacher,Course.findByTeacher(teacher),ctx().session().get("userName"),calculateAge(teacher.dateOfBirth)));
 		}
 	}
 	
 	public static Result newTeacherForm(){
-		Language l1  = new Language();
-		l1.languageName = "Arabic";
-		Language l2  = new Language();
-		l2.languageName = "English";
-		Language l3  = new Language();
-		l3.languageName = "German";
-		Language l4  = new Language();
-		l4.languageName = "French";
-		
-		DanceStyle s1 = new DanceStyle();
-		s1.danceStyleName = "Salsa";
-		
-		DanceStyle s2 = new DanceStyle();
-		s2.danceStyleName = "Samba";
-		
-		DanceStyle s3 = new DanceStyle();
-		s3.danceStyleName = "Tango";
-		
-		Gender g1 = new Gender();
-		g1.genderName = "Male";
-		
-		Gender g2 = new Gender();
-		g2.genderName = "Female";
-		
-//		l1.save();
-//		l2.save();
-//		l3.save();
-//		l4.save();
-//
-//		s1.save();
-//		s2.save();
-//		s3.save();
-//
-//		g1.save();
-//		g2.save();
 		
 		if(ctx().session().get("userName") != null){
 			return redirect(controllers.teacher.routes.TeacherController.show(ctx().session().get("userName")));
@@ -79,7 +48,7 @@ public class TeacherController extends Controller {
 		return ok(views.html.newTeacher.render(teacherForm,DanceStyle.findAll(),Gender.find.all(),ctx().session().get("userName")));
 	}
 	
-	public static Result createTeacher(){
+	public static Result createTeacher() throws ParseException{
 		Form<TeacherForm> form = form(TeacherForm.class).bindFromRequest();
 		if (form.hasErrors()) {    	
 			System.out.println("form has errors");
@@ -95,9 +64,10 @@ public class TeacherController extends Controller {
 		teacher.password = teacherForm.password;
 		teacher.email = teacherForm.email;
 		teacher.mobile = teacherForm.mobile;
-		teacher.imgURL = "img.jpg";
+		teacher.imgURL = teacherForm.imgURL;
 		teacher.professionalExperience = teacherForm.professionalExperience;
-		teacher.dateOfBirth = new Date(); //TODO
+		DateFormat format = new SimpleDateFormat("dd.mm.yyyy");
+		teacher.dateOfBirth = format.parse(teacherForm.dateOfBirth);
 		teacher.spokenLanguages = getLanguages(teacherForm.spokenLanguages);
 		teacher.danceStyles = getDanceStyles(teacherForm.danceStyles);
 		teacher.save();
@@ -122,6 +92,16 @@ public class TeacherController extends Controller {
 			styles.add(DanceStyle.findByName(style));
 		}
 		return styles;
+	}
+	
+	private static String calculateAge(Date birthDate){
+		Calendar now = Calendar.getInstance();
+		Calendar dob = Calendar.getInstance();
+		dob.setTime(birthDate);
+		System.out.println(now.get(Calendar.YEAR));
+		System.out.println(dob.get(Calendar.YEAR));
+		System.out.println(birthDate);
+		return (now.get(Calendar.YEAR) - dob.get(Calendar.YEAR)) + "";
 	}
 	
 	public static class TeacherForm {
