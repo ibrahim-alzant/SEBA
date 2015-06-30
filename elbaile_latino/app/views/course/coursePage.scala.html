@@ -1,4 +1,4 @@
-@(course : models.common.course.Course,userName: String, isEditable : Boolean)
+@(course : models.common.course.Course,userName: String, isEditable : Boolean, courseForm:Form[controllers.course.CourseController.CourseForm])
 
 @import helper._
 
@@ -26,6 +26,13 @@
 				<div class="tab-pane fade active in" id="details">
 				<form class="form-horizontal" @if(isEditable) {action="/course/update/" method="post"}>
 				<fieldset>
+					@if(courseForm.hasGlobalErrors) {
+						<div class="alert alert-dismissible alert-danger">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+							<strong>@courseForm.globalError.message</strong>
+						</div>
+
+					}
 				<div class="form-group" style="margin-top: 20px;">
 					<label for="startDate" class="col-lg-2 control-label">Start date</label>
 					<div class="col-lg-6">
