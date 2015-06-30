@@ -88,7 +88,7 @@ public class CourseController extends Controller {
 		course.language = Language.findByName(courseForm.language);
 		Date courseStartdate;
 		try {
-			courseStartdate = new SimpleDateFormat("dd.MM.yyyy").parse(courseForm.startDate);
+			courseStartdate = new SimpleDateFormat("dd.MM.yy").parse(courseForm.startDate);
 		} catch (ParseException e) {
 			courseStartdate = new Date();
 		}
@@ -267,7 +267,7 @@ public class CourseController extends Controller {
 				return "Title is required";
 			}
 			if (isBlank(startDate)) {
-				return "StartDate is required";
+				return "Start Date is required";
 			}
 			if (isZeroOrNigative(numberOfClasses)) {
 				return "Number of classes is required";

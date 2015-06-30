@@ -37,7 +37,7 @@
 					<label for="startDate" class="col-lg-2 control-label">Start date</label>
 					<div class="col-lg-6">
 						<input type="text" class="form-control"  @if(isEditable) {id="startDate"} name="startDate" @if(!isEditable) {readonly}
-						placeholder="Start date" type="text" value="@course.startDate.format("dd.MM.yyyy")">
+						placeholder="Start date" type="text" value="@course.startDate.format("dd.MM.yy")">
 						<script type="text/javascript">
 							$(function () {
 								$('#startDate').datepicker({ format: 'dd.mm.yy' });
