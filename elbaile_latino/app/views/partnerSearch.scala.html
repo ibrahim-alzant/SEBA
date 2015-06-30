@@ -124,7 +124,8 @@
                                 {{style.danceStyleName}}</span>
                             <br/>
                         </div>
-                        <button class="btn btn-success" style="margin-top : 30px ; float : right ;" ng-click="sendMessage(student)">
+                        <button class="btn btn-success" style="margin-top : 30px ; float : right ;"
+                            ng-class="sendMessageButtonClass()" ng-click="sendMessage(student)">
                             <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Send message
                         </button>
                     </div>
