@@ -63,7 +63,7 @@ public class Teacher extends  Model{
 	public List<Language> spokenLanguages;
 	
 	@Required
-	@Formats.DateTime(pattern = "dd-MM-yyyy HH:mm:ss")
+	@Formats.DateTime(pattern = "dd.MM.yyyy")
 	public Date dateOfBirth;
 	
 	@Required

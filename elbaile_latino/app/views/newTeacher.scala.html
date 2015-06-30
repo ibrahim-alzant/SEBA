@@ -1,138 +1,160 @@
-@(teacherForm: Form[controllers.teacher.TeacherController.TeacherForm], danceStyles: List[models.common.DanceStyle], genders: List[models.common.Gender], userName: String)
+@(teacherForm: Form[controllers.teacher.TeacherController.TeacherForm],
+danceStyles: List[models.common.DanceStyle], genders:
+List[models.common.Gender], userName: String) @import helper._
 
-    @import helper._
+@main("Register as a teacher", userName) {
 
-    @main("Register as a teacher", userName) {
 
-                <div class="panel panel-success">
-                    <div class="panel-heading">Register as a teacher</div>
-                    <form class="form-horizontal" action="/teacher/post/" method="post">
-                        @if(teacherForm.hasGlobalErrors) {
-                            <div class="alert alert-error">
-                            @for(validationError <- teacherForm.globalErrors) {
-                                <a class="close" data-dismiss="alert">×</a>
-                                @validationError.message
-                            }
-                            </div>
-                        }
-                        <fieldset>
-                            <br>
-                            <div class="form-group">
-                                <label for="firstName" class="col-lg-2 control-label">First name</label>
-                                <div class="col-lg-6">
-                                    <input class="form-control" id="firstName" name="firstName" placeholder="First name" type="text" value="Team26" >
-                                </div>
-                            </div>
+<div class="panel panel-success">
+	<div class="panel-heading">Register as a teacher</div>
+	<form class="form-horizontal" action="/teacher/post/" method="post">
+		@if(teacherForm.hasGlobalErrors) {
+		<div class="alert alert-dismissible alert-danger">
+			<button type="button" class="close" data-dismiss="alert">×</button>
+			<strong>@teacherForm.globalError.message </strong>
+		</div>
 
-                            <div class="form-group">
-                                <label for="lastName" class="col-lg-2 control-label">Last name</label>
-                                <div class="col-lg-6">
-                                    <input class="form-control" id="lastName" name="lastName" placeholder="Last Name" type="text" value="SEBA">
-                                </div>
-                            </div>
+		}
+		<fieldset>
+			<br>
+			<div class="form-group">
+				<label for="firstName" class="col-lg-2 control-label">First
+					name</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="firstName" name="firstName"
+						placeholder="First name" type="text" value="Team26">
+				</div>
+			</div>
 
-                            <div class="form-group">
-                                <label for="select" class="col-lg-2 control-label">Gender</label>
-                                <div class="col-lg-2">
-                                    <select class="form-control" id="gender" name="gender">
-                                    @for(gender <- genders) {
-                                        <option>@gender.genderName</option>
-                                    }
-                                    </select>
-                                </div>
-                            </div>
+			<div class="form-group">
+				<label for="lastName" class="col-lg-2 control-label">Last
+					name</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="lastName" name="lastName"
+						placeholder="Last Name" type="text" value="SEBA">
+				</div>
+			</div>
 
-                            <div class="form-group">
-                                <label for="dateOfBirth" class="col-lg-2 control-label">Date of Birth</label>
-                                <div class="col-lg-6">
-                                    <input class="form-control" id="dateOfBirth" name="dateOfBirth" placeholder="Date of Birth" type="text" value="22.05.1980">
-                                </div>
-                            </div>
+			<div class="form-group">
+				<label for="select" class="col-lg-2 control-label">Gender</label>
+				<div class="col-lg-2">
+					<select class="form-control" id="gender" name="gender">
+						@for(gender <- genders) {
+						<option>@gender.genderName</option> }
+					</select>
+				</div>
+			</div>
 
-                            <div class="form-group">
-                                <label for="userName" class="col-lg-2 control-label">User name</label>
-                                <div class="col-lg-6">
-                                    <input class="form-control" id="userName" name="userName" placeholder="User name" type="text" value="teacher1">
-                                </div>
-                            </div>
+			<div class="form-group">
+				<label for="dateOfBirth" class="col-lg-2 control-label">Date
+					of Birth</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="dateOfBirth" name="dateOfBirth"
+						placeholder="Date of Birth" type="text" value="22.05.1980">
+				</div>
+			</div>
 
-                            <div class="form-group">
-                                <label for="password" class="col-lg-2 control-label">Password</label>
-                                <div class="col-lg-6">
-                                    <input class="form-control" id="password" name="password" placeholder="Password" type="password" value="password">
-                                </div>
-                            </div>
+			<div class="form-group">
+				<label for="userName" class="col-lg-2 control-label">User
+					name</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="userName" name="userName"
+						placeholder="User name" type="text" value="teacher1">
+				</div>
+			</div>
 
-                            <div class="form-group">
-                                <label for="passwordConfirm" class="col-lg-2 control-label">Confirm password</label>
-                                <div class="col-lg-6">
-                                    <input class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Re-type password"
-                                    type="password" value="password">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="col-lg-2 control-label">Email</label>
-                                <div class="col-lg-6">
-                                    <input class="form-control" id="email" name="email" placeholder="Email" type="text" value="teacher1tum.de">
-                                </div>
-                            </div>
+			<div class="form-group">
+				<label for="password" class="col-lg-2 control-label">Password</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="password" name="password"
+						placeholder="Password" type="password" value="password">
+				</div>
+			</div>
 
-                            <div class="form-group">
-                                <label for="emailConfirm" class="col-lg-2 control-label">Confirm Email</label>
-                                <div class="col-lg-6">
-                                    <input class="form-control" id="emailConfirm" name="emailConfirm" placeholder="Re-Type email" type="text" value="teacher1tum.de">
-                                </div>
-                            </div>
+			<div class="form-group">
+				<label for="passwordConfirm" class="col-lg-2 control-label">Confirm
+					password</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="passwordConfirm"
+						name="passwordConfirm" placeholder="Re-type password"
+						type="password" value="password">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="email" class="col-lg-2 control-label">Email</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="email" name="email"
+						placeholder="Email" type="text" value="teacher1tum.de">
+				</div>
+			</div>
 
-                            <div class="form-group">
-                                <label for="mobile" class="col-lg-2 control-label">Mobile</label>
-                                <div class="col-lg-6">
-                                    <input class="form-control" id="mobile" name="mobile" placeholder="Mobile" type="text" value="015753460555">
-                                </div>
-                            </div>
+			<div class="form-group">
+				<label for="emailConfirm" class="col-lg-2 control-label">Confirm
+					Email</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="emailConfirm" name="emailConfirm"
+						placeholder="Re-Type email" type="text" value="teacher1tum.de">
+				</div>
+			</div>
 
-                            <div class="form-group">
-                                <label for="imgURL" class="col-lg-2 control-label">Profile Picture</label>
-                                <div class="col-lg-6">
-                                    <input class="form-control" id="imgURL" name="imgURL" placeholder="Profile Picture" type="text"
-                                    value="http://localhost:9000/assets/images/profile/teacher1.jpg">
-                                </div>
-                            </div>
+			<div class="form-group">
+				<label for="mobile" class="col-lg-2 control-label">Mobile</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="mobile" name="mobile"
+						placeholder="Mobile" type="text" value="015753460555">
+				</div>
+			</div>
 
-                            <div class="form-group">
-                                <label for="professionalExperience" class="col-lg-2 control-label">
-                                    Professional Experience</label>
-                                <div class="col-lg-6">
-                                    <textarea class="form-control" rows="3" name="professionalExperience" id="professionalExperience">5 years dance teaching experience in VirtualDanceAcademy</textarea>
-                                    <span class="help-block">Please write briefly about your previous experience.</span>
-                                </div>
-                            </div>
+			<div class="form-group">
+				<label for="imgURL" class="col-lg-2 control-label">Profile
+					Picture</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="imgURL" name="imgURL"
+						placeholder="Profile Picture" type="text"
+						value="http://localhost:9000/assets/images/profile/teacher1.jpg">
+				</div>
+			</div>
 
-                            <div class="form-group">
-                                <label for="spokenLanguages" class="col-lg-2 control-label">Spoken Languages</label>
-                                <div class="col-lg-6">
-                                    <input id="spokenLanguages" name="spokenLanguages" type="text" placeholder="Write a language" value="Arabic,English"
-                                    style="width : 10 em !important ;" data-role="tagsinput" />
-                                </div>
-                            </div>
+			<div class="form-group">
+				<label for="professionalExperience" class="col-lg-2 control-label">
+					Professional Experience</label>
+				<div class="col-lg-6">
+					<textarea class="form-control" rows="3"
+						name="professionalExperience" id="professionalExperience">5 years dance teaching experience in VirtualDanceAcademy</textarea>
+					<span class="help-block">Please write briefly about your
+						previous experience.</span>
+				</div>
+			</div>
 
-                            <div class="form-group">
-                                <label for="danceStyles" class="col-lg-2 control-label">Dance Styles</label>
-                                <div class="col-lg-6">
-                                    <input id="danceStyles" name="danceStyles" type="text" placeholder="Write a dance style" value="Salsa,Samba"
-                                    style="width : 10 em !important ;" data-role="tagsinput" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <button type="reset" class="btn btn-default">Cancel</button>
-                                </div>
-                            </div>
+			<div class="form-group">
+				<label for="spokenLanguages" class="col-lg-2 control-label">Spoken
+					Languages</label>
+				<div class="col-lg-6">
+					<input id="spokenLanguages" name="spokenLanguages" type="text"
+						placeholder="Write a language" value="Arabic,English"
+						style="width: 10 em !important;" data-role="tagsinput" />
+				</div>
+			</div>
 
-                        </fieldset>
+			<div class="form-group">
+				<label for="danceStyles" class="col-lg-2 control-label">Dance
+					Styles</label>
+				<div class="col-lg-6">
+					<input id="danceStyles" name="danceStyles" type="text"
+						placeholder="Write a dance style" value="Salsa,Samba"
+						style="width: 10 em !important;" data-role="tagsinput" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-lg-10 col-lg-offset-2">
+					<button type="submit" class="btn btn-primary">Submit</button>
+					<a class="btn btn-primary" href="/">Cancel</a>
+				</div>
+			</div>
 
-                    </form>
-                </div>
+		</fieldset>
 
-    }
+	</form>
+</div>
+
+}

@@ -16,6 +16,7 @@ import models.common.Language;
 import models.common.course.Course;
 import models.teacher.Teacher;
 import play.data.Form;
+import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -105,81 +106,89 @@ public class TeacherController extends Controller {
 	}
 	
 	public static class TeacherForm {
-		@Required
         public String firstName;
-        @Required
         public String lastName;
-        @Required
         public String userName;
-        @Required
         public String password;
-        @Required
         public String passwordConfirm;
-        
-        @Required        
         public String email;
-        
-        @Required        
         public String gender;
-        
-        @Required        
         public String emailConfirm;
-        
-        @Required
     	public String mobile;
-        @Required
     	public String imgURL;
-
         public String professionalExperience;        
-        
     	public String spokenLanguages;
-        @Required
+    	@Formats.DateTime(pattern = "dd.MM.yyyy")
     	public String dateOfBirth;
-        
     	public String danceStyles;
         
         public String validate (){
         	if (isBlank(firstName)) {
                 return "First name is required";
             }
-        	if (isBlank(lastName)) {
+        	else if (isBlank(lastName)) {
                 return "Last name is required";
             }       
-        	if (isBlank(userName)) {
+        	else if (isBlank(userName)) {
                 return "User Name is required";
             }       
-        	if (isBlank(dateOfBirth)) {
+        	else if (isBlank(dateOfBirth)) {
                 return "Date of birth is required";
             }       
-        	if (isBlank(password)) {
+        	else if (isBlank(password)) {
                 return "Password is required";
             }  
-        	if (isBlank(passwordConfirm)) {
+        	else if (isBlank(passwordConfirm)) {
                 return "Password confirmation is required";
             }  
-        	if (isBlank(email)) {
+        	else if (isBlank(email)) {
                 return "Email is required";
             }       
-        	if (isBlank(emailConfirm)) {
+        	else if (isBlank(emailConfirm)) {
                 return "Email confirmation is required";
             }       
-        	if (isBlank(mobile)) {
+        	else if (isBlank(mobile)) {
                 return "Mobile is required";
             }       
-        	if (isBlank(spokenLanguages)) {
-                return "At least one language is required is required";
+        	else if (isBlank(spokenLanguages)) {
+                return "At least one language is required ";
             }       
-        	if (isBlank(danceStyles)) {
-                return "At least one dance style is required is required";
-            }       
+        	else if (isBlank(danceStyles)) {
+                return "At least one dance style is required ";
+            } 
+        	else if(!validateDate(dateOfBirth)){
+        		return "Date format is not correct. please enter date in this format: 'dd.MM.yyyy'";
+        	}
+        	else if(userNameUsed(userName)){
+        		return "username is already in use, please enter another username";
+        	}
+        	else if(!password.equals(passwordConfirm)){
+        		return "password confirmation does not match password";
+        	} else if (!(email.equals(emailConfirm))){
+        		return "email confirmation does not match email";
+        	}
         	
             return null;
         }
         
         private boolean isBlank(String input) {
-            return input == null || input.isEmpty() || input.trim().isEmpty();
+            return input == null || input == "" || input.trim().isEmpty();
         }
-        //TODO continue with form validation
+
+        private boolean validateDate(String dateOfBirth){
+        	DateFormat format = new SimpleDateFormat("dd.mm.yyyy");
+    		try {
+				format.parse(dateOfBirth);
+				return true;
+			} catch (ParseException e) {
+				return false;
+			}
+        }
+        
+        private boolean userNameUsed(String username){
+        	Teacher teacher = Teacher.findByUsername(username);
+        	return !(teacher == null);
+        }
         
 	}
 	
