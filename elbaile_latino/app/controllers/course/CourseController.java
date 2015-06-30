@@ -67,6 +67,43 @@ public class CourseController extends Controller {
 		return redirect(controllers.teacher.routes.TeacherController.show(ctx().session().get("userName")));
 	}
 
+	public static Result updateCourse() {
+		Form<CourseForm> form = form(CourseForm.class).bindFromRequest();
+		if (form.hasErrors()) {
+			return badRequest(views.html.course.newCourse.render(form,DanceStyle.findAll(),ctx().session().get("userName")));
+		}
+		CourseController.CourseForm courseForm = form.get();
+
+		Course course = new Course();
+		course.id = courseForm.id;
+		course.title = courseForm.title;
+		course.numberOfParticipants = courseForm.numberOfParticipants;
+		course.maxNumberOfParticipants = courseForm.maxNumberOfParticipants;
+		course.numberOfClasses = courseForm.numberOfClasses;
+		course.language = Language.findByName(courseForm.language);
+		Date courseStartdate;
+		try {
+			courseStartdate = new SimpleDateFormat("dd.MM.yyyy").parse(courseForm.startDate);
+		} catch (ParseException e) {
+			courseStartdate = new Date();
+		}
+		course.startDate = courseStartdate;
+		course.danceStyle = DanceStyle.findByName(courseForm.danceStyle);
+		course.participantFee = courseForm.participantFee;
+		course.location = courseForm.location;
+		course.locationCode = courseForm.locationCode;
+
+		course.teacher = Teacher.findByUsername(ctx().session().get("userName"));
+		course.status = courseForm.status;
+		course.danceLevel = courseForm.danceLevel;
+		course.pictureURL = courseForm.pictureURL;
+		course.videoURL = courseForm.videoURL;
+
+		course.update();
+
+		return redirect(controllers.teacher.routes.TeacherController.show(ctx().session().get("userName")));
+	}
+
 	public static Result list() {
 		List<Course> courses = Course.find.all();
 		return ok(views.html.course.list.render(courses,ctx().session().get("userName")));
