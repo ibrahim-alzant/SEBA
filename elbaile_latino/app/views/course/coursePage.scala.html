@@ -29,8 +29,15 @@
 				<div class="form-group" style="margin-top: 20px;">
 					<label for="startDate" class="col-lg-2 control-label">Start date</label>
 					<div class="col-lg-6">
-						<input class="form-control" id="startDate" name="startDate" @if(!isEditable) {readonly}
+						<input type="text" class="form-control"  @if(isEditable) {id="startDate"} name="startDate" @if(!isEditable) {readonly}
 						placeholder="Start date" type="text" value="@course.startDate.format("dd.MM.yyyy")">
+						<script type="text/javascript">
+							$(function () {
+								$('#startDate').datepicker({ dateFormat: 'dd.mm.yy' });
+							});
+						</script>
+						@*<input class="form-control" id="startDate" name="startDate" @if(!isEditable) {readonly}*@
+						@*placeholder="Start date" type="text" value="@course.startDate.format("dd.MM.yyyy")">*@
 						<input class="form-control" id="id" name="id"
 						placeholder="Start date" type="hidden" value="@course.id">
 						<input class="form-control" id="title" name="title"
