@@ -84,7 +84,6 @@ public class StudentController extends Controller {
         DateFormat format = new SimpleDateFormat("dd.mm.yyyy");
         student.dateOfBirth = format.parse(studentForm.dateOfBirth);
         student.spokenLanguages = getLanguages(studentForm.spokenLanguages);
-        //TODO if dance style doesn't exist create one
         student.danceStyles = getDanceStyles(studentForm.danceStyles);
         student.save();
         return redirect(controllers.student.routes.LoginController.loginForm());
