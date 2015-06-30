@@ -45,6 +45,7 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http, $wi
                 ( student.height <= parseFloat($scope.height.split(',')[1])) &&
                 ( student.hasStyle($scope.style)) &&
                 ( student.hasCheckedLanguages()) &&
+                ( student.userName != $scope.name) &&
                 (
                     (!student.hasOwnProperty('distance')) ||
                     (
