@@ -33,7 +33,7 @@
 						placeholder="Start date" type="text" value="@course.startDate.format("dd.MM.yyyy")">
 						<script type="text/javascript">
 							$(function () {
-								$('#startDate').datepicker({ dateFormat: 'dd.mm.yy' });
+								$('#startDate').datepicker({ format: 'dd.mm.yy' });
 							});
 						</script>
 						@*<input class="form-control" id="startDate" name="startDate" @if(!isEditable) {readonly}*@
