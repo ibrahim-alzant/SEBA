@@ -13,6 +13,7 @@ POST        /teacher/post/                   controllers.teacher.TeacherControll
 GET         /teacher/login/                  controllers.teacher.LoginController.loginForm()
 POST        /teacher/doLogin/                controllers.teacher.LoginController.authenticate()
 GET         /teacher/signOut/                controllers.teacher.LoginController.signOut()
+POST         /teacher/upload/                controllers.teacher.TeacherController.uploadfile()
 
 # Course pages
 GET         /course/list/                    controllers.course.CourseController.list()
