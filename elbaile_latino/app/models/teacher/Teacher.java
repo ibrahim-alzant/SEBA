@@ -77,6 +77,11 @@ public class Teacher extends  Model{
 		return find.where().eq("userName", username).findUnique();
 	}
 	
+	public static Teacher findByEmail(String email){
+		return find.where().eq("email", email).findUnique();
+	}
+
+	
 	public static Teacher authenticate(String userName, String password) {
 		Teacher teacher = find.where().eq("userName", userName).findUnique();
 		if (teacher != null) {

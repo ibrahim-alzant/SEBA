@@ -3,15 +3,32 @@
 @main("Teacher Profile",userName) {
 
 <div class="panel panel-success">
-<div class="panel-heading">@teacherProfile.firstName  @teacherProfile.lastName</div>
+<div class="panel-heading">
+
+<div class="btn-group">
+  <a href="#" class="btn btn-default">@teacherProfile.firstName  @teacherProfile.lastName</a>
+  <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    <li><a href="/teacher/edit/">edit profile</a></li>
+    <li><a href="/teacher/signOut/">sign out</a></li>
+    
+  </ul>
+</div>
+
+</div>
 <div class="panel-body">
 	<div class="list-group">
 		<div class="panel panel-success">
-			<div class="panel-heading">Personal Information</div>
+			<div class="panel-heading">Personal Information
+			
+			</div>
 			<div class="panel-body">
 				<div class="col-lg-3">
 					<img src="@teacherProfile.imgURL"  height="200" width="200">
 				</div>
+				
+				
+
 				<div class="well col-lg-8" style="height: 200px">
 					<table>
 						<col width="130">

@@ -107,11 +107,56 @@ public class TeacherController extends Controller {
 				DanceStyle.findAll(), Gender.find.all(),
 				ctx().session().get("userName")));
 	}
+	
+	public static Result editTeacherProfile() {
+		if (ctx().session().get("userName") != null) {
+			Form<TeacherController.TeacherEditForm> teacherEditForm = form(TeacherController.TeacherEditForm.class);
+			Teacher teacher = Teacher.findByUsername(ctx().session().get("userName"));
+			DateFormat format = new SimpleDateFormat("dd.mm.yyyy");
+			return ok(views.html.editTeacherProfile.render(teacherEditForm,
+					DanceStyle.findAll(), Gender.find.all(),
+					ctx().session().get("userName"),teacher,getTeacherDanceStyles(teacher),getTeacherLanguages(teacher),format.format(teacher.dateOfBirth)));
+		}
+		return ok("unauthorized page");
+	}
+	
+	public static Result updateTeacherProfile() throws ParseException{
+		if (ctx().session().get("userName") != null) {
+			Form<TeacherEditForm> form = form(TeacherEditForm.class).bindFromRequest();
+			Teacher originalTeacher = Teacher.findByUsername(ctx().session().get("userName"));
+			DateFormat format = new SimpleDateFormat("dd.mm.yyyy");
+			if (form.hasErrors()) {
+				return badRequest(views.html.editTeacherProfile.render(form,
+						DanceStyle.findAll(), Gender.find.all(),
+						ctx().session().get("userName"),originalTeacher,getTeacherDanceStyles(originalTeacher),getTeacherLanguages(originalTeacher),format.format(originalTeacher.dateOfBirth)));
+			}
+			TeacherController.TeacherEditForm teacherForm = form.get();
+			originalTeacher.firstName = teacherForm.firstName;
+			originalTeacher.lastName = teacherForm.lastName;
+			originalTeacher.userName = teacherForm.userName;
+			originalTeacher.gender = Gender.findByName(teacherForm.gender);			
+			originalTeacher.email = teacherForm.email;
+			originalTeacher.mobile = teacherForm.mobile;
+			originalTeacher.imgURL = teacherForm.imgURL;
+			originalTeacher.professionalExperience = teacherForm.professionalExperience;
+			originalTeacher.dateOfBirth = format.parse(teacherForm.dateOfBirth);
+			originalTeacher.spokenLanguages = getLanguages(teacherForm.spokenLanguages);
+			originalTeacher.danceStyles = getDanceStyles(teacherForm.danceStyles);
+			
+			originalTeacher.update();
+			session("userName", originalTeacher.userName);     
+			Teacher teacher = Teacher.findByUsername(originalTeacher.userName);
+			return ok(views.html.teacherProfile.render(teacher,
+					Course.findByTeacher(teacher),
+					ctx().session().get("userName"),
+					calculateAge(teacher.dateOfBirth)));
+		}
+		return ok("unauthorized page");
+	}
 
 	public static Result createTeacher() throws ParseException {
 		Form<TeacherForm> form = form(TeacherForm.class).bindFromRequest();
 		if (form.hasErrors()) {
-			System.out.println("form has errors");
 			return badRequest(views.html.newTeacher.render(form, DanceStyle
 					.findAll(), Gender.find.all(),
 					ctx().session().get("userName")));
@@ -205,8 +250,80 @@ public class TeacherController extends Controller {
 				return "Date format is not correct. please enter date in this format: 'dd.MM.yyyy'";
 			} else if (userNameUsed(userName)) {
 				return "username is already in use, please enter another username";
+			} else if (emailUsed(email)) {
+				return "email is already in use, please enter another email";
 			} else if (!password.equals(passwordConfirm)) {
 				return "password confirmation does not match password";
+			} else if (!(email.equals(emailConfirm))) {
+				return "email confirmation does not match email";
+			}
+			
+			return null;
+		}
+
+		private boolean isBlank(String input) {
+			return input == null || input == "" || input.trim().isEmpty();
+		}
+
+		private boolean validateDate(String dateOfBirth) {
+			DateFormat format = new SimpleDateFormat("dd.mm.yyyy");
+			try {
+				format.parse(dateOfBirth);
+				return true;
+			} catch (ParseException e) {
+				return false;
+			}
+		}
+
+		private boolean userNameUsed(String username) {
+			Teacher teacher = Teacher.findByUsername(username);
+			return !(teacher == null);
+		}
+		
+		private boolean emailUsed(String email) {
+			Teacher teacher = Teacher.findByEmail(email);
+			return !(teacher == null);
+		}
+
+	}
+	
+	
+	public static class TeacherEditForm {
+		public String firstName;
+		public String lastName;
+		public String userName;		
+		public String email;
+		public String gender;
+		public String emailConfirm;
+		public String mobile;
+		public String imgURL;
+		public String professionalExperience;
+		public String spokenLanguages;
+		@Formats.DateTime(pattern = "dd.MM.yyyy")
+		public String dateOfBirth;
+		public String danceStyles;
+
+		public String validate() {
+			if (isBlank(firstName)) {
+				return "First name is required";
+			} else if (isBlank(lastName)) {
+				return "Last name is required";
+			} else if (isBlank(userName)) {
+				return "User Name is required";
+			} else if (isBlank(dateOfBirth)) {
+				return "Date of birth is required";
+			}  else if (isBlank(email)) {
+				return "Email is required";
+			} else if (isBlank(emailConfirm)) {
+				return "Email confirmation is required";
+			} else if (isBlank(mobile)) {
+				return "Mobile is required";
+			} else if (isBlank(spokenLanguages)) {
+				return "At least one language is required ";
+			} else if (isBlank(danceStyles)) {
+				return "At least one dance style is required ";
+			} else if (!validateDate(dateOfBirth)) {
+				return "Date format is not correct. please enter date in this format: 'dd.MM.yyyy'";
 			} else if (!(email.equals(emailConfirm))) {
 				return "email confirmation does not match email";
 			}
@@ -233,6 +350,22 @@ public class TeacherController extends Controller {
 			return !(teacher == null);
 		}
 
+	}
+	
+	private static String getTeacherDanceStyles(Teacher teacher){
+		String danceStyles = "";
+		for(DanceStyle danceStyle : teacher.danceStyles){
+			danceStyles+= danceStyle.danceStyleName +",";
+		}
+		return danceStyles.substring(0, danceStyles.length());
+	}
+	
+	private static String getTeacherLanguages(Teacher teacher){
+		String languages = "";
+		for(Language lang : teacher.spokenLanguages){
+			languages+= lang.languageName +",";
+		}
+		return languages.substring(0, languages.length());
 	}
 
 }
