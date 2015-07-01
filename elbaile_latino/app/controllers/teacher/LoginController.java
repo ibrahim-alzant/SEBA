@@ -3,6 +3,7 @@ package controllers.teacher;
 import java.util.Calendar;
 import java.util.Date;
 
+import controllers.teacher.TeacherController.ChangePasswordForm;
 import models.common.course.Course;
 import models.teacher.Teacher;
 import play.data.Form;
@@ -25,7 +26,7 @@ public class LoginController extends Controller {
         } else {
             session("userName", loginForm.get().userName);            
             Teacher teacher = Teacher.findByUsername(loginForm.get().userName);
-            return ok(views.html.teacherProfile.render(teacher,Course.findByTeacher(teacher),ctx().session().get("userName"),calculateAge(teacher.dateOfBirth)));
+            return ok(views.html.teacherProfile.render(teacher,Course.findByTeacher(teacher),ctx().session().get("userName"),calculateAge(teacher.dateOfBirth),form(ChangePasswordForm.class)));
         }
     }
     

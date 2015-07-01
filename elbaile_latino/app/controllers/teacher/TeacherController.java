@@ -56,8 +56,30 @@ public class TeacherController extends Controller {
 			return ok(views.html.teacherProfile.render(teacher,
 					Course.findByTeacher(teacher),
 					ctx().session().get("userName"),
-					calculateAge(teacher.dateOfBirth)));
+					calculateAge(teacher.dateOfBirth),form(ChangePasswordForm.class)));
 		}
+	}
+	
+	public static Result changePassword(){ 
+		Teacher originalTeacher = Teacher.findByUsername(ctx().session().get("userName"));
+		if(ctx().session().get("userName") != null){
+			Form<ChangePasswordForm> form = form(ChangePasswordForm.class).bindFromRequest();
+			if (form.hasErrors()) {				
+				return badRequest(views.html.teacherProfile.render(originalTeacher,
+						Course.findByTeacher(originalTeacher),
+						ctx().session().get("userName"),
+						calculateAge(originalTeacher.dateOfBirth),form(ChangePasswordForm.class)));
+			}
+			System.out.println("try to change password");
+			TeacherController.ChangePasswordForm teacherForm = form.get();
+			
+			originalTeacher.password = teacherForm.newPassword;
+			originalTeacher.update();
+		}
+		return ok(views.html.teacherProfile.render(originalTeacher,
+				Course.findByTeacher(originalTeacher),
+				ctx().session().get("userName"),
+				calculateAge(originalTeacher.dateOfBirth),form(ChangePasswordForm.class)));
 	}
 
 	@BodyParser.Of(value = BodyParser.AnyContent.class, maxLength = MAX_LENGTH)
@@ -149,7 +171,7 @@ public class TeacherController extends Controller {
 			return ok(views.html.teacherProfile.render(teacher,
 					Course.findByTeacher(teacher),
 					ctx().session().get("userName"),
-					calculateAge(teacher.dateOfBirth)));
+					calculateAge(teacher.dateOfBirth),form(ChangePasswordForm.class)));
 		}
 		return ok("unauthorized page");
 	}
@@ -350,6 +372,25 @@ public class TeacherController extends Controller {
 			return !(teacher == null);
 		}
 
+	}
+	
+	public static class ChangePasswordForm{
+		public String currentPassword;
+		public String newPassword;
+		public String passwordConfirm;
+		public String userName;
+		
+		public String validate(){
+			System.out.println("inside password validation");
+			System.out.println(currentPassword + newPassword + passwordConfirm + userName);
+			if(!Teacher.findByUsername(userName).password.equals(currentPassword)){
+				return "Current password is not correct !";
+			} else if (!newPassword.equals(passwordConfirm)){
+				return "Password does not match password confirmation !";
+			}
+			System.out.println("password validated !");
+			return null;
+		}
 	}
 	
 	private static String getTeacherDanceStyles(Teacher teacher){
