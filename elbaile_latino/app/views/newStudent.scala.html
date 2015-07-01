@@ -97,8 +97,12 @@
                 <div class="form-group">
                     <label for="imgURL" class="col-lg-2 control-label">Profile Picture</label>
                     <div class="col-lg-6">
-                        <input class="form-control" id="imgURL" name="imgURL" placeholder="Profile Picture" type="text">
+                        <input ng-model="imgURL" class="form-control" id="imgURL" name="imgURL" placeholder="Profile Picture" type="text">
                     </div>
+                    <img src="{{imgURL}}" width="100" height="100"
+                        onerror="if (this.src != '@routes.Assets.at("images/profile/defualt_male.png")')
+                        this.src = '@routes.Assets.at("images/profile/defualt_male.png")';">
+
                 </div>
 
                 <div class="form-group">

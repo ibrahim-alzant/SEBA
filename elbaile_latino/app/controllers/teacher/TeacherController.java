@@ -113,9 +113,9 @@ public class TeacherController extends Controller {
 			Form<TeacherController.TeacherEditForm> teacherEditForm = form(TeacherController.TeacherEditForm.class);
 			Teacher teacher = Teacher.findByUsername(ctx().session().get("userName"));
 			DateFormat format = new SimpleDateFormat("dd.mm.yyyy");
-			return ok(views.html.editTeacherProfile.render(teacherEditForm,
-					DanceStyle.findAll(), Gender.find.all(),
-					ctx().session().get("userName"),teacher,getTeacherDanceStyles(teacher),getTeacherLanguages(teacher),format.format(teacher.dateOfBirth)));
+//			return ok(views.html.editTeacherProfile.render(teacherEditForm,
+//					DanceStyle.findAll(), Gender.find.all(),
+//					ctx().session().get("userName"),teacher,getTeacherDanceStyles(teacher),getTeacherLanguages(teacher),format.format(teacher.dateOfBirth)));
 		}
 		return ok("unauthorized page");
 	}
@@ -126,9 +126,9 @@ public class TeacherController extends Controller {
 			Teacher originalTeacher = Teacher.findByUsername(ctx().session().get("userName"));
 			DateFormat format = new SimpleDateFormat("dd.mm.yyyy");
 			if (form.hasErrors()) {
-				return badRequest(views.html.editTeacherProfile.render(form,
-						DanceStyle.findAll(), Gender.find.all(),
-						ctx().session().get("userName"),originalTeacher,getTeacherDanceStyles(originalTeacher),getTeacherLanguages(originalTeacher),format.format(originalTeacher.dateOfBirth)));
+//				return badRequest(views.html.editTeacherProfile.render(form,
+//						DanceStyle.findAll(), Gender.find.all(),
+//						ctx().session().get("userName"),originalTeacher,getTeacherDanceStyles(originalTeacher),getTeacherLanguages(originalTeacher),format.format(originalTeacher.dateOfBirth)));
 			}
 			TeacherController.TeacherEditForm teacherForm = form.get();
 			originalTeacher.firstName = teacherForm.firstName;

@@ -120,7 +120,7 @@ public class Student extends Model {
     }
 
     public String getFormattedDate(Student student){
-        DateFormat format = new SimpleDateFormat("dd.mm.yyyy");
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         return  format.format(student.dateOfBirth);
     }
 

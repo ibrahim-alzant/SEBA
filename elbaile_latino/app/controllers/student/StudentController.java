@@ -81,7 +81,7 @@ public class StudentController extends Controller {
         student.imgURL = studentForm.imgURL;
         student.additionalInformation = studentForm.additionalInformation;
         student.height = Integer.parseInt(studentForm.height);
-        DateFormat format = new SimpleDateFormat("dd.mm.yyyy");
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         student.dateOfBirth = format.parse(studentForm.dateOfBirth);
         student.spokenLanguages = getLanguages(studentForm.spokenLanguages);
         student.danceStyles = getDanceStyles(studentForm.danceStyles);
