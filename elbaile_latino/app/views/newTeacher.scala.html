@@ -55,6 +55,11 @@ List[models.common.Gender], userName: String) @import helper._
 				<div class="col-lg-6">
 					<input class="form-control" id="dateOfBirth" name="dateOfBirth"
 						placeholder="Date of Birth" type="text" value="22.05.1980">
+						<script type="text/javascript">
+							$(function () {
+								$('#dateOfBirth').datepicker({ format: 'dd.mm.yyyy' });
+							});
+						</script>
 				</div>
 			</div>
 
@@ -202,7 +207,13 @@ List[models.common.Gender], userName: String) @import helper._
 <script>
 	$(document).ready(function(e) {
 		var useDefaultPicture = false;
-		$("#profilePictureBlock").hide();
+		var selectedOption = $( "#gender option:selected" ).text();
+		useDefaultPicture = true;
+		if(selectedOption == "Male"){
+			$("#profilePicture").attr("src", "/assets/images/profile/defualt_male.png");				
+		} else {
+			$("#profilePicture").attr("src", "/assets/images/profile/defualt_female.png");
+		}
 		$("#myForm").on('submit', (function(e) {
 			e.preventDefault();
 			$.ajax({

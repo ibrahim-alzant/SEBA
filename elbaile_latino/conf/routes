@@ -16,6 +16,7 @@ GET         /teacher/signOut/                controllers.teacher.LoginController
 POST        /teacher/upload/                 controllers.teacher.TeacherController.uploadfile()
 GET         /teacher/edit/					 controllers.teacher.TeacherController.editTeacherProfile()
 POST        /teacher/update/                 controllers.teacher.TeacherController.updateTeacherProfile()
+POST        /teacher/changePassword/         controllers.teacher.TeacherController.changePassword()
 
 # Course pages
 GET         /course/list/                    controllers.course.CourseController.list()

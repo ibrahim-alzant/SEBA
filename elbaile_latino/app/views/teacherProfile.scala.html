@@ -1,4 +1,5 @@
-@(teacherProfile : models.teacher.Teacher, courses:List[models.common.course.Course],userName: String,age:String)
+@(teacherProfile : models.teacher.Teacher, courses:List[models.common.course.Course],userName: String,age:String,
+passwordForm : Form[controllers.teacher.TeacherController.ChangePasswordForm])
 @import helper._
 @main("Teacher Profile",userName) {
 
@@ -10,12 +11,21 @@
   <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
   <ul class="dropdown-menu">
     <li><a href="/teacher/edit/">edit profile</a></li>
+    <li><a href="#" data-toggle="modal" data-target="#changePassword" id="uploadPictureButton">change password</a></li>
     <li><a href="/teacher/signOut/">sign out</a></li>
+    
     
   </ul>
 </div>
 
 </div>
+@if(passwordForm.hasGlobalErrors) {
+		<div class="alert alert-dismissible alert-danger">
+			<button type="button" class="close" data-dismiss="alert">×</button>
+			<strong>@passwordForm.globalError.message </strong>
+		</div>
+
+		}
 <div class="panel-body">
 	<div class="list-group">
 		<div class="panel panel-success">
@@ -134,6 +144,53 @@
 		</div>
 	</div>
 </div>
+</div>
+
+<div class="modal" id="changePassword">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">×</button>
+				<h4 class="modal-title">Change password</h4>
+			</div>
+			<form  class="form-horizontal" id="myForm" action="/teacher/changePassword/" method="post">
+			<div class="modal-body">
+			<div class="form-group">
+				<label for="currentPassword" class="col-lg-4 control-label">Current password</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="currentPassword"
+						name="currentPassword" placeholder="Type current password"
+						type="password" value="">
+				</div>
+				<input type="hidden" name="userName" value="@userName" /> 
+			</div>
+			
+			<div class="form-group">
+				<label for="newPassword" class="col-lg-4 control-label">New password</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="newPassword"
+						name="newPassword" placeholder="Type new password"
+						type="password" value="">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="passwordConfirm" class="col-lg-4 control-label">Re-type password</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="passwordConfirm"
+						name="passwordConfirm" placeholder="Re-type password"
+						type="password" value="">
+				</div>
+			</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary">Change password</button>
+				
+			</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 }
