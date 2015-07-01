@@ -234,6 +234,34 @@ public class Course extends Model {
 		return result_list;
 	}
 
+	public static int getCategoryCoursesCount(String cat){
+
+		Connection connection = DB.getConnection();
+		List<Course> result_list = new ArrayList<>();
+
+		try{
+			ResultSet result = connection.prepareStatement(" Select course.id "
+							+" from course"
+			).executeQuery();
+
+			connection.close();
+
+			while(result.next()){
+
+				Long courseId = result.getLong(1);
+				Course courseFound = Course.find.byId(courseId);
+
+				if(courseFound.danceStyle.danceStyleName.toUpperCase().contains(cat))
+					result_list.add(courseFound);
+			}
+
+		}catch(Exception e){
+			e.getStackTrace();
+
+		}
+		return result_list.size();
+	}
+
 	public static Course findById(int courseId){
 		return find.where().eq("id", courseId).findUnique();
 	}
