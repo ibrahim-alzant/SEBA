@@ -103,11 +103,14 @@
                             {{selectedStudents().length}}</span>
                     </div>
 
-                    <div class="search_result_div" ng-repeat="student in selectedStudents()">
+                    <div class="search_result_div row" ng-repeat="student in selectedStudents()" style="margin: 0px">
 
                         @*{{student}}*@
-                        <img src="{{student.imgURL}}" height="100" width="100" style="vertical-align : top !important ;">
-                        <div style="padding-left : 10px ; display : inline-block ; vertical-align : top">
+                        <div class="col-md-2">
+                            <img src="{{student.imgURL}}" height="100" width="100" style="vertical-align : top !important ;">
+                        </div>
+
+                        <div style="padding-left : 10px ; display : inline-block ; vertical-align : top" class="col-md-7">
                             <span style=" font-family : 'Lobster' ; color : #337ab7 ; font-size : 20px ">
                                 {{student.firstName+" "+student.lastName}}</span>
                             <br>
@@ -124,10 +127,13 @@
                                 {{style.danceStyleName}}</span>
                             <br/>
                         </div>
-                        <button class="btn btn-success" style="margin-top : 30px ; float : right ;"
+                        <div class="col-md-3">
+                            <button class="btn btn-success" style="margin-top : 30px ; float : right ;"
                             ng-class="sendMessageButtonClass()" ng-click="sendMessage(student)">
-                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Send message
-                        </button>
+                                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Send message
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </fieldset>

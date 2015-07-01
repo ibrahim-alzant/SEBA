@@ -90,6 +90,12 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http, $wi
         var ageDate = new Date(ageDifMs);
         student.age = Math.abs(ageDate.getUTCFullYear() - 1970);
 
+        student.hasStyle = function (styleName) {
+            return hasStyle(student, styleName);
+        };
+        student.hasCheckedLanguages = function () {
+            return hasCheckedLanguages(student);
+        };
         //counting distance from user address
         geocoder.geocode({'address': student.address}, function (results, status) {
             if ((status == google.maps.GeocoderStatus.OK)&&($scope.location!=undefined)) {
@@ -102,12 +108,7 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http, $wi
             var scope = angular.element(e).scope();
             scope.$digest();
         });
-        student.hasStyle = function (styleName) {
-            return hasStyle(student, styleName);
-        };
-        student.hasCheckedLanguages = function () {
-            return hasCheckedLanguages(student);
-        };
+
 
     }
 
