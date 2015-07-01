@@ -70,7 +70,6 @@ public class TeacherController extends Controller {
 						ctx().session().get("userName"),
 						calculateAge(originalTeacher.dateOfBirth),form(ChangePasswordForm.class)));
 			}
-			System.out.println("try to change password");
 			TeacherController.ChangePasswordForm teacherForm = form.get();
 			
 			originalTeacher.password = teacherForm.newPassword;
@@ -193,7 +192,15 @@ public class TeacherController extends Controller {
 		teacher.password = teacherForm.password;
 		teacher.email = teacherForm.email;
 		teacher.mobile = teacherForm.mobile;
-		teacher.imgURL = teacherForm.imgURL;
+		if(teacherForm.imgURL == null || teacherForm.imgURL.equals("")){
+			if(teacherForm.gender.equals("Male")){
+				teacher.imgURL = "/assets/images/profile/defualt_male.png";
+			} else {
+				teacher.imgURL = "/assets/images/profile/defualt_female.png";
+			}
+		} else {
+			teacher.imgURL = teacherForm.imgURL;
+		}
 		teacher.professionalExperience = teacherForm.professionalExperience;
 		DateFormat format = new SimpleDateFormat("dd.mm.yyyy");
 		teacher.dateOfBirth = format.parse(teacherForm.dateOfBirth);

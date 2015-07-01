@@ -207,7 +207,13 @@ List[models.common.Gender], userName: String) @import helper._
 <script>
 	$(document).ready(function(e) {
 		var useDefaultPicture = false;
-		$("#profilePictureBlock").hide();
+		var selectedOption = $( "#gender option:selected" ).text();
+		useDefaultPicture = true;
+		if(selectedOption == "Male"){
+			$("#profilePicture").attr("src", "/assets/images/profile/defualt_male.png");				
+		} else {
+			$("#profilePicture").attr("src", "/assets/images/profile/defualt_female.png");
+		}
 		$("#myForm").on('submit', (function(e) {
 			e.preventDefault();
 			$.ajax({
