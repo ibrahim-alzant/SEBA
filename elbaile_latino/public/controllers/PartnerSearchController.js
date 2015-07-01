@@ -45,6 +45,7 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http, $wi
                 ( student.height <= parseFloat($scope.height.split(',')[1])) &&
                 ( student.hasStyle($scope.style)) &&
                 ( student.hasCheckedLanguages()) &&
+                ( student.userName != $scope.name) &&
                 (
                     (!student.hasOwnProperty('distance')) ||
                     (
@@ -91,7 +92,7 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http, $wi
 
         //counting distance from user address
         geocoder.geocode({'address': student.address}, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
+            if ((status == google.maps.GeocoderStatus.OK)&&($scope.location!=undefined)) {
                 student.distance = distances($scope.location.lat(), $scope.location.lng(),
                     results[0].geometry.location.lat(), results[0].geometry.location.lng());
             } else {
@@ -151,31 +152,49 @@ ElBaileLatino.controller('PartnerSearchController', function ($scope, $http, $wi
         return kmdistance;
     }
 
-    $scope.styleLabelClass = function (danceStyleName) {
-        if (danceStyleName == $scope.style) {
-            return "label label-info";
-        } else {
-            return "label label-default";
-        }
-    };
-    $scope.languageLabelClass = function (languageId) {
-        var isLanguageChecked = false;
-        angular.forEach($scope.languages, function (lan) {
-            if ((lan.id == languageId) && (lan.checked)) {
-                isLanguageChecked = true;
+    //dynamic classes
+    {
+        $scope.styleLabelClass = function (danceStyleName) {
+            if (danceStyleName == $scope.style) {
+                return "label label-info";
+            } else {
+                return "label label-default";
             }
-            ;
-        });
-        if (isLanguageChecked) {
-            return "label label-info";
-        } else {
-            return "label label-default";
+        };
+        $scope.languageLabelClass = function (languageId) {
+            var isLanguageChecked = false;
+            angular.forEach($scope.languages, function (lan) {
+                if ((lan.id == languageId) && (lan.checked)) {
+                    isLanguageChecked = true;
+                }
+                ;
+            });
+            if (isLanguageChecked) {
+                return "label label-info";
+            } else {
+                return "label label-default";
+            }
+
+        };
+
+        $scope.sendMessageButtonClass = function () {
+            if ($scope.name != "") {
+                return "btn btn-success";
+            } else {
+                return "btn btn-success disabled";
+            }
         }
-
-    };
-
-    $scope.sendMessage = function (student) {
-        $window.location = "mailto:"+student.email+"?subject=ElBaileLatino - dance together &body=";
     }
+
+    // events
+    {
+        $scope.sendMessage = function (student) {
+            if ($scope.name != "") {
+                $window.location = "mailto:" + student.email + "?subject=ElBaileLatino - dance together &body=";
+            }
+
+        }
+    }
+
 
 });

@@ -42,9 +42,13 @@
 
                 <div class="form-group">
                     <label for="dateOfBirth" class="col-lg-2 control-label">Date of Birth</label>
-                    <div class="col-lg-6">
-                        <input class="form-control" id="dateOfBirth" name="dateOfBirth" placeholder="Date of Birth"
-                        value="@student.getFormattedDate(student)" type="text">
+                    <div class="col-lg-2">
+                        <input id="dateOfBirth" name="dateOfBirth" placeholder="Date of Birth"
+                            value="@student.getFormattedDate(student)"
+                            type="text" class="datepicker form-control" style="width: 100%"/>
+                        <script type="text/javascript">
+                            $('.datepicker').datepicker({ format: 'dd.mm.yyyy'})
+                        </script>
                     </div>
                 </div>
 

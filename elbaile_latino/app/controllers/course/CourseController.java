@@ -67,6 +67,48 @@ public class CourseController extends Controller {
 		return redirect(controllers.teacher.routes.TeacherController.show(ctx().session().get("userName")));
 	}
 
+	public static Result updateCourse() throws ParseException {
+		Form<CourseForm> form = form(CourseForm.class).bindFromRequest();
+
+		if (form.hasErrors())
+		{
+			int courseId = Integer.parseInt(Form.form().bindFromRequest().get("id"));
+			Course tmpCourse = Course.findById(courseId);
+			return badRequest(views.html.course.coursePage.render(tmpCourse,ctx().session().get("userName"),true, form));
+		}
+
+		CourseController.CourseForm courseForm = form.get();
+
+		Course course = new Course();
+		course.id = courseForm.id;
+		course.title = courseForm.title;
+		course.numberOfParticipants = courseForm.numberOfParticipants;
+		course.maxNumberOfParticipants = courseForm.maxNumberOfParticipants;
+		course.numberOfClasses = courseForm.numberOfClasses;
+		course.language = Language.findByName(courseForm.language);
+		Date courseStartdate;
+		try {
+			courseStartdate = new SimpleDateFormat("dd.MM.yy").parse(courseForm.startDate);
+		} catch (ParseException e) {
+			courseStartdate = new Date();
+		}
+		course.startDate = courseStartdate;
+		course.danceStyle = DanceStyle.findByName(courseForm.danceStyle);
+		course.participantFee = courseForm.participantFee;
+		course.location = courseForm.location;
+		course.locationCode = courseForm.locationCode;
+
+		course.teacher = Teacher.findByUsername(ctx().session().get("userName"));
+		course.status = courseForm.status;
+		course.danceLevel = courseForm.danceLevel;
+		course.pictureURL = courseForm.pictureURL;
+		course.videoURL = courseForm.videoURL;
+
+		course.update();
+
+		return redirect(controllers.teacher.routes.TeacherController.show(ctx().session().get("userName")));
+	}
+
 	public static Result list() {
 		List<Course> courses = Course.find.all();
 		return ok(views.html.course.list.render(courses,ctx().session().get("userName")));
@@ -86,7 +128,8 @@ public class CourseController extends Controller {
 		if (course == null) {
 			return notFound();
 		} else {
-			return ok(views.html.course.coursePage.render(course,ctx().session().get("userName"),false));
+			Form<CourseController.CourseForm> courseForm = form(CourseController.CourseForm.class);
+			return ok(views.html.course.coursePage.render(course,ctx().session().get("userName"),false,courseForm));
 		}
 	}
 
@@ -95,7 +138,8 @@ public class CourseController extends Controller {
 		if (course == null) {
 			return notFound();
 		} else {
-			return ok(views.html.course.coursePage.render(course,ctx().session().get("userName"),true));
+			Form<CourseController.CourseForm> courseForm = form(CourseController.CourseForm.class);
+			return ok(views.html.course.coursePage.render(course,ctx().session().get("userName"),true,courseForm));
 		}
 	}
 
@@ -202,61 +246,60 @@ public class CourseController extends Controller {
 	}
 
 	public static class CourseForm {
-
 		public int id;
-
-		@Required
 		public String title;
-
-		@Required
 		public String startDate;
-
-		@Required
 		public int numberOfClasses;
-
-		@Required
 		public Integer numberOfParticipants;
-
-		@Required
 		public Integer maxNumberOfParticipants;
-
-		@Required
 		public String language;
-
-		@Required
 		public String danceStyle;
-
-		@Required
 		public String danceLevel;
-
-		@Required
 		public String status;
-
-		@Required
 		public String location;
-
 		public String locationCode;
-
-		@Required
 		public float participantFee;
-
 		public String pictureURL;
-
 		public String videoURL;
 
-		public String validate() {
+		public String validate () {
 			if (isBlank(title)) {
-				return "title is required";
+				return "Title is required";
 			}
+			if (isBlank(startDate)) {
+				return "Start Date is required";
+			}
+			if (isZeroOrNigative(numberOfClasses)) {
+				return "Number of classes is required";
+			}
+			if (isZeroOrNigative(maxNumberOfParticipants)) {
+				return "Max Number of participants is required";
+			}
+			if (isBlank(language)) {
+				return "Language is required";
+			}
+			if (isBlank(location)) {
+				return "Location is required";
+			}
+			if (isZeroOrNigative(participantFee)) {
+				return "Participant Fee is required";
+			}
+			if (isBlank(danceLevel)) {
+				return "Dance Level is required";
+			}
+
 			if (isBlank(danceStyle)) {
-				return "Dance style is required";
+				return "Dance Level is required";
 			}
 
 			return null;
 		}
 
 		private boolean isBlank(String input) {
-			return input == null || input.isEmpty() || input.trim().isEmpty();
+			return input == null || input.length() == 0;
+		}
+		private boolean isZeroOrNigative(float input) {
+			return input <= 0;
 		}
 	}
 }

@@ -1,4 +1,4 @@
-@(course : models.common.course.Course,userName: String, isEditable : Boolean)
+@(course : models.common.course.Course,userName: String, isEditable : Boolean, courseForm:Form[controllers.course.CourseController.CourseForm])
 
 @import helper._
 
@@ -24,13 +24,27 @@
 			</ul>
 			<div id="myTabContent" class="tab-content">
 				<div class="tab-pane fade active in" id="details">
-				<form class="form-horizontal" @if(isEditable) {action="/course/post/" method="post"}>
+				<form class="form-horizontal" @if(isEditable) {action="/course/update/" method="post"}>
 				<fieldset>
+					@if(courseForm.hasGlobalErrors) {
+						<div class="alert alert-dismissible alert-danger">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+							<strong>@courseForm.globalError.message</strong>
+						</div>
+
+					}
 				<div class="form-group" style="margin-top: 20px;">
 					<label for="startDate" class="col-lg-2 control-label">Start date</label>
 					<div class="col-lg-6">
-						<input class="form-control" id="startDate" name="startDate" @if(!isEditable) {readonly}
-						placeholder="Start date" type="text" value="@course.startDate.format("dd.MM.yyyy")">
+						<input type="text" class="form-control"  @if(isEditable) {id="startDate"} name="startDate" @if(!isEditable) {readonly}
+						placeholder="Start date" type="text" value="@course.startDate.format("dd.MM.yy")">
+						<script type="text/javascript">
+							$(function () {
+								$('#startDate').datepicker({ format: 'dd.mm.yy' });
+							});
+						</script>
+						@*<input class="form-control" id="startDate" name="startDate" @if(!isEditable) {readonly}*@
+						@*placeholder="Start date" type="text" value="@course.startDate.format("dd.MM.yyyy")">*@
 						<input class="form-control" id="id" name="id"
 						placeholder="Start date" type="hidden" value="@course.id">
 						<input class="form-control" id="title" name="title"

@@ -13,19 +13,29 @@
 					<div style="padding-top : 10px">
 						<label>Starts from</label><br/>
 						<input type="text" class="form-control" id="startDateFrom" name="startDateFrom"
-						placeholder="dd.MM.yyyy" value="@criteria.dateFrom"/>
+						placeholder="dd.MM.yyyy" value="@criteria.dateFrom" onchange="this.form.submit()"/>
+						<script type="text/javascript">
+							$(function () {
+								$('#startDateFrom').datepicker({ dateFormat: 'dd.mm.yy' });
+							});
+						</script>
 					</div>
 
 					<div style="padding-top : 10px">
 						<label>To</label><br/>
 						<input type="text" class="form-control" id="startDateTo" name="startDateTo"
-						placeholder="dd.MM.yyyy" value="@criteria.dateTo"/>
+						placeholder="dd.MM.yyyy" value="@criteria.dateTo" onchange="this.form.submit()"/>
+						<script type="text/javascript">
+							$(function () {
+								$('#startDateTo').datepicker({ dateFormat: 'dd.mm.yy' });
+							});
+						</script>
 					</div>
 
 					@*dancing style*@
 					<div style="padding-top : 10px">
 						<label>Dancing style</label><br/>
-						<select class="form-control" id="danceStyle" name="danceStyle">
+						<select class="form-control" id="danceStyle" name="danceStyle" onchange="this.form.submit()">
 							<option>All</option>
 						@for(style <- styles) {
 							<option @if(criteria.danceStyle == style.danceStyleName) {selected}>@style.danceStyleName</option>
@@ -36,18 +46,13 @@
 					@*Language*@
 					<div style="padding-top : 10px">
 						<label>Language</label><br/>
-						<select class="form-control" id="language" name="language">
+						<select class="form-control" id="language" name="language" onchange="this.form.submit()">
 							<option>All</option>
 							@for(language <- languages) {
 								<option @if(criteria.language == language.languageName) {selected}>@language.languageName</option>
 							}
 						</select>
 					</div>
-
-					<div style="padding-top : 10px">
-						<button type="submit" class="btn btn-success">Filter</button>
-					</div>
-
 				</div>
 
 				@*result part*@
