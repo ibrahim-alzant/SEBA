@@ -222,6 +222,155 @@ VALUES (16, 'Simon', 1, 'Breme', 'Steinickeweg 7, 80798 Muenchen', 'simon', '123
  INSERT INTO student_dance_style (student_id, dance_style_id ) VALUES (16,7);
  INSERT INTO student_dance_style (student_id, dance_style_id ) VALUES (16,5);
 
+INSERT INTO teacher (id, first_name, gender_id, last_name, user_name, password, email, mobile, img_url, professional_experience, date_of_birth )
+VALUES (1, 'Johannes', 1, 'Spogg','TeacherJohannes', '123', 'jspogg@gmail.com', '+491739434882343',
+ 'http://www.teachballroomdancing.com/wp-content/uploads/2013/08/9_GreatDanceTeacher.jpg',
+ 'Normaly working at Steuer Dance School. Try my courses here!', '1960-09-01 00:00:00.00');
+
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (1,1);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (1,2);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (1,7);
+
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (1,1);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (1,3);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (1,7);
+
+INSERT INTO teacher (id, first_name, gender_id, last_name, user_name, password, email, mobile, img_url, professional_experience, date_of_birth )
+VALUES (2, 'Martin', 1, 'Zellner', 'TeacherMartin', '123', 'martiiiin@gmail.com', '+491739434882343',
+ 'http://www.milomiles.com/wp-content/uploads/2012/05/A1.jpg',
+ 'Passionate Salsa dancer. I have experience from all over the world!', '1970-09-01 00:00:00.00');
+
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (2,4);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (2,2);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (2,9);
+
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (2,2);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (2,4);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (2,8);
+
+INSERT INTO teacher (id, first_name, gender_id, last_name, user_name, password, email, mobile, img_url, professional_experience, date_of_birth )
+VALUES (3, 'Felix', 1, 'Brauer', 'TeacherFelix', '123', 'felixbrauer@gmail.com', '+491739434882343',
+ 'http://www.universaldancecreations.com/images/samba-latin-dancers.jpg',
+ 'Want some hot dance classes? Try my courses... I will fulfill your wishes', '1980-09-01 00:00:00.00');
+
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (3,4);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (3,3);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (3,6);
+
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (3,4);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (3,5);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (3,6);
+
+INSERT INTO teacher (id, first_name, gender_id, last_name, user_name, password, email, mobile, img_url, professional_experience, date_of_birth )
+VALUES (4, 'Thomas', 1, 'Kork', 'TeachingThomas', '123', 'Tommy12325@gmail.com', '+491739434882343',
+ 'http://www.universaldancecreations.com/images/samba-latin-dancers.jpg',
+ 'Want to know how to move your body? Come to my courses!' , '1985-09-01 00:00:00.00');
+
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (4,1);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (4,6);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (4,7);
+
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (4,6);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (4,7);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (4,8);
+
+INSERT INTO teacher (id, first_name, gender_id, last_name, user_name, password, email, mobile, img_url, professional_experience, date_of_birth )
+VALUES (5, 'Anneliese', 2, 'Gola', 'TeacherAnny', '123', 'AnnelieseGgg@gmail.com', '+491739434882343',
+ 'http://ecx.images-amazon.com/images/I/41WonBsoO8L._SY445_.jpg',
+ 'Probably the best Tango dancer you can find in town :) Check out my courses!' , '1986-09-01 00:00:00.00');
+
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (5,1);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (5,2);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (5,3);
+
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (5,4);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (5,2);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (5,1);
+
+INSERT INTO teacher (id, first_name, gender_id, last_name, user_name, password, email, mobile, img_url, professional_experience, date_of_birth )
+VALUES (6, 'Laura', 2, 'Wittner', 'TeacherLaura', '123', 'LauraW.2312@gmail.com', '+491739434882343',
+ 'https://s-media-cache-ak0.pinimg.com/236x/cb/57/fe/cb57fe80a8b81783bb6267dce5f01ad5.jpg',
+ 'Experienced teacher for many many years!' , '1976-09-01 00:00:00.00');
+
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (6,1);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (6,5);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (6,6);
+
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (6,1);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (6,7);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (6,5);
+
+INSERT INTO teacher (id, first_name, gender_id, last_name, user_name, password, email, mobile, img_url, professional_experience, date_of_birth )
+VALUES (7, 'Marlin', 2, 'Wagner', 'TeacherMarlin', '123', 'MarlinTeacher@gmail.com', '+491739434882343',
+ 'http://g01.a.alicdn.com/kf/HTB1UKMJHFXXXXcUXVXXq6xXFXXXI/-font-b-Ballroom-b-font-O-neck-short-sleeve-modern-Latin-font-b-dance-b.jpg',
+ 'Dancing and teaching is my passion! LOVE this new opportunity! Elbailelatino rocks!!!' , '1981-09-01 00:00:00.00');
+
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (7,4);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (7,2);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (7,9);
+
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (7,3);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (7,6);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (7,1);
+
+INSERT INTO teacher (id, first_name, gender_id, last_name, user_name, password, email, mobile, img_url, professional_experience, date_of_birth )
+VALUES (8, 'Myriam', 2, 'F.', 'TeacherMyriam', '123', 'MyriFeller@gmail.com', '+491739434882343',
+ 'https://s-media-cache-ak0.pinimg.com/736x/a9/4d/4c/a94d4c73e3e27fd642221e0bd73699ba.jpg',
+ 'Ever wondered how to dance a perfect Jive? I will tell you... No worries!' , '1986-09-01 00:00:00.00');
+
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (8,2);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (8,4);
+ INSERT INTO teacher_language (teacher_id, language_id ) VALUES (8,5);
+
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (8,2);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (8,4);
+ INSERT INTO teacher_dance_style (teacher_id, dance_style_id ) VALUES (8,8);
+
+
+ INSERT INTO course (id, teacher_id, title, start_date, number_of_classes, number_of_participants, max_number_of_participants, language_id, dance_style_id, dance_level,
+ status, location, location_code, participant_fee, picture_url, video_url)
+ VALUES (1, 1,'Salsa for everyone', '2015-09-01 15:00:00.00', 8, 0, 20, 1, 1, 'Open for everyone! Well do the basics', 'open', 'Turnhalle 1, Olympiazentrum',
+  '48.263418850644165,11.66921496347640', 100, 'http://www.salsa-libre.eu/salsalibre/wp-content/uploads/2013/01/Salsa-libre-banner-3.jpg', '' );
+
+
+ INSERT INTO course (id, teacher_id, title, start_date, number_of_classes, number_of_participants, max_number_of_participants, language_id, dance_style_id, dance_level,
+ status, location, location_code, participant_fee, picture_url, video_url)
+ VALUES (2, 2,'Die Tangostunden deines Lebens!', '2015-07-30 12:00:00.00', 10, 0, 24, 2, 2, 'Fortgeschritten, aber Hauptsache motiviert! Yeah!', 'open', 'Turnhalle 1, Olympiazentrum',
+  '48.263418850644165,11.66921496347640', 120, 'http://www.tango-buenos-aires.com.ar/wp-content/gallery/gallery/e9fc1f15-9f4b-0141-25b7-c40731371ae4.jpg', '' );
+
+
+ INSERT INTO course (id, teacher_id, title, start_date, number_of_classes, number_of_participants, max_number_of_participants, language_id, dance_style_id, dance_level,
+ status, location, location_code, participant_fee, picture_url, video_url)
+ VALUES (3, 3,'Sexy Samba!', '2015-07-30 13:00:00.00', 10, 0, 24, 1, 3, 'Learn all the samba steps you need to impress!', 'open', 'Turnhalle 1, Olympiazentrum',
+  '48.263418850644165,11.66921496347640', 90, 'http://www.tango-buenos-aires.com.ar/wp-content/gallery/gallery/e9fc1f15-9f4b-0141-25b7-c40731371ae4.jpg', '' );
+
+ INSERT INTO course (id, teacher_id, title, start_date, number_of_classes, number_of_participants, max_number_of_participants, language_id, dance_style_id, dance_level,
+ status, location, location_code, participant_fee, picture_url, video_url)
+ VALUES (4, 4,'Bachata - Beginners', '2015-07-30 13:00:00.00', 15, 0, 30, 1, 4, 'Never heard of it? No problem!', 'open', 'Turnhalle 1, Olympiazentrum',
+  '48.263418850644165,11.66921496347640', 150, 'http://photos3.meetupstatic.com/photos/event/9/3/3/c/event_129037692.jpeg', '' );
+
+ INSERT INTO course (id, teacher_id, title, start_date, number_of_classes, number_of_participants, max_number_of_participants, language_id, dance_style_id, dance_level,
+ status, location, location_code, participant_fee, picture_url, video_url)
+ VALUES (5, 5,'Danza - Move your body!', '2015-08-30 13:00:00.00', 10, 0, 30, 1, 4, 'basic - just feel the rhythm and youll have fun', 'open', 'Turnhalle 1, Olympiazentrum',
+  '48.263418850644165,11.66921496347640', 150, 'http://misleibyblug.zumba.com/zumba-class-0911-004.jpg', '' );
+
+  INSERT INTO course (id, teacher_id, title, start_date, number_of_classes, number_of_participants, max_number_of_participants, language_id, dance_style_id, dance_level,
+ status, location, location_code, participant_fee, picture_url, video_url)
+ VALUES (6, 5,'Groovy Reggeaton', '2015-08-30 13:00:00.00', 10, 0, 30, 1, 4, 'Everyone!', 'open', 'Turnhalle 1, Olympiazentrum',
+  '48.263418850644165,11.66921496347640', 150, 'http://www.timba.com/blog_files/0000/0957/TripsToCuba12.jpg', '' );
+
+  INSERT INTO course (id, teacher_id, title, start_date, number_of_classes, number_of_participants, max_number_of_participants, language_id, dance_style_id, dance_level,
+ status, location, location_code, participant_fee, picture_url, video_url)
+ VALUES (7, 7,'Jive Professional', '2015-08-30 13:00:00.00', 15, 0, 10, 1, 4, 'Only professionals please!', 'open', 'Turnhalle 1, Olympiazentrum',
+  '48.263418850644165,11.66921496347640', 300, 'http://www.dancesportindia.com/wp-content/uploads/2012/03/JIV.jpg', '' );
+
+  INSERT INTO course (id, teacher_id, title, start_date, number_of_classes, number_of_participants, max_number_of_participants, language_id, dance_style_id, dance_level,
+ status, location, location_code, participant_fee, picture_url, video_url)
+ VALUES (8, 8,'Rumba für Anfaenger', '2015-08-30 13:00:00.00', 10, 0, 30, 1, 4, 'Anfaenger', 'open', 'Turnhalle 1, Olympiazentrum',
+  '48.263418850644165,11.66921496347640', 150, 'http://www.kandsmusic.net/_Media/img_3445_med.jpeg', '' );
+
+
+
 # --- !Downs
 DELETE FROM student_language;
 DELETE FROM student_dance_style;
