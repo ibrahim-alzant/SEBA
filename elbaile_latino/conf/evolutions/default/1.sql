@@ -23,6 +23,28 @@ create table course (
   constraint pk_course primary key (id))
 ;
 
+create table course_feed_back (
+  id                        bigint not null,
+  feedback_text             varchar(255),
+  owner_id                  bigint,
+  course_id                 integer,
+  constraint pk_course_feed_back primary key (id))
+;
+
+create table course_payment (
+  id                        integer not null,
+  student_id                bigint,
+  course_id                 integer,
+  payment_type              varchar(255),
+  card_holder_name          varchar(255),
+  card_number               varchar(255),
+  expiration_date           varchar(255),
+  security_code             varchar(255),
+  amount                    float,
+  payment_date              timestamp,
+  constraint pk_course_payment primary key (id))
+;
+
 create table dance_style (
   id                        bigint not null,
   dance_style_name          varchar(255),
@@ -42,6 +64,15 @@ create table language (
   language_name             varchar(255),
   constraint uq_language_language_name unique (language_name),
   constraint pk_language primary key (id))
+;
+
+create table remarks (
+  id                        bigint not null,
+  student_id                bigint,
+  remark_date               timestamp,
+  remark_message            varchar(255),
+  is_new                    boolean,
+  constraint pk_remarks primary key (id))
 ;
 
 create table student (
@@ -94,6 +125,12 @@ create table course_student (
   constraint pk_course_student primary key (course_id, student_id))
 ;
 
+create table course_remarks (
+  course_id                      integer not null,
+  remarks_id                     bigint not null,
+  constraint pk_course_remarks primary key (course_id, remarks_id))
+;
+
 create table student_language (
   student_id                     bigint not null,
   language_id                    bigint not null,
@@ -119,11 +156,17 @@ create table teacher_dance_style (
 ;
 create sequence course_seq;
 
+create sequence course_feed_back_seq;
+
+create sequence course_payment_seq;
+
 create sequence dance_style_seq;
 
 create sequence gender_seq;
 
 create sequence language_seq;
+
+create sequence remarks_seq;
 
 create sequence student_seq;
 
@@ -137,16 +180,26 @@ alter table course add constraint fk_course_language_2 foreign key (language_id)
 create index ix_course_language_2 on course (language_id);
 alter table course add constraint fk_course_danceStyle_3 foreign key (dance_style_id) references dance_style (id) on delete restrict on update restrict;
 create index ix_course_danceStyle_3 on course (dance_style_id);
-alter table student add constraint fk_student_gender_4 foreign key (gender_id) references gender (id) on delete restrict on update restrict;
-create index ix_student_gender_4 on student (gender_id);
-alter table teacher add constraint fk_teacher_gender_5 foreign key (gender_id) references gender (id) on delete restrict on update restrict;
-create index ix_teacher_gender_5 on teacher (gender_id);
+alter table course_feed_back add constraint fk_course_feed_back_owner_4 foreign key (owner_id) references student (id) on delete restrict on update restrict;
+create index ix_course_feed_back_owner_4 on course_feed_back (owner_id);
+alter table course_feed_back add constraint fk_course_feed_back_course_5 foreign key (course_id) references course (id) on delete restrict on update restrict;
+create index ix_course_feed_back_course_5 on course_feed_back (course_id);
+alter table remarks add constraint fk_remarks_student_6 foreign key (student_id) references student (id) on delete restrict on update restrict;
+create index ix_remarks_student_6 on remarks (student_id);
+alter table student add constraint fk_student_gender_7 foreign key (gender_id) references gender (id) on delete restrict on update restrict;
+create index ix_student_gender_7 on student (gender_id);
+alter table teacher add constraint fk_teacher_gender_8 foreign key (gender_id) references gender (id) on delete restrict on update restrict;
+create index ix_teacher_gender_8 on teacher (gender_id);
 
 
 
 alter table course_student add constraint fk_course_student_course_01 foreign key (course_id) references course (id) on delete restrict on update restrict;
 
 alter table course_student add constraint fk_course_student_student_02 foreign key (student_id) references student (id) on delete restrict on update restrict;
+
+alter table course_remarks add constraint fk_course_remarks_course_01 foreign key (course_id) references course (id) on delete restrict on update restrict;
+
+alter table course_remarks add constraint fk_course_remarks_remarks_02 foreign key (remarks_id) references remarks (id) on delete restrict on update restrict;
 
 alter table student_language add constraint fk_student_language_student_01 foreign key (student_id) references student (id) on delete restrict on update restrict;
 
@@ -172,11 +225,19 @@ drop table if exists course;
 
 drop table if exists course_student;
 
+drop table if exists course_remarks;
+
+drop table if exists course_feed_back;
+
+drop table if exists course_payment;
+
 drop table if exists dance_style;
 
 drop table if exists gender;
 
 drop table if exists language;
+
+drop table if exists remarks;
 
 drop table if exists student;
 
@@ -196,11 +257,17 @@ SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists course_seq;
 
+drop sequence if exists course_feed_back_seq;
+
+drop sequence if exists course_payment_seq;
+
 drop sequence if exists dance_style_seq;
 
 drop sequence if exists gender_seq;
 
 drop sequence if exists language_seq;
+
+drop sequence if exists remarks_seq;
 
 drop sequence if exists student_seq;
 

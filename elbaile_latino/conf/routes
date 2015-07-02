@@ -34,6 +34,7 @@ POST        /course/filter/                  controllers.course.CourseController
 GET         /courses/search/                 controllers.course.CourseController.showAllCourses()
 POST        /course/update/                  controllers.course.CourseController.updateCourse()
 POST        /course/pay/                     controllers.course.CourseController.registerStudentAndPay()
+POST        /course/addComment/				 controllers.course.CourseController.addComment()
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                    controllers.Assets.at(path="/public", file)

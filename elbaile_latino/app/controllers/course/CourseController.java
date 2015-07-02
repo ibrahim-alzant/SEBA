@@ -9,17 +9,18 @@ import java.util.List;
 import models.common.DanceStyle;
 import models.common.Language;
 import models.common.course.Course;
+import models.common.course.CourseFeedBack;
 import models.common.course.CoursePayment;
 import models.common.course.Remarks;
 import models.common.course.SearchFilter;
 import models.student.Student;
 import models.teacher.Teacher;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
 import scala.Int;
-
 import static play.data.Form.form;
 
 
@@ -67,6 +68,23 @@ public class CourseController extends Controller {
 		course.save();
 		return redirect(controllers.teacher.routes.TeacherController.show(ctx().session().get("userName")));
 	}
+	
+	public static Result addComment(){
+		System.out.println("inside comment");
+		DynamicForm requestData = form().bindFromRequest();
+	    String comment = requestData.get("comment");
+	    String courseId = requestData.get("courseId");
+	    CourseFeedBack feedBack = new CourseFeedBack();
+	    feedBack.course = Course.findById(new Integer(courseId));
+	    feedBack.feedbackText = comment;
+	    feedBack.owner = Student.findByUsername(ctx().session().get("userName"));
+	    System.out.println(feedBack.course.title);
+	    System.out.println(feedBack.owner.firstName);
+	    System.out.println(feedBack.feedbackText);
+	    feedBack.save();
+	    
+		return ok("success");
+	}
 
 	public static Result updateCourse() throws ParseException {
 		Form<CourseForm> form = form(CourseForm.class).bindFromRequest();
@@ -75,7 +93,8 @@ public class CourseController extends Controller {
 		{
 			int courseId = Integer.parseInt(Form.form().bindFromRequest().get("id"));
 			Course tmpCourse = Course.findById(courseId);
-			return badRequest(views.html.course.coursePage.render(tmpCourse,ctx().session().get("userName"),true, form));
+			List<CourseFeedBack> feedback = CourseFeedBack.findByCourse(tmpCourse);
+			return badRequest(views.html.course.coursePage.render(tmpCourse,ctx().session().get("userName"),true, form,null,feedback));
 		}
 
 		CourseController.CourseForm courseForm = form.get();
@@ -130,9 +149,14 @@ public class CourseController extends Controller {
 			return notFound();
 		} else {
 			Form<CourseController.CourseForm> courseForm = form(CourseController.CourseForm.class);
-			return ok(views.html.course.coursePage.render(course,ctx().session().get("userName"),false,courseForm));
+			String userName = ctx().session().get("userName");
+			Student user = Student.findByUsername(userName);
+			List<CourseFeedBack> feedback = CourseFeedBack.findByCourse(course);
+			System.out.println("number of feedback for this course is " + feedback.size());
+			return ok(views.html.course.coursePage.render(course,userName,false,courseForm,user,feedback));
 		}
 	}
+	
 
 	public static Result editById(Long id) {
 		Course course = Course.find.byId(id);
@@ -140,7 +164,8 @@ public class CourseController extends Controller {
 			return notFound();
 		} else {
 			Form<CourseController.CourseForm> courseForm = form(CourseController.CourseForm.class);
-			return ok(views.html.course.coursePage.render(course,ctx().session().get("userName"),true,courseForm));
+			List<CourseFeedBack> feedback = CourseFeedBack.findByCourse(course);
+			return ok(views.html.course.coursePage.render(course,ctx().session().get("userName"),true,courseForm,null,feedback));
 		}
 	}
 
