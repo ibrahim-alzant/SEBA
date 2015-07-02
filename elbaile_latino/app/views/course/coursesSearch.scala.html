@@ -16,7 +16,7 @@
 						placeholder="dd.MM.yyyy" value="@criteria.dateFrom" onchange="this.form.submit()"/>
 						<script type="text/javascript">
 							$(function () {
-								$('#startDateFrom').datepicker({ dateFormat: 'dd.mm.yy' });
+								$('#startDateFrom').datepicker({ dateFormat: 'dd.mm.yyyy' });
 							});
 						</script>
 					</div>
@@ -27,7 +27,7 @@
 						placeholder="dd.MM.yyyy" value="@criteria.dateTo" onchange="this.form.submit()"/>
 						<script type="text/javascript">
 							$(function () {
-								$('#startDateTo').datepicker({ dateFormat: 'dd.mm.yy' });
+								$('#startDateTo').datepicker({ dateFormat: 'dd.mm.yyyy' });
 							});
 						</script>
 					</div>
@@ -93,7 +93,8 @@
 										}
 										@course.status
 									</span></td>
-									<td style="padding-top: 15px;"><a href="@controllers.course.routes.CourseController.showById(course.id)" class="btn btn-success btn-sm">Details</a></td>
+									<td style="padding-top: 15px;"><a href="@controllers.course.routes.CourseController.showById(course.id)"
+									class="btn btn-success btn-sm" @if(userName == null) {style="display: none;" }>Details</a></td>
 								</tr>
 							}
 
