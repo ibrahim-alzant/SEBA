@@ -1,33 +1,51 @@
-@(userName: String, amount: String, courseId: String)
+@(userName: String, amount: String, courseId: String, coursePaymentForm:Form[controllers.course.CourseController.CoursePaymentForm])
 
 @import helper._
 @main("payment",userName) {
 <div class="panel panel-success">
 	<div class="panel-heading">Payment</div>
 	<div class="panel-body">
-		<form class="form-horizontal" action="/course/register/" method="post">
+		<form class="form-horizontal" action="/course/pay/" method="post">
 			<fieldset>
+				@if(coursePaymentForm.hasGlobalErrors) {
+					<div class="alert alert-dismissible alert-danger">
+						<button type="button" class="close" data-dismiss="alert">×</button>
+						<strong>@coursePaymentForm.globalError.message</strong>
+					</div>
+				}
 				<legend>Please enter your payment information</legend>
 				<div class="form-group" style="margin-top: 20px; padding-left: 15px; padding-right: 15px;">
-					<input class="form-control" type="text" value="Credit Card">
+					<input class="form-control" name="paymentType" id="paymentType"
+					type="text" value="Credit Card" readonly>
 				</div>
 				<div class="form-group" style="margin-top: 20px; padding-left: 15px; padding-right: 15px;">
-					<input class="form-control" placeholder="Name of cardholder" type="text">
+					<input class="form-control" name="cardHolderName" id="cardHolderName"
+					placeholder="Name of cardholder" type="text">
 				</div>
 				<div class="form-group" style="margin-top: 20px; padding-left: 15px; padding-right: 15px;">
-					<input class="form-control" placeholder="Card Number" type="text">
+					<input class="form-control" name="cardNumber" id="cardNumber"
+					placeholder="Card Number" type="text">
 				</div>
 				<div class="form-group" style="margin-top: 20px; padding-left: 15px; padding-right: 15px;">
-					<input class="form-control" placeholder="Expiration Date" type="date">
+					<input type="text" class="form-control" id="expirationDate" name="expirationDate"
+					placeholder="Start date" type="text">
+					<script type="text/javascript">
+							$(function () {
+								$('#startDate').datepicker({ format: 'mm.yy' });
+							});
+						</script>
 				</div>
 				<div class="form-group" style="margin-top: 20px; padding-left: 15px; padding-right: 15px;">
 					<img src="@routes.Assets.at("images/master_card.png")" width="250">
 				</div>
 				<div class="form-group" style="margin-top: 20px; padding-left: 15px; padding-right: 15px;">
-					<input class="form-control" placeholder="Security Code" type="text">
+					<input class="form-control" name="securityCode" id="securityCode"
+					placeholder="Security Code" type="text">
 				</div>
 				<div class="form-group" style="margin-top: 20px; padding-left: 15px; padding-right: 15px;">
 					<strong>Total amount:</strong><p></p><strong>@amount EUR</strong>
+					<input class="form-control" name="amount" id="amount" value="@amount"
+					placeholder="Security Code" type="hidden">
 				</div>
 				<input class="form-control" id="courseId" name="courseId" type="hidden" value="@courseId">
 			</fieldset>

@@ -14,7 +14,7 @@ GET         /teacher/login/                  controllers.teacher.LoginController
 POST        /teacher/doLogin/                controllers.teacher.LoginController.authenticate()
 GET         /teacher/signOut/                controllers.teacher.LoginController.signOut()
 POST        /teacher/upload/                 controllers.teacher.TeacherController.uploadfile()
-GET         /teacher/edit/					 controllers.teacher.TeacherController.editTeacherProfile()
+GET         /teacher/edit/                   controllers.teacher.TeacherController.editTeacherProfile()
 POST        /teacher/update/                 controllers.teacher.TeacherController.updateTeacherProfile()
 POST        /teacher/changePassword/         controllers.teacher.TeacherController.changePassword()
 
@@ -26,13 +26,14 @@ GET         /course/new/                     controllers.course.CourseController
 POST        /course/post/                    controllers.course.CourseController.createCourse()
 POST        /course/search/                  controllers.course.CourseController.searchByKeyword()
 GET         /course/category/:catName        controllers.course.CourseController.searchByCategory(catName:String)
-POST        /course/payment/                 controllers.course.CourseController.showPaymentForm()
+GET         /course/payment/:courseID         controllers.course.CourseController.showPaymentForm(courseID:String)
 GET         /course/edit/id/:id/             controllers.course.CourseController.editById(id:Long)
 GET         /course/settings/                controllers.course.CourseController.showCourseSettings()
 POST        /course/register/                controllers.course.CourseController.registerStudent()
 POST        /course/filter/                  controllers.course.CourseController.searchByCriteria()
 GET         /courses/search/                 controllers.course.CourseController.showAllCourses()
 POST        /course/update/                  controllers.course.CourseController.updateCourse()
+POST        /course/pay/                     controllers.course.CourseController.registerStudentAndPay()
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                    controllers.Assets.at(path="/public", file)

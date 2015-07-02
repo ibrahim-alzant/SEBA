@@ -9,6 +9,7 @@ import java.util.List;
 import models.common.DanceStyle;
 import models.common.Language;
 import models.common.course.Course;
+import models.common.course.CoursePayment;
 import models.common.course.Remarks;
 import models.common.course.SearchFilter;
 import models.student.Student;
@@ -174,10 +175,11 @@ public class CourseController extends Controller {
 		return ok(views.html.course.coursesSearch.render(Course.findByKeyword(keyword),ctx().session().get("userName"), keyword, DanceStyle.findAll(),searchCriteria, Language.findAll()));
 	}
 
-	public static Result showPaymentForm(){
-		String amount = Form.form().bindFromRequest().get("amount");
-		String courseId = Form.form().bindFromRequest().get("courseId");
-		return ok(views.html.course.coursePayment.render(ctx().session().get("userName"),amount, courseId));
+	public static Result showPaymentForm(String courseID){
+		Course tmpCourse = Course.findById(Integer.parseInt(courseID));
+		String amount = String.valueOf(tmpCourse.participantFee);
+		Form<CourseController.CoursePaymentForm> paymentForm = form(CourseController.CoursePaymentForm.class);
+		return ok(views.html.course.coursePayment.render(ctx().session().get("userName"),amount, courseID,paymentForm));
 	}
 
 	public static Result searchByCriteria(){
@@ -245,6 +247,46 @@ public class CourseController extends Controller {
 		return redirect(controllers.student.routes.StudentController.show(ctx().session().get("userName")));
 	}
 
+	public static Result registerStudentAndPay()
+	{
+		Form<CoursePaymentForm> form = form(CoursePaymentForm.class).bindFromRequest();
+
+		if (form.hasErrors())
+		{
+			String courseId = Form.form().bindFromRequest().get("courseId");
+			String amountValue = Form.form().bindFromRequest().get("amount");
+			return ok(views.html.course.coursePayment.render(ctx().session().get("userName"), amountValue, courseId, form));
+		}
+		//-- Now Register the user
+		Student tmpStudent = Student.findByUsername(ctx().session().get("userName"));
+		int courseId =  Integer.parseInt(Form.form().bindFromRequest().get("courseId"));
+		Course tmpCourse = Course.findById(courseId);
+
+		if(tmpCourse.participants == null)
+			tmpCourse.participants = new ArrayList<Student>();
+
+		tmpCourse.participants.add(tmpStudent);
+
+		tmpCourse.save();
+
+		// ---- Now Process the payment
+		CourseController.CoursePaymentForm paymentForm = form.get();
+		CoursePayment newPayment = new CoursePayment();
+		newPayment.paymentType = paymentForm.paymentType;
+		newPayment.cardHolderName = paymentForm.cardHolderName;
+		newPayment.cardNumber = paymentForm.cardNumber;
+		newPayment.expirationDate = paymentForm.expirationDate;
+		newPayment.securityCode = paymentForm.securityCode;
+		newPayment.amount = paymentForm.amount;
+		newPayment.courseId = paymentForm.courseId;
+		newPayment.studentId = tmpStudent.id;
+		newPayment.paymentDate = new Date();
+
+		newPayment.save();
+
+		return redirect(controllers.student.routes.StudentController.show(ctx().session().get("userName")));
+	}
+
 	public static class CourseForm {
 		public int id;
 		public String title;
@@ -300,6 +342,44 @@ public class CourseController extends Controller {
 		}
 		private boolean isZeroOrNigative(float input) {
 			return input <= 0;
+		}
+	}
+
+	public static class CoursePaymentForm {
+		public int id;
+		public String paymentType;
+		public String cardHolderName;
+		public String cardNumber;
+		public String expirationDate;
+		public String securityCode;
+
+		public long studentId;
+		public int courseId;
+		public float amount;
+
+		public String validate () {
+			if (isBlank(paymentType)) {
+				return "Payment Type is required";
+			}
+			if (isBlank(cardHolderName)) {
+				return "Card Holder Name is required";
+			}
+			if (isBlank(cardNumber)) {
+				return "Card Number is required";
+			}
+			if (isBlank(expirationDate)) {
+				return "Expiration Date is required";
+			}
+
+			if (isBlank(securityCode)) {
+				return "Security Code is required";
+			}
+
+			return null;
+		}
+
+		private boolean isBlank(String input) {
+			return input == null || input.length() == 0;
 		}
 	}
 }

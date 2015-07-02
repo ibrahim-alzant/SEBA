@@ -379,7 +379,7 @@
 						</fieldset>
 						<div class="col-lg-2"> </div>
 							<button class="btn btn-success" type="submit">Register</button>
-							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#registerAndPayBox">Proceed to payment</button>
+							<a type="button" class="btn btn-success" href="/course/payment/@course.id">Proceed to payment</a>
 					</form>
 				</div>
 				<div class="tab-pane fade" id="participants">
@@ -438,50 +438,5 @@
 				</div>
 				</div>
 			</div>
-					<div class="modal fade" id="registerAndPayBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<h4 class="modal-title" id="myModalLabel">Register & Pay</h4>
-								</div>
-								<form class="form-horizontal" action="/course/payment/" method="post">
-									<div class="modal-body">
-										<fieldset>
-											Please select the payment method you would like to use:
-											<div class="form-group">
-												<div class="col-lg-10">
-													<div class="radio">
-														<label>
-															<input name="optionsRadios" id="optionsRadios1" value="option1" checked="" type="radio">
-															Credit card
-														</label>
-													</div>
-													<div class="radio">
-														<label>
-															<input name="optionsRadios" id="optionsRadios2" value="option2" type="radio">
-															Paypal
-														</label>
-													</div>
-													<div class="radio">
-														<label>
-															<input name="optionsRadios" id="optionsRadios2" value="option2" type="radio">
-															SofortUberweisung.de
-														</label>
-													</div>
-													<input class="form-control" id="courseId" name="courseId" type="hidden" value="@course.id">
-													<input class="form-control" id="amount" name="amount" type="hidden" value="@course.participantFee">
-												</div>
-											</div>
-										</fieldset>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-success" data-dismiss="modal">Go Back</button>
-										<button type="submit" class="btn btn-success">Proceed</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
 			</div>
 }
