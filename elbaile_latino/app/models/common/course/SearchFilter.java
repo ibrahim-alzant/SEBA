@@ -14,7 +14,7 @@ public class SearchFilter {
 			str += "From: " + dateFrom + ", ";
 
 		if(dateTo.length() > 0)
-			str += "To: " + dateFrom + ", ";
+			str += "To: " + dateTo + ", ";
 
 		if(danceStyle.length() > 0)
 			str += "Style: " + danceStyle + ", ";

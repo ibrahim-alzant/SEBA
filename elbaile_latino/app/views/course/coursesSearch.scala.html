@@ -13,10 +13,13 @@
 					<div style="padding-top : 10px">
 						<label>Starts from</label><br/>
 						<input type="text" class="form-control" id="startDateFrom" name="startDateFrom"
-						placeholder="dd.MM.yyyy" value="@criteria.dateFrom" onchange="this.form.submit()"/>
+						placeholder="dd.MM.yyyy" value="@criteria.dateFrom" oninput="this.form.submit()" onchange="this.form.submit()"/>
 						<script type="text/javascript">
 							$(function () {
-								$('#startDateFrom').datepicker({ dateFormat: 'dd.mm.yyyy' });
+								 $('#startDateFrom').datepicker({ format: 'dd.mm.yyyy'});
+								$('#startDateFrom').datepicker().on('changeDate', function (ev) {
+									this.form.submit();
+								});
 							});
 						</script>
 					</div>
@@ -27,7 +30,10 @@
 						placeholder="dd.MM.yyyy" value="@criteria.dateTo" onchange="this.form.submit()"/>
 						<script type="text/javascript">
 							$(function () {
-								$('#startDateTo').datepicker({ dateFormat: 'dd.mm.yyyy' });
+								  $('#startDateTo').datepicker({ format: 'dd.mm.yyyy'});
+								  $('#startDateTo').datepicker().on('changeDate', function (ev) {
+									this.form.submit();
+								});
 							});
 						</script>
 					</div>
