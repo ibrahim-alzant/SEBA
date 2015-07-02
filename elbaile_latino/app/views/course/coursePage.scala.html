@@ -431,6 +431,7 @@
 								<th>Student</th>
 								<th>Remark / Question</th>
 								<th>Date</th>
+								<th></th
 							</tr>
 						</thead>
 						<tbody>
@@ -441,6 +442,9 @@
 									<td style="padding-top: 20px;">@remark.student.firstName  @remark.student.lastName</td>
 									<td style="padding-top: 20px;">@remark.remarkMessage</td>
 									<td style="padding-top: 20px;">@remark.remarkDate.format("dd.MM.yyyy")</td>
+									<td><a class="btn btn-success" href="mailto:@remark.student.email?Subject=RE:@course.title">
+										<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Reply
+									</a></td>
 								</tr>
 							}}
 						</tbody>
