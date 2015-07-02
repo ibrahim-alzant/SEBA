@@ -50,3 +50,7 @@ GET         /student/all/                    models.student.Student.allStudentsJ
 
 #Language
 GET         /language/all                    models.common.Language.allLanguagesJson()
+
+#MAIL
+POST        /courseSettings/sendemail/:message    controllers.teacher.MailController.send(message:String)
+#GET        /courseSettings/sendmail         controllers.teacher.MailController.send()

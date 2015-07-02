@@ -4,51 +4,40 @@
 @main("Course Settings",userName) {
     <div class="panel  panel-success">
         <div class="panel-heading">Course settings</div>
-        <div class="panel-body">
-
+        <form class="form-horizontal" action="/courseSettings/sendemail/" method="post">
+            <br>
+            <fieldset>
             <h4>Do you want to cancel a course or send a message?</h4>
 
             <div class="form-group">
-               <!-- <label class="col-lg-2 control-label">Decide!</label> -->
-                <div class="col-lg-10">
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                            Cancel a class
-                        </label>
+                <label for="message" class="col-lg-2 control-label">Message</label>
+                <div class="col-lg-4">
+                    <input class="form-control" id="message" name="message" placeholder="Enter your message here!" type="text">
+                </div>
+            </div>
 
 
-                    <div class="form-group" >
-                        <p class="text-muted">To cancel a class, please enter the concerned date.</p>
-                        <input type="date" class="form-control">
-                        <textarea class="form-control" rows="3" id="cancelReaseom" placeholder="Enter a reason for the cancellation and additional information."></textarea>
-                    </div>
-                    </div>
-
-
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                            Send a message to participants
+            <div class="form-group">
+                <label for="date" class="col-lg-2 control-label">Date</label>
+                <div class="col-lg-4">
+                    <input class="form-control" id="date" name="date"
+                           placeholder="date" type="password">
+                    <div class="checkbox">
+                        <label> <input type="checkbox"> Keep me logged in
                         </label>
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="textArea" class="col-lg-2 control-label"><Message></Message></label>
-                    <div class="col-lg-10">
-                        <textarea class="form-control" rows="3" id="participantsMessage" placeholder="Enter your message"></textarea>
-                        <span class="help-block">Your message will be sent to all registered participants of the course.</span>
-                    </div>
+
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-default">Cancel</button>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <div class="col-lg-10 col-lg-offset-2">
-                        <button type="reset" class="btn btn-default">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </div>
-
+            </fieldset>
+        </form>
         </div>
-    </div></div>
 }
