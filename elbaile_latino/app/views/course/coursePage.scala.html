@@ -1,3 +1,4 @@
+@import models.common.course.CoursePayment
 @(course : models.common.course.Course,userName: String, isEditable : Boolean, courseForm:Form[controllers.course.CourseController.CourseForm])
 
 @import helper._
@@ -393,12 +394,14 @@
 								<th>Height</th>
 								<th>Email</th>
 								<th>Mobile</th>
+								<th>Payed?</th>
 							</tr>
 						</thead>
 						<tbody>
 						@if(course.participants != null){
 							@for(participant <- course.participants) {
-								<tr>
+								<tr @if(CoursePayment.findByCourseIdAndParticipant(course.id,participant.id).size() > 0) {class="active"}
+									@if(CoursePayment.findByCourseIdAndParticipant(course.id,participant.id).size() == 0) {class="warning"}>
 									<td><img src="@participant.imgURL" height="50" width="50" style="vertical-align: top !important;"></td>
 									<td style="padding-top: 20px;">@participant.firstName</td>
 									<td style="padding-top: 20px;">@participant.lastName</td>
@@ -406,6 +409,14 @@
 									<td style="padding-top: 20px;">@participant.height</td>
 									<td style="padding-top: 20px;">@participant.email</td>
 									<td style="padding-top: 20px;">@participant.mobile</td>
+									<td style="padding-top: 20px;">@if(CoursePayment.findByCourseIdAndParticipant(course.id,participant.id).size() > 0){
+										<span class="label label-success">
+											YES
+										} else{
+										<span class="label label-danger">
+											NO
+										}
+									</span></td>
 								</tr>
 							}}
 						</tbody>

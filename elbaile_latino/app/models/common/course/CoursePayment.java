@@ -59,6 +59,10 @@ public class CoursePayment extends Model {
 		return find.where().eq("courseId", courseId).findList();
 	}
 
+	public static List<CoursePayment> findByCourseIdAndParticipant(int courseId, long participantId){
+		return find.where().eq("courseId", courseId).where().eq("studentId", participantId).findList();
+	}
+
 	public static CoursePayment findById(int coursePaymentId){
 		return find.where().eq("id", coursePaymentId).findUnique();
 	}
