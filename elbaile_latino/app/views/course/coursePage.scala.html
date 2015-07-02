@@ -489,7 +489,7 @@ $(document).ready(function() {
 						success : function(data) {
 							if(data == "success"){
 								$(".feedback_container").append('<div class="panel panel-default"> <div class="panel-heading">'
-								+'@if(user !=null){ @user.firstName @user.lastName}</div> <div class="panel-body"><div class="col-lg-8"> ' 	
+								+'@if(user !=null){ <img height="40" width="40" src="@user.imgURL"/> @user.firstName @user.lastName}</div> <div class="panel-body"><div class="col-lg-8"> ' 	
 										+ commentText
 										+'</div></div></div>');
 										$("#comment").val("");
