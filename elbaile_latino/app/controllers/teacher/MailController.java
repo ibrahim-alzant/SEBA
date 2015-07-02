@@ -40,6 +40,49 @@ public class MailController extends Controller {
 
         try {
             DynamicForm requestData = form().bindFromRequest();
+            String emailtext = requestData.get("message");
+            String namefrom = requestData.get("name");
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("elbailelatino@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse("MichaelaEva@gmx.de"));
+
+            message.setSubject("Elbailelatino - You got a message from " + namefrom + " !");
+            //message.setText("Dear Mail Crawler," +
+            //        "\n\n No spam to my email, please!");
+            message.setText(emailtext);
+            Transport.send(message);
+
+            System.out.println("Done");
+
+            return ok("Email sent!");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static Result sendcancellation() {
+
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("elbailelatino", "elbailelatino26");
+                    }
+                });
+
+        try {
+            DynamicForm requestData = form().bindFromRequest();
             String messagerequested = requestData.get("message");
             String namefrom = requestData.get("name");
             String date = requestData.get("date");
@@ -49,7 +92,7 @@ public class MailController extends Controller {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse("MichaelaEva@gmx.de"));
 
-            message.setSubject("Elbailelatino Message from " + namefrom + " for you!");
+            message.setSubject("Your dance class on " + date + " got canceled.");
             //message.setText("Dear Mail Crawler," +
             //        "\n\n No spam to my email, please!");
             message.setText(messagerequested);
