@@ -15,13 +15,13 @@ import javax.mail.internet.MimeMessage;
 
 import static play.data.Form.form;
 
-
 import play.data.Form;
 import play.data.format.Formats;
+import play.data.DynamicForm;
 
 public class MailController extends Controller {
 
-    public static Result send(String message2) {
+    public static Result send() {
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -39,15 +39,20 @@ public class MailController extends Controller {
                 });
 
         try {
+            DynamicForm requestData = form().bindFromRequest();
+            String messagerequested = requestData.get("message");
+            String namefrom = requestData.get("name");
+            String date = requestData.get("date");
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("elbailelatino@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse("MichaelaEva@gmx.de"));
-            message.setSubject("Testing Subject");
+
+            message.setSubject("Elbailelatino Message from " + namefrom + " for you!");
             //message.setText("Dear Mail Crawler," +
             //        "\n\n No spam to my email, please!");
-            message.setText(message2);
+            message.setText(messagerequested);
 
             Transport.send(message);
 
@@ -68,13 +73,15 @@ public class MailController extends Controller {
         return ok(views.html.courseSettings.render(mailForm));
     }
 **/
+/**
     public static Result mailForm() {
+        DynamicForm requestData = form().bindFromRequest();
         Form<MailForm> form = form(MailForm.class).bindFromRequest();
         MailForm mailform = form.get();
         send(mailform.message);
-        return ok("Test");
+        return ok(views.html.course.courseSettings.render(@"Test"));
     }
-
+**/
         /**
          * Mail class used by Mail Form.
          */
@@ -86,17 +93,17 @@ public class MailController extends Controller {
          *
          * @return null if validation ok, string with details otherwise
          */
-/**
+
         public String validate() {
             if (isBlank(message)) {
                 return "Message is required";
             }
             return null;
         }
-**/
+
    }
 
-    private boolean isBlank(String input) {
+    private static boolean isBlank(String input) {
         return input == null || input.isEmpty() || input.trim().isEmpty();
     }
 
