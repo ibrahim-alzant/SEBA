@@ -251,7 +251,7 @@ public class Course extends Model {
 				Long courseId = result.getLong(1);
 				Course courseFound = Course.find.byId(courseId);
 
-				if(courseFound.danceStyle.danceStyleName.toUpperCase().contains(cat))
+				if(courseFound.danceStyle.danceStyleName.toUpperCase().contains(cat.toUpperCase()))
 					result_list.add(courseFound);
 			}
 
