@@ -386,12 +386,3 @@ DELETE FROM teacher_language ;
 DELETE FROM language;
 DELETE FROM gender;
 DELETE FROM dance_style;
-
-DELETE FROM course;
-DELETE FROM teacher;
-
-DELETE FROM teacher_dance_style;
-DELETE FROM teacher;
-DELETE FROM course;
-DELETE FROM teacher_language;
- 
