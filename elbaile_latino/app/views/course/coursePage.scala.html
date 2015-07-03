@@ -363,6 +363,7 @@
 				</div>
 				<div class="tab-pane fade" id="register">
 
+				@if(isEditable == false) {
 					<form class="form-horizontal" action="/course/register/" method="post">
 						<fieldset>
 							<div class="form-group">
@@ -380,6 +381,39 @@
 									A reservation can be made for 1 week and will be confirmed after successful payment.
 								</div>
 							</div>
+							<div class="form-group">
+								<label for="participantFee" class="col-lg-2 control-label">Name</label>
+								<div class="col-lg-6">
+									<input class="form-control" readonly type="text" value="@user.firstName  @user.lastName">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="participantFee" class="col-lg-2 control-label">Gender</label>
+								<div class="col-lg-6">
+									<input class="form-control" readonly type="text" value="@user.gender.genderName">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="participantFee" class="col-lg-2 control-label">Height</label>
+								<div class="col-lg-6">
+									<input class="form-control" readonly type="text" value="@user.height">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="participantFee" class="col-lg-2 control-label">Email</label>
+								<div class="col-lg-6">
+									<input class="form-control" readonly type="text" value="@user.email">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="participantFee" class="col-lg-2 control-label">Mobile</label>
+								<div class="col-lg-6">
+									<input class="form-control" readonly type="text" value="@user.mobile">
+								</div>
+							</div>
+							<div class="form-group">
+								<hr style="width: 90%" />
+							</div>
 							<input class="form-control" id="courseId" name="courseId" type="hidden" value="@course.id">
 							<div class="form-group">
 								<label for="questions" class="col-lg-2 control-label">Questions</label>
@@ -393,6 +427,7 @@
 							<button class="btn btn-success" type="submit">Register</button>
 							<a type="button" class="btn btn-success" href="/course/payment/@course.id">Register & payment</a>
 					</form>
+				}
 				</div>
 				<div class="tab-pane fade" id="participants">
 					<table class="table table-striped table-hover ">
