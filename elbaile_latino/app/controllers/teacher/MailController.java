@@ -96,9 +96,7 @@ public class MailController extends Controller {
             //message.setText("Dear Mail Crawler," +
             //        "\n\n No spam to my email, please!");
             message.setText(messagerequested);
-
             Transport.send(message);
-
             System.out.println("Done");
 
             return ok("Email sent!");
