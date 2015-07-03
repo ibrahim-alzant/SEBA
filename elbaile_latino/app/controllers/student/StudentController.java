@@ -6,18 +6,18 @@ import models.common.Language;
 import models.common.course.Course;
 import models.student.Student;
 import play.data.Form;
-import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.editStudent;
 import views.html.newStudent;
-import views.html.newTeacher;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static play.data.Form.form;
 
@@ -55,8 +55,14 @@ public class StudentController extends Controller {
 
     public static Result createStudent() throws ParseException {
         Form<StudentForm> form = form(StudentForm.class).bindFromRequest();
+//        StudentForm studentForm = form.get();
         if (form.hasErrors()) {
             System.out.println("form has errors");
+            if (ctx().session().get("userName") != null) {
+                String username = ctx().session().get("userName");
+                Student student = Student.findByUsername(username);
+                return badRequest(editStudent.render(form, DanceStyle.findAll(), Gender.find.all(), username, student));
+            }
             return badRequest(newStudent.render(form, DanceStyle.findAll(), Gender.find.all(), ctx().session().get("userName")));
         }
         StudentForm studentForm = form.get();
@@ -113,25 +119,26 @@ public class StudentController extends Controller {
     }
 
     public static class StudentForm {
-        @Required
+
+        //        @Required
         public String firstName;
-        @Required
+        //        @Required
         public String lastName;
-        @Required
+        //        @Required
         public String userName;
-        @Required
+        //        @Required
         public String password;
-        @Required
+        //        @Required
         public String passwordConfirm;
-        @Required
+        //        @Required
         public String address;
-        @Required
+        //        @Required
         public String email;
 
-        @Required
+        //        @Required
         public String gender;
 
-        @Required
+        //        @Required
         public String emailConfirm;
 
         public String mobile;
@@ -142,12 +149,12 @@ public class StudentController extends Controller {
 
         public String height;
 
-        @Required
+        //        @Required
         public String spokenLanguages;
 
         public String dateOfBirth;
 
-        @Required
+        //        @Required
         public String danceStyles;
 
         public String validate() {
@@ -166,11 +173,17 @@ public class StudentController extends Controller {
             if (isBlank(passwordConfirm)) {
                 return "Password confirmation is required";
             }
+            if (!password.equals(passwordConfirm)) {
+                return "Password and password confirm don't match";
+            }
             if (isBlank(email)) {
                 return "Email is required";
             }
             if (isBlank(emailConfirm)) {
                 return "Email confirmation is required";
+            }
+            if(!email.equals(emailConfirm)){
+                return "Email and email confirm don't match";
             }
             if (isBlank(spokenLanguages)) {
                 return "At least one language is required is required";
@@ -178,12 +191,31 @@ public class StudentController extends Controller {
             if (isBlank(danceStyles)) {
                 return "At least one dance style is required is required";
             }
+            if ((ctx().session().get("userName")==null)&&(Student.findByUsername(userName)!=null)){
+                return "This user name already exists";
+            }
+            if(!validateEmail(email)){
+                return "Email looks strange -_-";
+            }
+            String[] languagesInputs = spokenLanguages.split(",");
+            for (String lang : languagesInputs) {
+                if(Language.findByName(lang)==null){
+                    return "Language "+lang+" doesn't exist in the system";
+                }
+            }
 
             return null;
         }
 
         private boolean isBlank(String input) {
             return input == null || input.isEmpty() || input.trim().isEmpty();
+        }
+        private static final Pattern emailRegex =
+                Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+        private static boolean validateEmail(String emailStr) {
+            Matcher matcher = emailRegex.matcher(emailStr);
+            return matcher.find();
         }
 
     }

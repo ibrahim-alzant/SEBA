@@ -43,7 +43,7 @@
                 <div class="form-group">
                     <label for="dateOfBirth" class="col-lg-2 control-label">Date of Birth</label>
                     <div class="col-lg-2">
-                        <input id="dateOfBirth" name="dateOfBirth" placeholder="Date of Birth"
+                        <input id="dateOfBirth" name="dateOfBirth" placeholder="Date of Birth" readonly
                             value="@student.getFormattedDate(student)"
                             type="text" class="datepicker form-control" style="width: 100%"/>
                         <script type="text/javascript">
@@ -55,7 +55,8 @@
                 <div class="form-group">
                     <label for="userName" class="col-lg-2 control-label">User name</label>
                     <div class="col-lg-6">
-                        <input class="form-control" id="userName" name="userName" placeholder="User name" type="text" value="@student.userName">
+                        <input class="form-control" id="userName" name="userName" placeholder="User name" type="text"
+                        readonly value="@student.userName">
                     </div>
                 </div>
 
@@ -141,6 +142,17 @@
                         style="width : 10em !important ;" data-role="tagsinput" />
                     </div>
                 </div>
+                @if(studentForm.hasErrors) {
+                    <div class="alert alert-error" style="color: red">
+                        @if(studentForm.errors.size() > 0) {
+                            @for((key, value) <- studentForm.errors) {
+                                @for(err <- value) {
+                                    @err.message().toString()
+                                }
+                            }
+                        } else {No error returned.}
+                    </div>
+                }
                 <div class="form-group">
                     <div class="col-lg-10 col-lg-offset-2">
                         <button type="submit" class="btn btn-primary">Submit</button>

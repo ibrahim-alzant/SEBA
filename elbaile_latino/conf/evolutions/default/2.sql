@@ -366,15 +366,27 @@ VALUES (8000, 'Myriam', 2, 'F.', 'TeacherMyriam', '123', 'MyriFeller@gmail.com',
 
   INSERT INTO course (id, teacher_id, title, start_date, number_of_classes, number_of_participants, max_number_of_participants, language_id, dance_style_id, dance_level,
  status, location, location_code, participant_fee, picture_url, video_url)
- VALUES (8000, 8000,'Rumba f�r Anfaenger', '2015-08-30 13:00:00.00', 10, 0, 30, 1, 4, 'Anfaenger', 'open', 'Turnhalle 1, Olympiazentrum',
+ VALUES (8000, 8000,'Rumba fur Anfaenger', '2015-08-30 13:00:00.00', 10, 0, 30, 1, 4, 'Anfaenger', 'open', 'Turnhalle 1, Olympiazentrum',
   '48.263418850644165,11.66921496347640', 150, 'http://www.kandsmusic.net/_Media/img_3445_med.jpeg', '' );
+
+  INSERT INTO course_student (course_id, student_id) VALUES (8000,1000);
 
 
 
 # --- !Downs
 DELETE FROM student_language;
 DELETE FROM student_dance_style;
+DELETE FROM course_student;
 DELETE FROM student;
+
+
+DELETE FROM teacher_dance_style;
+DELETE FROM teacher_language ;
+
 DELETE FROM language;
 DELETE FROM gender;
 DELETE FROM dance_style;
+DELETE FROM course;
+DELETE FROM teacher;
+
+
