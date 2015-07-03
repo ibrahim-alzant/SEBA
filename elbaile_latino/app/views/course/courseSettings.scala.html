@@ -6,49 +6,81 @@
         <div class="panel-heading">Course settings</div>
         <div class="panel-body">
 
-            <h4>Do you want to cancel a course or send a message?</h4>
+            <h4>If you want to send a message to your participants, please enter the details here: </h4>
 
-            <div class="form-group">
-               <!-- <label class="col-lg-2 control-label">Decide!</label> -->
-                <div class="col-lg-10">
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                            Cancel a class
-                        </label>
+            <form class="form-horizontal" action="/courseSettings/sendemail/" method="post">
+                <br>
+                <div class="form-group">
 
+                <fieldset>
 
-                    <div class="form-group" >
-                        <p class="text-muted">To cancel a class, please enter the concerned date.</p>
-                        <input type="date" class="form-control">
-                        <textarea class="form-control" rows="3" id="cancelReaseom" placeholder="Enter a reason for the cancellation and additional information."></textarea>
+                    <div class="form-group">
+                        <label for="name" class="col-lg-2 control-label">Name</label>
+                        <div class="col-lg-4">
+                            <input class="form-control" id="name" name="name" placeholder="Please enter your name" type="textarea" rows="5">
+                        </div>
                     </div>
-                    </div>
-
-
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                            Send a message to participants
-                        </label>
-                    </div>
-                </div>
 
                 <div class="form-group">
-                    <label for="textArea" class="col-lg-2 control-label"><Message></Message></label>
-                    <div class="col-lg-10">
-                        <textarea class="form-control" rows="3" id="participantsMessage" placeholder="Enter your message"></textarea>
-                        <span class="help-block">Your message will be sent to all registered participants of the course.</span>
+                    <label for="message" class="col-lg-2 control-label">Message</label>
+                    <div class="col-lg-4">
+                        <input class="form-control" id="message" name="message" placeholder="Please enter your message" type="text" cols="50" rows="10"     >
                     </div>
                 </div>
+
 
                 <div class="form-group">
                     <div class="col-lg-10 col-lg-offset-2">
-                        <button type="reset" class="btn btn-default">Cancel</button>
+                        <a class="btn btn-default" href="/teacher/@userName">Cancel</a>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
 
+                </fieldset>
+                </div>
+            </form>
+
+
+            <h4>If you want to cancel the course, please enter the details here: </h4>
+
+        <form class="form-horizontal" action="/courseSettings/sendcancellationemail/" method="post">
+            <br>
+            <div>
+            <fieldset>
+
+                <div class="form-group">
+                    <label for="name" class="col-lg-2 control-label">Name</label>
+                    <div class="col-lg-4">
+                        <input class="form-control" id="name" name="name" placeholder="Please enter your name" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="date" class="col-lg-2 control-label">Date</label>
+                    <div class="col-lg-4">
+                        <input class="form-control" id="date" name="date" placeholder="Enter cancellation date" type="date">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="col-lg-2 control-label">Message</label>
+                    <div class="col-lg-4">
+                        <input class="form-control" id="message" name="message" placeholder="Enter your cancellation reason" type="texarea">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <a class="btn btn-default" href="/teacher/@userName">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+
+            </fieldset>
+            </div>
+        </form>
+
         </div>
-    </div></div>
+    </div>
 }
