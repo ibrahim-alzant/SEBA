@@ -249,7 +249,7 @@
 			<label for="picture" class="col-lg-2 control-label">Picture</label>
 			<div class="col-lg-6">
 				<input class="form-control" id="pictureURL" name="pictureURL"
-				placeholder="Insert image URL" type="text" onkeyup="onImageURLChange()" onchange="onImageURLChange()">
+				placeholder="Insert image URL" type="text" onkeyup="onImageURLChange()" onchange="onImageURLChange()" value="http://localhost:9000/assets/images/class.jpg">
 				<script>
 					function onImageURLChange(){var urlInput = (document.getElementById('pictureURL'));var imageInput = (document.getElementById('imgContainer')); imageInput.src=urlInput.value;}
 				</script>
@@ -265,7 +265,7 @@
 			<label for="video" class="col-lg-2 control-label">Video</label>
 			<div class="col-lg-6">
 				<input class="form-control" id="videoURL" name="videoURL"
-				placeholder="Insert MP4 video URL" type="text" onkeyup="onVideoURLChange()" onchange="onVideoURLChange()">
+				placeholder="Insert MP4 video URL" type="text" onkeyup="onVideoURLChange()" onchange="onVideoURLChange()" value="http://localhost:9000/assets/videos/video.mp4">
 				<script>
 					function onVideoURLChange(){var videoUrlInput = (document.getElementById('videoURL'));var videoInput = (document.getElementById('videoSource')); videoInput.src=videoUrlInput.value;}
 				</script>
