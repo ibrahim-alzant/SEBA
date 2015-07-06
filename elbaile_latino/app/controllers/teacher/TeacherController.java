@@ -134,9 +134,9 @@ public class TeacherController extends Controller {
 			Form<TeacherController.TeacherEditForm> teacherEditForm = form(TeacherController.TeacherEditForm.class);
 			Teacher teacher = Teacher.findByUsername(ctx().session().get("userName"));
 			DateFormat format = new SimpleDateFormat("dd.mm.yyyy");
-//			return ok(views.html.editTeacherProfile.render(teacherEditForm,
-//					DanceStyle.findAll(), Gender.find.all(),
-//					ctx().session().get("userName"),teacher,getTeacherDanceStyles(teacher),getTeacherLanguages(teacher),format.format(teacher.dateOfBirth)));
+			return ok(views.html.editTeacherProfile.render(teacherEditForm,
+					DanceStyle.findAll(), Gender.find.all(),
+					ctx().session().get("userName"),teacher,getTeacherDanceStyles(teacher),getTeacherLanguages(teacher),format.format(teacher.dateOfBirth)));
 		}
 		return ok("unauthorized page");
 	}
@@ -147,9 +147,9 @@ public class TeacherController extends Controller {
 			Teacher originalTeacher = Teacher.findByUsername(ctx().session().get("userName"));
 			DateFormat format = new SimpleDateFormat("dd.mm.yyyy");
 			if (form.hasErrors()) {
-//				return badRequest(views.html.editTeacherProfile.render(form,
-//						DanceStyle.findAll(), Gender.find.all(),
-//						ctx().session().get("userName"),originalTeacher,getTeacherDanceStyles(originalTeacher),getTeacherLanguages(originalTeacher),format.format(originalTeacher.dateOfBirth)));
+				return badRequest(views.html.editTeacherProfile.render(form,
+						DanceStyle.findAll(), Gender.find.all(),
+						ctx().session().get("userName"),originalTeacher,getTeacherDanceStyles(originalTeacher),getTeacherLanguages(originalTeacher),format.format(originalTeacher.dateOfBirth)));
 			}
 			TeacherController.TeacherEditForm teacherForm = form.get();
 			originalTeacher.firstName = teacherForm.firstName;
@@ -162,8 +162,8 @@ public class TeacherController extends Controller {
 			originalTeacher.professionalExperience = teacherForm.professionalExperience;
 			originalTeacher.dateOfBirth = format.parse(teacherForm.dateOfBirth);
 			originalTeacher.spokenLanguages = getLanguages(teacherForm.spokenLanguages);
-			originalTeacher.danceStyles = getDanceStyles(teacherForm.danceStyles);
-			
+			originalTeacher.danceStyles = getDanceStyles(teacherForm.danceStyles);						
+			System.out.println(getLanguages(teacherForm.spokenLanguages));
 			originalTeacher.update();
 			session("userName", originalTeacher.userName);     
 			Teacher teacher = Teacher.findByUsername(originalTeacher.userName);
@@ -214,8 +214,9 @@ public class TeacherController extends Controller {
 		List<Language> languagesList = new ArrayList<Language>();
 		String[] languagesInputs = languages.split(",");
 		for (String lang : languagesInputs) {
+			System.out.println("looking for " + lang);
 			languagesList.add(Language.findByName(lang));
-		}
+		}		
 		return languagesList;
 	}
 
@@ -223,6 +224,7 @@ public class TeacherController extends Controller {
 		List<DanceStyle> styles = new ArrayList<DanceStyle>();
 		String[] danceStylesInputs = stylesString.split(",");
 		for (String style : danceStylesInputs) {
+			System.out.println("looking for " + style);
 			styles.add(DanceStyle.findByName(style));
 		}
 		return styles;
@@ -405,7 +407,7 @@ public class TeacherController extends Controller {
 		for(DanceStyle danceStyle : teacher.danceStyles){
 			danceStyles+= danceStyle.danceStyleName +",";
 		}
-		return danceStyles.substring(0, danceStyles.length());
+		return danceStyles.substring(0, danceStyles.length()-1);
 	}
 	
 	private static String getTeacherLanguages(Teacher teacher){
@@ -413,7 +415,7 @@ public class TeacherController extends Controller {
 		for(Language lang : teacher.spokenLanguages){
 			languages+= lang.languageName +",";
 		}
-		return languages.substring(0, languages.length());
+		return languages.substring(0, languages.length()-1);
 	}
 
 }

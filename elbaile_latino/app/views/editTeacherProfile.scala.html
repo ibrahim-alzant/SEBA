@@ -1,0 +1,248 @@
+@(teacherForm: Form[controllers.teacher.TeacherController.TeacherEditForm],
+danceStyles: List[models.common.DanceStyle], genders:
+List[models.common.Gender], userName: String, teacher:models.teacher.Teacher, teacherDanceStyles:String,teacherLanguages:String, teacherDOB:String)
+@import helper._
+
+@main("Edit teacher profile", userName) {
+
+
+<div class="panel panel-success">
+	<div class="panel-heading">Register as a teacher</div>
+
+
+
+
+	<form class="form-horizontal" action="/teacher/update/" method="post">
+		@if(teacherForm.hasGlobalErrors) {
+		<div class="alert alert-dismissible alert-danger">
+			<button type="button" class="close" data-dismiss="alert">×</button>
+			<strong>@teacherForm.globalError.message </strong>
+		</div>
+
+		}
+		<fieldset>
+			<br>
+			<div class="form-group">
+				<label for="firstName" class="col-lg-2 control-label">First
+					name</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="firstName" name="firstName"
+						placeholder="First name" type="text" value="@teacher.firstName">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="lastName" class="col-lg-2 control-label">Last
+					name</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="lastName" name="lastName"
+						placeholder="Last Name" type="text" value="@teacher.lastName">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="select" class="col-lg-2 control-label">Gender</label>
+				<div class="col-lg-2">
+					<select class="form-control" id="gender" name="gender">
+						@for(gender <- genders) {
+						<option>@gender.genderName</option> }
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="dateOfBirth" class="col-lg-2 control-label">Date
+					of Birth</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="dateOfBirth" name="dateOfBirth"
+						placeholder="Date of Birth" type="text" value="@teacherDOB">
+						<script type="text/javascript">
+							$(function () {
+								$('#dateOfBirth').datepicker({ format: 'dd.mm.yyyy' });
+							});
+						</script>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="userName" class="col-lg-2 control-label">User
+					name</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="userName" name="userName"
+						placeholder="User name" type="text" value="@teacher.userName">
+				</div>
+			</div>
+
+			
+			<div class="form-group">
+				<label for="email" class="col-lg-2 control-label">Email</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="email" name="email"
+						placeholder="Email" type="text" value="@teacher.email">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="emailConfirm" class="col-lg-2 control-label">Confirm
+					Email</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="emailConfirm" name="emailConfirm"
+						placeholder="Re-Type email" type="text" value="@teacher.email">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="mobile" class="col-lg-2 control-label">Mobile</label>
+				<div class="col-lg-6">
+					<input class="form-control" id="mobile" name="mobile"
+						placeholder="Mobile" type="text" value="@teacher.mobile">
+				</div>
+			</div>
+
+			<div class="form-group" id="profilePictureBlock">
+				<label for="profilePicture" class="col-lg-2 control-label">Profile
+					Picture</label>
+				<div class="col-lg-6">
+					<img src="@teacher.imgURL" id="profilePicture" height="250px" width="250px" /> 
+					<input type="hidden" id="imgURL" name="imgURL" value="@teacher.imgURL"/>
+				</div>
+			</div>
+
+			<div class="form-group" id="profilePictureButtonBlock">
+				<label for="profilePicture" class="col-lg-2 control-label"></label>
+				<div class="col-lg-6">
+					<input type="button" class="btn btn-info btn-lg" data-toggle="modal"
+				data-target="#myModal" id="uploadPictureButton" value="Upload profile picture"/>
+				
+				<input type="button" class="btn btn-info btn-lg" id="useDefualtProfilePicture" value="Use Defualt Profile Picture"/>
+				</div>
+			</div>
+			
+
+			<div class="form-group">
+				<label for="professionalExperience" class="col-lg-2 control-label">
+					Professional Experience</label>
+				<div class="col-lg-6">
+					<textarea class="form-control" rows="3"
+						name="professionalExperience" id="professionalExperience">@teacher.professionalExperience</textarea>
+					<span class="help-block">Please write briefly about your
+						previous experience.</span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="spokenLanguages" class="col-lg-2 control-label">Spoken Languages</label>
+				<div class="col-lg-6">
+					<input id="spokenLanguages" name="spokenLanguages" type="text"
+						placeholder="Write a language" value="@teacherLanguages"
+						style="width: 10 em !important;" data-role="tagsinput" />
+				</div>
+			</div>
+
+			<div class="form-group">
+			
+				<label for="danceStyles" class="col-lg-2 control-label">Dance Styles</label>
+				<div class="col-lg-6">
+					<input id="danceStyles" name="danceStyles" type="text"
+						placeholder="Write a dance style" value="@teacherDanceStyles"
+						style="width: 10 em !important;" data-role="tagsinput" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-lg-10 col-lg-offset-2">
+					<button type="submit" class="btn btn-primary">Update</button>
+					<a class="btn btn-primary" href="/teacher/@teacher.userName/">Cancel</a>
+				</div>
+			</div>
+
+		</fieldset>
+
+	</form>
+
+</div>
+
+<div class="modal" id="myModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">×</button>
+				<h4 class="modal-title">Upload profile picture</h4>
+			</div>
+			<form id="myForm" action="/teacher/upload/" method="post"
+						enctype="multipart/form-data" target="uploadTrg">
+			<div class="modal-body">
+					
+
+						File: <input type="file" name="file" id="file">
+
+					
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary">Upload</button>
+				
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function(e) {
+		var useDefaultPicture = false;
+		var selectedOption = $( "#gender option:selected" ).text();
+		useDefaultPicture = true;
+		if(selectedOption == "Male"){
+			$("#profilePicture").attr("src", "/assets/images/profile/defualt_male.png");				
+		} else {
+			$("#profilePicture").attr("src", "/assets/images/profile/defualt_female.png");
+		}
+		$("#myForm").on('submit', (function(e) {
+			e.preventDefault();
+			$.ajax({
+				url : "/teacher/upload/",
+				type : "POST",
+				data : new FormData(this),
+				contentType : false,
+				cache : false,
+				processData : false,
+				success : function(data) {
+					$("#profilePicture").attr("src", data);
+					$("#profilePictureBlock").show();
+					$("#uploadPictureButton").attr("value", "Change profile picture")
+					$("#imgURL").attr("value", data);
+					useDefaultPicture = false;
+				}
+			});
+		}));
+		$("#useDefualtProfilePicture").click(function(){
+			var selectedOption = $( "#gender option:selected" ).text();
+			useDefaultPicture = true;
+			if(selectedOption == "Male"){
+				$("#profilePicture").attr("src", "/assets/images/profile/defualt_male.png");				
+			} else {
+				$("#profilePicture").attr("src", "/assets/images/profile/defualt_female.png");
+			}
+			
+			$("#profilePictureBlock").show();
+		});
+		
+		$("#gender").change(function(){
+			if(useDefaultPicture){
+				var selectedOption = $( "#gender option:selected" ).text();
+				if(selectedOption == "Male"){
+					$("#profilePicture").attr("src", "/assets/images/profile/defualt_male.png");				
+				} else {
+					$("#profilePicture").attr("src", "/assets/images/profile/defualt_female.png");
+				}
+				
+				$("#profilePictureBlock").show();
+			}
+				
+		});
+			
+	});
+</script>
+
+}
