@@ -55,8 +55,8 @@ public class MailController extends Controller {
             Transport.send(message);
 
             System.out.println("Done");
-
-            return ok("Email sent!");
+            return redirect(controllers.teacher.routes.TeacherController
+                    .show(ctx().session().get("userName")));
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);
@@ -99,7 +99,9 @@ public class MailController extends Controller {
             Transport.send(message);
             System.out.println("Done");
 
-            return ok("Email sent!");
+            return redirect(controllers.teacher.routes.TeacherController
+                    .show(ctx().session().get("userName")));
+
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);
