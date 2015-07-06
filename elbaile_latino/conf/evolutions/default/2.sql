@@ -351,22 +351,22 @@ VALUES (8000, 'Myriam', 2, 'F.', 'TeacherMyriam', '123', 'MyriFeller@gmail.com',
 
  INSERT INTO course (id, teacher_id, title, start_date, number_of_classes, number_of_participants, max_number_of_participants, language_id, dance_style_id, dance_level,
  status, location, location_code, participant_fee, picture_url, video_url)
- VALUES (5000, 5000,'Danza - Move your body!', '2015-08-30 13:00:00.00', 10, 0, 30, 1, 4, 'basic - just feel the rhythm and youll have fun', 'open', 'Turnhalle 1, Olympiazentrum',
+ VALUES (5000, 5000,'Danza - Move your body!', '2015-08-30 13:00:00.00', 10, 0, 30, 1, 5, 'basic - just feel the rhythm and youll have fun', 'open', 'Turnhalle 1, Olympiazentrum',
   '48.263418850644165,11.66921496347640', 150, 'http://misleibyblug.zumba.com/zumba-class-0911-004.jpg', '' );
 
   INSERT INTO course (id, teacher_id, title, start_date, number_of_classes, number_of_participants, max_number_of_participants, language_id, dance_style_id, dance_level,
  status, location, location_code, participant_fee, picture_url, video_url)
- VALUES (6000, 5000,'Groovy Reggeaton', '2015-08-30 13:00:00.00', 10, 0, 30, 1, 4, 'Everyone!', 'open', 'Turnhalle 1, Olympiazentrum',
+ VALUES (6000, 5000,'Groovy Reggeaton', '2015-08-30 13:00:00.00', 10, 0, 30, 1, 6, 'Everyone!', 'open', 'Turnhalle 1, Olympiazentrum',
   '48.263418850644165,11.66921496347640', 150, 'http://www.timba.com/blog_files/0000/0957/TripsToCuba12.jpg', '' );
 
   INSERT INTO course (id, teacher_id, title, start_date, number_of_classes, number_of_participants, max_number_of_participants, language_id, dance_style_id, dance_level,
  status, location, location_code, participant_fee, picture_url, video_url)
- VALUES (7000, 7000,'Jive Professional', '2015-08-30 13:00:00.00', 15, 0, 10, 1, 4, 'Only professionals please!', 'open', 'Turnhalle 1, Olympiazentrum',
+ VALUES (7000, 7000,'Jive Professional', '2015-08-30 13:00:00.00', 15, 0, 10, 1, 7, 'Only professionals please!', 'open', 'Turnhalle 1, Olympiazentrum',
   '48.263418850644165,11.66921496347640', 300, 'http://www.dancesportindia.com/wp-content/uploads/2012/03/JIV.jpg', '' );
 
   INSERT INTO course (id, teacher_id, title, start_date, number_of_classes, number_of_participants, max_number_of_participants, language_id, dance_style_id, dance_level,
  status, location, location_code, participant_fee, picture_url, video_url)
- VALUES (8000, 8000,'Rumba fur Anfaenger', '2015-08-30 13:00:00.00', 10, 0, 30, 1, 4, 'Anfaenger', 'open', 'Turnhalle 1, Olympiazentrum',
+ VALUES (8000, 8000,'Rumba fur Anfaenger', '2015-08-30 13:00:00.00', 10, 0, 30, 1, 8, 'Anfaenger', 'open', 'Turnhalle 1, Olympiazentrum',
   '48.263418850644165,11.66921496347640', 150, 'http://www.kandsmusic.net/_Media/img_3445_med.jpeg', '' );
 
   INSERT INTO course_student (course_id, student_id) VALUES (8000,1000);
