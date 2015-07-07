@@ -124,4 +124,12 @@ public class Student extends Model {
         return  format.format(student.dateOfBirth);
     }
 
+    public static Student findById(long studentId){
+        return find.where().eq("id", studentId).findUnique();
+    }
+
+    public static String getEmail(Student student){
+        return student.email;
+    }
+
 }

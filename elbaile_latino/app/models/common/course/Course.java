@@ -266,4 +266,40 @@ public class Course extends Model {
 		return find.where().eq("id", courseId).findUnique();
 	}
 
+
+
+	public static List<Student> findStudentsById(int courseid) {
+
+		Connection connection = DB.getConnection();
+		List<Student> student_list = new ArrayList<>();
+
+		try {
+
+			ResultSet result = connection.prepareStatement(" Select course_student.student_id "
+					+ " from course_student"
+					+ " where course_student.course_id=" + courseid).executeQuery();
+
+
+			connection.close();
+
+			String emails = "";
+			while (result.next()) {
+
+				Long studentId = result.getLong(1);
+				Student studentFound = Student.find.byId(studentId);
+
+				student_list.add(studentFound);
+			}
+
+		} catch (Exception e) {
+			e.getStackTrace();
+
+		}
+		return student_list;
+	}
+
+
+
+
+
 }

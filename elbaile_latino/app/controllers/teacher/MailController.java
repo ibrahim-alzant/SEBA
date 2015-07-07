@@ -19,6 +19,12 @@ import play.data.Form;
 import play.data.format.Formats;
 import play.data.DynamicForm;
 
+import java.util.ArrayList;
+import java.util.List;
+import models.student.Student;
+import models.common.course.Course;
+
+
 public class MailController extends Controller {
 
     public static Result send() {
@@ -42,13 +48,21 @@ public class MailController extends Controller {
             DynamicForm requestData = form().bindFromRequest();
             String emailtext = requestData.get("message");
             String namefrom = requestData.get("name");
+            String courseid = requestData.get("courseid");
+
+            int courseid2 = Integer.parseInt(courseid);
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("elbailelatino@gmail.com"));
+
+            String allemails = getReceivers(courseid2);
+
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("MichaelaEva@gmx.de"));
+                    InternetAddress.parse(allemails));
 
             message.setSubject("Elbailelatino - You got a message from " + namefrom + " !");
+
+
             //message.setText("Dear Mail Crawler," +
             //        "\n\n No spam to my email, please!");
             message.setText(emailtext);
@@ -108,6 +122,21 @@ public class MailController extends Controller {
         }
     }
 
+
+    public static String getReceivers(int courseid){
+        List<Student> students = new ArrayList<Student>();
+        students = Course.findStudentsById(courseid);
+
+        String allemails ="";
+        String email = "";
+
+        for (Student student: students) {
+            email = Student.getEmail(student);
+            allemails = allemails + email + ", ";
+        }
+        allemails = allemails + "MichaelaEva@gmx.de";
+        return allemails;
+    }
 
 /**
     public static Result mailForm() {
